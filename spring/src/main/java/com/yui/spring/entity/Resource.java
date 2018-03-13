@@ -1,6 +1,7 @@
 package com.yui.spring.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -26,10 +27,9 @@ public class Resource implements Serializable {
 	
 	private String name;
 	private Integer age;
-	
+	private Date birth;
 	@JsonInclude(Include.NON_NULL)
 	private String desc;
-	
 	
 	public Resource() {
 		super();
@@ -58,9 +58,16 @@ public class Resource implements Serializable {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
+	
+	public Date getBirth() {
+		return birth;
+	}
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
 	@Override
 	public String toString() {
-		return "Resource [name=" + name + ", age=" + age + ", desc=" + desc + "]";
+		return "Resource [name=" + name + ", age=" + age + ", birth=" + birth + ", desc=" + desc + "]";
 	}
 
 }
