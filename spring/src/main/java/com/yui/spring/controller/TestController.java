@@ -48,7 +48,6 @@ public class TestController {
 	
 	@RequestMapping("add")
 	public String add(Resource user) {
-		int a = 1/0;
 		System.out.println(user);
 		return "redirect:/center";
 	}
