@@ -1,4 +1,4 @@
-package com.yui.spring;
+package com.yui.spring.utils;
 
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;

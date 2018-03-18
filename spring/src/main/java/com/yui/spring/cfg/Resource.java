@@ -1,4 +1,4 @@
-package com.yui.spring.entity;
+package com.yui.spring.cfg;
 
 import java.io.Serializable;
 import java.util.Date;

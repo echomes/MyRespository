@@ -1,4 +1,4 @@
-package com.yui.spring;
+package com.yui.spring.test;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

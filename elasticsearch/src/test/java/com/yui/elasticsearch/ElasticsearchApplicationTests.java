@@ -18,7 +18,7 @@ public class ElasticsearchApplicationTests {
 	
 	@Test
 	public void contextLoads() {
-		User u = new User(1l, "李四");
+		User u = new User(7l, "测试");
 		userREposity.save(u);
 	}
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
@@ -9,27 +9,27 @@
         <property name="endingDelimiter" value="`"/>
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="com.imooc.utils.MyMapper"/>
+            <property name="mappers" value="com.yui.spring.utils.MyBatisMapper"/>
         </plugin>
 
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/leecx"
-                        userId="root"
-                        password="root">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" 
+                        connectionURL="jdbc:mysql://localhost:3306/test?useSSL=true" 
+                        userId="root" 
+                        password="123456" >
         </jdbcConnection>
 
         <!-- 对于生成的pojo所在包 -->
-        <javaModelGenerator targetPackage="com.imooc.pojo" targetProject="src/main/java"/>
+        <javaModelGenerator targetPackage="com.yui.spring.entity" targetProject="src/main/java"/>
 
 		<!-- 对于生成的mapper所在目录 -->
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
 
 		<!-- 配置mapper对应的java映射 -->
-        <javaClientGenerator targetPackage="com.imooc.mapper" targetProject="src/main/java"
+        <javaClientGenerator targetPackage="com.yui.spring.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
 
-		<table tableName="sys_user"></table>
+		<table tableName="user"></table>
 		 
     </context>
 </generatorConfiguration>
