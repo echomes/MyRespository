@@ -3,6 +3,7 @@ package com.yui.spring.service;
 import java.util.List;
 
 import com.yui.spring.entity.User;
+import com.yui.spring.utils.Page;
 
 /**
  * 业务层代码
@@ -40,4 +41,10 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> find(User user);
+	
+	/**
+	 * 分页查询
+	 * @param page
+	 */
+	void findPage(Page<User> page);
 }

@@ -1,7 +1,6 @@
 package com.yui.spring.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yui.spring.cfg.Resource;
 import com.yui.spring.entity.User;
 import com.yui.spring.service.UserService;
+import com.yui.spring.utils.Page;
 
 /**
  * 测试
@@ -63,9 +63,9 @@ public class TestController {
 
 		User u = new User();
 		u.setId(1);
-		u.setName("测试aa");
-		u.setAge(250);
-		u.setMark("aaaaa");;
+		u.setName("aa");
+		u.setAge(0);
+		u.setMark("a");;
 		u.setBirth(new Date());
 
 		userService.update(u);
@@ -79,15 +79,16 @@ public class TestController {
 	public Object selectUser() {
 		
 		User u = new User();
-		u.setId(1);
+		//u.setId(1);
 		u.setName("测试aa");
-		u.setAge(250);
-		u.setMark("aaaaa");;
-		u.setBirth(new Date());
+		//u.setAge(250);
+		//u.setMark("aaaaa");;
+		//u.setBirth(new Date());
 		
-		List<User> list = userService.find(null);
+		Page<User> page = new Page<User>(u);
+		userService.findPage(page);
 		
-		return list;
+		return page;
 	}
 
 }
