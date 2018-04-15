@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Thymeleaf</title>
+	<script th:src="@{static/js/jquery-3.3.1.min.js}"></script>
+</head>
+<body>
+
+	<div>
+		姓名：<input th:value="${user.name}" th:name="${user.name}" th:id="${user.name}"><br/>
+		年龄：<input th:id="${user.age}" th:value="${user.age}" th:name="${user.age}"><br/>
+		生日：<input th:value="${#dates.format(user.birth,'yyyy-MM-dd HH:mm:ss')}"><br/>
+	</div>
+	<hr/>
+	
+	<div th:object="${user}">
+		姓名：<input th:value="*{name}" th:name="*{name}" th:id="*{name}"><br/>
+		年龄：<input th:id="*{age}" th:value="*{age}" th:name="*{age}"><br/>
+		生日：<input th:value="*{#dates.format(birth,'yyyy-MM-dd HH:mm:ss')}"><br/>
+	</div>
+	<hr/>
+	
+	<div>
+		<span th:text="${user.desc}"></span>
+		<span th:utext="${user.desc}"></span>
+	</div>
+	<hr/>
+	
+	<form th:action="@{add}" th:object=${user} th:mothod="post">
+		姓名：<input type="text" th:field="*{name}"><br/>
+		年龄：<input type="number" th:field="*{age}"><br/>
+		生日：<input type="date" th:field="*{birth}"><br/>
+		<input type="submit" value="提交">
+	</form>
+	<hr/>
+	
+	<div>
+		<span th:if="${user.age} le 20">20</span>
+	</div>
+</body>
+</html>
