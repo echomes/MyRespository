@@ -69,6 +69,7 @@ public class TestController {
 		u.setBirth(new Date());
 
 		userService.update(u);
+		userService.find(u);
 		
 		userService.find(u);
 
