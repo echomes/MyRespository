@@ -1,0 +1,29 @@
+2018-05-10 22:37:44,462 [main] INFO  [com.jeesite.common.config.Global] tg:114 - logPath: D:/Git/js/jeesite-web/src/main/webapp/WEB-INF/classes
+
+   _____        ___  _   _           ___
+  |_   _|      / __'(_)_| |_        /   |
+  _ | | __  __ \___ | |_   _| __   / /| |
+ ( .| |/__\/__\ ___)| | | |_ /__\ / /_| |_
+  \___|\__.\__.|____|_| \___)\__.(____   _|  :: JeeSite V4.0.2 :: 
+======================================|_|==========================
+
+    欢迎使用 JeeSite Demo V4.0
+
+    您当前的版本为开源版，官方网站：http://jeesite.com
+
+    机器码是：502aa3209f98c95cef58870f84ac7640
+    产品名称：JeeSite Demo
+    公司名称：ThinkGem
+
+===================================================================
+
+2018-05-10 22:37:46,228 [main] DEBUG [c.j.c.mybatis.mapper.provider.SelectSqlProvider] em:120 - 1毫秒: SELECT a.status AS "status", a.create_by AS "createBy", a.create_date AS "createDate", a.update_by AS "updateBy", a.update_date AS "updateDate", a.remarks AS "remarks", a.module_code AS "moduleCode", a.module_name AS "moduleName", a.description AS "description", a.main_class_name AS "mainClassName", a.current_version AS "currentVersion", a.upgrade_info AS "upgradeInfo" FROM js_sys_module a WHERE a.status = #{sqlMap.where#status#EQ1} ORDER BY a.update_date DESC
+2018-05-10 22:37:46,238 [main] DEBUG [o.m.spring.transaction.SpringManagedTransaction] SpringManagedTransaction.java:87 - JDBC Connection [com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl@2c1f8dbd] will be managed by Spring
+2018-05-10 22:37:46,249 [main] DEBUG [com.jeesite.modules.sys.dao.ModuleDao.findList] BaseJdbcLogger.java:159 - ==>  Preparing: SELECT a.status AS "status", a.create_by AS "createBy", a.create_date AS "createDate", a.update_by AS "updateBy", a.update_date AS "updateDate", a.remarks AS "remarks", a.module_code AS "moduleCode", a.module_name AS "moduleName", a.description AS "description", a.main_class_name AS "mainClassName", a.current_version AS "currentVersion", a.upgrade_info AS "upgradeInfo" FROM js_sys_module a WHERE a.status = ? ORDER BY a.update_date DESC 
+2018-05-10 22:37:46,266 [main] DEBUG [com.jeesite.modules.sys.dao.ModuleDao.findList] BaseJdbcLogger.java:159 - ==> Parameters: 0(String)
+2018-05-10 22:37:46,282 [main] DEBUG [com.jeesite.modules.sys.dao.ModuleDao.findList] BaseJdbcLogger.java:159 - <==      Total: 0
+2018-05-10 22:37:47,323 [main] DEBUG [com.jeesite.common.beetl.BeetlUtils] tl:167 - Loading beetl config: [classpath:/config/beetl-core.properties, classpath:/config/beetl.properties]
+2018-05-10 22:37:48,035 [main] INFO  [o.s.b.c.e.tomcat.TomcatEmbeddedServletContainer] TomcatEmbeddedServletContainer.java:201 - Tomcat started on port(s): 8980 (http)
+2018-05-10 22:37:48,039 [main] INFO  [com.jeesite.modules.config.Application] StartupInfoLogger.java:57 - Started Application in 6.8 seconds (JVM running for 7.803)
+2018-05-10 22:38:49,332 [RMI TCP Connection(2)-127.0.0.1] INFO  [o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext] AbstractApplicationContext.java:984 - Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@5e600dd5: startup date [Thu May 10 22:37:41 CST 2018]; root of context hierarchy
+2018-05-10 22:38:49,339 [RMI TCP Connection(2)-127.0.0.1] DEBUG [com.jeesite.common.utils.SpringUtils] gh:108 - Clear ApplicationContext:org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@5e600dd5: startup date [Thu May 10 22:37:41 CST 2018]; root of context hierarchy
