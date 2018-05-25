@@ -1,6 +1,5 @@
 package com.yui.mybatis.cfg;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.ibatis.io.Resources;
@@ -27,7 +26,7 @@ public class MybatisCfgBuilder {
 			InputStream in = Resources.getResourceAsStream(source);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(in);
 			return sqlSessionFactory;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
