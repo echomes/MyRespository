@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import com.google.common.collect.Lists;
 import com.yui.mybatis.cfg.MybatisCfgBuilder;
-import com.yui.mybatis.entity.User;
-import com.yui.mybatis.mapper.UserMapper;
+import com.yui.mybatis.modules.test.entity.User;
+import com.yui.mybatis.modules.test.mapper.UserMapper;
 
 /**
  * 测试类
@@ -27,7 +27,7 @@ public class MyTest {
 		User u = new User();
 		u.setName("%测试%");
 
-		List<User> userList = userMapper.query(u);
+		List<User> userList = userMapper.findList(u);
 
 		for (User user : userList) {
 			System.out.println(user);
