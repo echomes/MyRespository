@@ -37,14 +37,14 @@
 	<select id="findList" resultType="User">
 		SELECT
 			*
-		FROM
+		FROM	
 			USER u
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="id != null">
 				u.id = #{id}
 			</if>
-			<if test="name != null">
-				u.name like #{name}
+			<if test="name != null and name != '' ">
+				u.name like '%' #{name} '%'
 			</if>
 		</trim>
 	</select>
