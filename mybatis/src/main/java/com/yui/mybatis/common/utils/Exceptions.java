@@ -1,6 +1,3 @@
-/**
- * Copyright (c) 2005-2012 springside.org.cn
- */
 package com.yui.mybatis.common.utils;
 
 import java.io.PrintWriter;
@@ -10,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 关于异常的工具类.
- * @author calvin
- * @version 2013-01-15
  */
 public class Exceptions {
 

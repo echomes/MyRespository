@@ -1,6 +1,3 @@
-/**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- */
 package com.yui.mybatis.common.persistence.dialect.db;
 
 import com.yui.mybatis.common.persistence.dialect.Dialect;
@@ -8,9 +5,6 @@ import com.yui.mybatis.common.persistence.dialect.Dialect;
 /**
  * Mysql方言的实现
  *
- * @author poplar.yfyang
- * @version 1.0 2010-10-10 下午12:31
- * @since JDK 1.5
  */
 public class MySQLDialect implements Dialect {
 

@@ -1,6 +1,3 @@
-/**
- * Copyright (c) 2005-2012 springside.org.cn
- */
 package com.yui.mybatis.common.beanvalidator;
 
 import java.util.List;
@@ -16,16 +13,6 @@ import com.google.common.collect.Maps;
 
 /**
  * JSR303 Validator(Hibernate Validator)工具类.
- * 
- * ConstraintViolation中包含propertyPath, message 和invalidValue等信息.
- * 提供了各种convert方法，适合不同的i18n需求:
- * 1. List<String>, String内容为message
- * 2. List<String>, String内容为propertyPath + separator + message
- * 3. Map<propertyPath, message>
- * 
- * 详情见wiki: https://github.com/springside/springside4/wiki/HibernateValidator
- * @author calvin
- * @version 2013-01-15
  */
 public class BeanValidators {
 
