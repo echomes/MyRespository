@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author calvin
  * @version 2013-01-15
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("all")
 public class Reflections {
 
 	private static final String SETTER_PREFIX = "set";

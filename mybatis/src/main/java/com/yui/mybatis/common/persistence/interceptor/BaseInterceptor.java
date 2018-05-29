@@ -54,7 +54,6 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
      * @return 分页对象
      * @throws NoSuchFieldException 无法找到参数
      */
-    @SuppressWarnings("unchecked")
 	protected static Page<Object> convertParameter(Object parameterObject, Page<Object> page) {
     	try{
             if (parameterObject instanceof Page) {

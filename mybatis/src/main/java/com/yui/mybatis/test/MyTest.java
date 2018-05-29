@@ -43,7 +43,7 @@ public class MyTest {
 
 		List<User> userList = Lists.newArrayList();
 		long start = System.currentTimeMillis();
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i < 1000; i++) {
 			userList.add(new User("测试_" + i, i, new Date()));
 		}
 
