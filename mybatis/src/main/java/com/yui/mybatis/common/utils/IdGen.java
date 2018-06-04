@@ -1,3 +1,6 @@
+/**
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ */
 package com.yui.mybatis.common.utils;
 
 import java.io.Serializable;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * 封装各种生成唯一性ID算法的工具类.
+ * @author ThinkGem
+ * @version 2013-01-15
  */
 @Service
 @Lazy(false)

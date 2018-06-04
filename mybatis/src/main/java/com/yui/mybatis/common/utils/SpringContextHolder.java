@@ -1,3 +1,6 @@
+/**
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ */
 package com.yui.mybatis.common.utils;
 
 import java.net.HttpURLConnection;

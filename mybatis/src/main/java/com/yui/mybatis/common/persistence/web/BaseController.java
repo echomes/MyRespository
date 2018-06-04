@@ -1,3 +1,6 @@
+/**
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ */
 package com.yui.mybatis.common.persistence.web;
 
 import java.beans.PropertyEditorSupport;
@@ -32,6 +35,9 @@ import com.yui.mybatis.common.utils.DateUtils;
 
 /**
  * 控制器支持类
+ * 
+ * @author ThinkGem
+ * @version 2013-3-23
  */
 public abstract class BaseController {
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 /**
  * $.ajax后需要接受的JSON（个人习惯）
  * AjaxJson 系统自带
+ * @author likl
  */
 @JsonPropertyOrder({ "result", "message", "code" })
 public class JsonResult {

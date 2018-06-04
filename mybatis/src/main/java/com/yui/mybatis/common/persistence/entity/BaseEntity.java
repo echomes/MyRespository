@@ -1,3 +1,6 @@
+/**
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ */
 package com.yui.mybatis.common.persistence.entity;
 
 import java.io.Serializable;
@@ -6,7 +9,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.pagehelper.Page;
@@ -15,6 +18,9 @@ import com.yui.mybatis.modules.test.entity.User;
 
 /**
  * Entity支持类
+ * 
+ * @author ThinkGem
+ * @version 2014-05-16
  */
 public abstract class BaseEntity<T> implements Serializable {
 

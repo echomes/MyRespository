@@ -3,10 +3,13 @@ package com.yui.mybatis.common.utils;
 import java.text.ParseException;
 import java.util.Date;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
+
 
 /**
  * 日期工具类, 继承org.apache.commons.lang.time.DateUtils类
+ * @author ThinkGem
+ * @version 2014-4-15
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	

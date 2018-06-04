@@ -1,3 +1,6 @@
+/**
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ */
 package com.yui.mybatis.common.persistence.dialect.db;
 
 import org.apache.commons.lang3.StringUtils;
@@ -6,6 +9,9 @@ import com.yui.mybatis.common.persistence.dialect.Dialect;
 
 /**
  * Sql 2005的方言实现
+ * @author poplar.yfyang
+ * @version 1.0 2010-10-10 下午12:31
+ * @since JDK 1.5
  */
 public class SQLServer2005Dialect implements Dialect {
 

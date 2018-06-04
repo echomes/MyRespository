@@ -1,3 +1,6 @@
+/**
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ */
 package com.yui.mybatis.common.persistence.interceptor;
 
 import java.io.Serializable;
@@ -22,6 +25,8 @@ import com.yui.mybatis.common.utils.Reflections;
 
 /**
  * Mybatis分页拦截器基类
+ * @author poplar.yfyang / thinkgem
+ * @version 2013-8-28
  */
 public abstract class BaseInterceptor implements Interceptor, Serializable {
 	
