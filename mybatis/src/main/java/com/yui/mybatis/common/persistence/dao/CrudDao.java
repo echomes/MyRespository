@@ -2,19 +2,14 @@ package com.yui.mybatis.common.persistence.dao;
 
 import java.util.List;
 
+import com.yui.mybatis.common.persistence.entity.DataEntity;
+
 /**
  * DAO支持类实现
  * @param <T>
  */
-public interface CrudDao<T> extends BaseDao {
+public interface CrudDao<T extends DataEntity> extends BaseDao {
 
-	/**
-	 * 获取单条数据
-	 * @param id
-	 * @return
-	 */
-	T get(String id);
-	
 	/**
 	 * 获取单条数据
 	 * @param entity

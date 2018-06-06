@@ -1,8 +1,7 @@
-/**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- */
 package com.yui.mybatis.common.persistence.serverice;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,19 @@ import com.yui.mybatis.common.persistence.entity.DataEntity;
 @Transactional(readOnly = true)
 public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>> {
 
+	private static Class clazz;
+
+	public CrudService() {
+		// 1获取子类的class(在创建子类对象的时候,会返回父类的构造方法)
+		clazz = this.getClass(); // Student
+		// 2获取当前类的带有泛型的父类类型
+		ParameterizedType type = (ParameterizedType) clazz.getGenericSuperclass();
+		// 3返回实际参数类型(泛型可以写多个)
+		Type[] types = type.getActualTypeArguments();
+		// 4 获取第一个参数(泛型的具体类) Person.class
+		clazz = (Class) types[1];
+	}
+
 	/**
 	 * 持久层对象
 	 */
@@ -36,7 +48,15 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>>
 	 * @return
 	 */
 	public T get(String id) {
-		return dao.get(id);
+		T entity;
+		try {
+			entity = (T) clazz.newInstance();
+			entity.setId(id);
+			return this.dao.get(entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**

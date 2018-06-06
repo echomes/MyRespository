@@ -8,8 +8,11 @@
 			*
 		FROM
 			USER u
-		WHERE
-			u.id = #{id}
+		<where>
+			<if test="id != null and id != '' ">
+				u.id = #{id}
+			</if>
+		</where>
 	</select>
 	
 	<!-- 添加 -->
@@ -19,8 +22,8 @@
 			age,
 			birth
 		)VALUES(
-			#{name}, 
-			#{age}, 
+			#{name},
+			#{age},
 			#{birth}
 		)
 	</insert>
@@ -41,10 +44,10 @@
 			USER u
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="id != null">
-				u.id = #{id}
+				and u.id = #{id}
 			</if>
 			<if test="name != null and name != '' ">
-				u.name like '%' #{name} '%'
+				and u.name like '%' #{name} '%'
 			</if>
 		</trim>
 	</select>
@@ -62,7 +65,17 @@
 				</foreach>
 			</if>
 		</trim>
-		limit 10
 	</select>
+	
+	<!-- 更新 -->
+	<update id="update">
+		UPDATE user 
+		<set>
+			<if test="name != null and name != '' ">name=#{name},</if>
+			<if test="age != null and age != '' ">age=#{age},</if>
+			<if test="birth != null and birth != '' ">birth=#{birth}</if>
+		</set>
+		WHERE id = #{id}
+	</update>
 	
 </mapper>
