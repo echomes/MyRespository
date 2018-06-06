@@ -84,4 +84,11 @@ public class MyTest {
 		str = str.replace("set", "").toLowerCase();
 		System.out.println(str);
 	}
+	
+	
+	@Test
+	public void testR() {
+		
+		System.out.println(MyTest.class.toGenericString());
+	}
 }

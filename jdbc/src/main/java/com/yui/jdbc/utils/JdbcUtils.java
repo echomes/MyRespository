@@ -218,6 +218,7 @@ public class JdbcUtils {
 
 	/**
 	 * 结果映射
+	 * 
 	 * @param clazz
 	 * @return
 	 */
@@ -233,9 +234,7 @@ public class JdbcUtils {
 					if ("Integer".equals(field.getType().getSimpleName())) {
 						for (Method method : methods) {
 							method.setAccessible(true);
-							String name = method.getName();
-							
-							if (name.contains("set") && name.replace("set", "").toLowerCase()
+							if (method.getName().contains("set") && method.getName().replace("set", "").toLowerCase()
 									.equals(field.getName().toLowerCase())) {
 								method.invoke(t, rs.getInt(field.getName()));
 							}
@@ -264,12 +263,28 @@ public class JdbcUtils {
 								method.invoke(t, rs.getLong(field.getName()));
 							}
 						}
+					} else if ("Double".equals(field.getType().getSimpleName())) {
+						for (Method method : methods) {
+							method.setAccessible(true);
+							if (method.getName().contains("set") && method.getName().replace("set", "").toLowerCase()
+									.equals(field.getName().toLowerCase())) {
+								method.invoke(t, rs.getDouble(field.getName()));
+							}
+						}
+					} else if ("Float".equals(field.getType().getSimpleName())) {
+						for (Method method : methods) {
+							method.setAccessible(true);
+							if (method.getName().contains("set") && method.getName().replace("set", "").toLowerCase()
+									.equals(field.getName().toLowerCase())) {
+								method.invoke(t, rs.getLong(field.getName()));
+							}
+						}
 					} else {
 						for (Method method : methods) {
 							method.setAccessible(true);
 							if (method.getName().contains("set") && method.getName().replace("set", "").toLowerCase()
 									.equals(field.getName().toLowerCase())) {
-								method.invoke(t, rs.getObject(field.getName()));
+								method.invoke(t, rs.getFloat(field.getName()));
 							}
 						}
 					}
