@@ -21,6 +21,7 @@
 		<druid.version>1.1.10</druid.version>
 		
 
+
 		<commons-lang3.version>3.7</commons-lang3.version>
 		<commons-io.version>2.6</commons-io.version>
 		<commons-codec.version>1.11</commons-codec.version>
@@ -323,28 +324,30 @@
 	</dependencies>
 
 	<build>
-		<!-- tomcat6插件 -->
-		<plugin>
-			<groupId>org.apache.tomcat.maven</groupId>
-			<artifactId>tomcat6-maven-plugin</artifactId>
-			<version>${tomcat.version}</version>
-			<configuration>
-				<port>${webserver.port}</port>
-				<path>/${project.artifactId}</path>
-				<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
-			</configuration>
-		</plugin>
+		<plugins>
+			<!-- tomcat6插件 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat6-maven-plugin</artifactId>
+				<version>${tomcat.version}</version>
+				<configuration>
+					<port>${webserver.port}</port>
+					<path>/${project.artifactId}</path>
+					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
+				</configuration>
+			</plugin>
 
-		<!-- tomcat7插件 -->
-		<plugin>
-			<groupId>org.apache.tomcat.maven</groupId>
-			<artifactId>tomcat7-maven-plugin</artifactId>
-			<version>${tomcat.version}</version>
-			<configuration>
-				<port>${webserver.port}</port>
-				<path>/${project.artifactId}</path>
-				<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
-			</configuration>
-		</plugin>
+			<!-- tomcat7插件 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>${tomcat.version}</version>
+				<configuration>
+					<port>${webserver.port}</port>
+					<path>/${project.artifactId}</path>
+					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>
