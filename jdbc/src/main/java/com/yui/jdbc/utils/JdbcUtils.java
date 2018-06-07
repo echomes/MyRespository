@@ -3,6 +3,7 @@ package com.yui.jdbc.utils;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,6 +38,9 @@ public class JdbcUtils {
 
 	// 定义查询返回的结果集合
 	private static ResultSet rs;
+
+	// 定义存储过程执行对象
+	private static CallableStatement cstmt;
 
 	static {
 		// 加载配置
@@ -77,7 +81,7 @@ public class JdbcUtils {
 			Class.forName(DRIVER); // 注册驱动
 			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // 获取连接
 		} catch (Exception e) {
-			throw new RuntimeException("get connection error!", e);
+			throw new RuntimeException("获取连接失败！", e);
 		}
 		return conn;
 	}
@@ -89,6 +93,13 @@ public class JdbcUtils {
 		if (rs != null) {
 			try {
 				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (cstmt != null) {
+			try {
+				cstmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -295,5 +306,34 @@ public class JdbcUtils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 调用存储过程
+	 * 
+	 * @param sql
+	 * @param params
+	 * @return
+	 */
+	public static boolean executeProc(String sql, List<?> params) {
+		boolean flag = false;
+		getConnection();
+		try {
+			int result = -1;// 表示当用户执行添加删除和修改的时候所影响数据库的行数
+			cstmt = conn.prepareCall(sql);
+			int index = 1;
+			// 填充sql语句中的占位符
+			if (params != null && !params.isEmpty()) {
+				for (int i = 0; i < params.size(); i++) {
+					cstmt.setObject(index++, params.get(i));
+				}
+			}
+			result = cstmt.executeUpdate();
+			flag = result > 0 ? true : false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		close();
+		return flag;
 	}
 }

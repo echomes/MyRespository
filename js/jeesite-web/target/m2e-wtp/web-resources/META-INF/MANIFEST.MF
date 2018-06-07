@@ -3,7 +3,7 @@ Implementation-Title: JeeSite Boot
 Implementation-Version: 4.0-SNAPSHOT
 Built-By: Echo
 Implementation-Vendor-Id: com.jeesite
-Build-Jdk: 1.8.0_144
+Build-Jdk: 1.8.0_161
 Implementation-URL: http://jeesite.com
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: JeeSite

@@ -10,7 +10,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>6.0.6</version>
+			<version>5.1.46</version>
 		</dependency>
 
 		<dependency>
@@ -25,15 +25,15 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<archive>
+					<!-- <archive>
 						<manifest>
-							<!--这里要替换成jar包main方法所在类 -->
+							这里要替换成jar包main方法所在类
 							<mainClass>com.sf.pps.client.IntfClientCall</mainClass>
 						</manifest>
 						<manifestEntries>
 							<Class-Path>.</Class-Path>
 						</manifestEntries>
-					</archive>
+					</archive> -->
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>

@@ -11,4 +11,1117 @@
 * @repository git://github.com/almasaeed2010/AdminLTE.git
 * @license MIT <http://opensource.org/licenses/MIT>
 */
-if(typeof jQuery==="undefined"){throw new Error("AdminLTE requires jQuery")}+function(g){var f="lte.boxrefresh";var c={source:"",params:{},trigger:".refresh-btn",content:".box-body",loadInContent:true,responseType:"",overlayTemplate:'<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>',onLoadStart:function(){},onLoadDone:function(h){return h}};var b={data:'[data-widget="box-refresh"]'};var d=function(i,h){this.element=i;this.options=h;this.$overlay=g(h.overlay);if(h.source===""){throw new Error("Source url was not defined. Please specify a url in your BoxRefresh source option.")}this._setUpListeners();this.load()};d.prototype.load=function(){this._addOverlay();this.options.onLoadStart.call(g(this));g.get(this.options.source,this.options.params,function(h){if(this.options.loadInContent){g(this.options.content).html(h)}this.options.onLoadDone.call(g(this),h);this._removeOverlay()}.bind(this),this.options.responseType!==""&&this.options.responseType)};d.prototype._setUpListeners=function(){g(this.element).on("click",b.trigger,function(h){if(h){h.preventDefault()}this.load()}.bind(this))};d.prototype._addOverlay=function(){g(this.element).append(this.$overlay)};d.prototype._removeOverlay=function(){g(this.element).remove(this.$overlay)};function e(h){return this.each(function(){var k=g(this);var j=k.data(f);if(!j){var i=g.extend({},c,k.data(),typeof h=="object"&&h);k.data(f,(j=new d(k,i)))}if(typeof j=="string"){if(typeof j[h]=="undefined"){throw new Error("No method named "+h)}j[h]()}})}var a=g.fn.boxRefresh;g.fn.boxRefresh=e;g.fn.boxRefresh.Constructor=d;g.fn.boxRefresh.noConflict=function(){g.fn.boxRefresh=a;return this};g(window).on("load",function(){g(b.data).each(function(){e.call(g(this))})})}(jQuery)+function(d){var b="lte.boxwidget";var f={animationSpeed:500,collapseTrigger:'[data-widget="collapse"]',removeTrigger:'[data-widget="remove"]',collapseIcon:"fa-minus",expandIcon:"fa-plus",removeIcon:"fa-times"};var a={data:".box",collapsed:".collapsed-box",body:".box-body",footer:".box-footer",tools:".box-tools"};var h={collapsed:"collapsed-box"};var i={collapsed:"collapsed.boxwidget",expanded:"expanded.boxwidget",removed:"removed.boxwidget"};var e=function(k,j){this.element=k;this.options=j;this._setUpListeners()};e.prototype.toggle=function(){var j=!d(this.element).is(a.collapsed);if(j){this.collapse()}else{this.expand()}};e.prototype.expand=function(){var l=d.Event(i.expanded);var k=this.options.collapseIcon;var j=this.options.expandIcon;d(this.element).removeClass(h.collapsed);d(this.element).find(a.tools).find("."+j).removeClass(j).addClass(k);d(this.element).find(a.body+", "+a.footer).slideDown(this.options.animationSpeed,function(){d(this.element).trigger(l)}.bind(this))};e.prototype.collapse=function(){var k=d.Event(i.collapsed);var l=this.options.collapseIcon;var j=this.options.expandIcon;d(this.element).find(a.tools).find("."+l).removeClass(l).addClass(j);d(this.element).find(a.body+", "+a.footer).slideUp(this.options.animationSpeed,function(){d(this.element).addClass(h.collapsed);d(this.element).trigger(k)}.bind(this))};e.prototype.remove=function(){var j=d.Event(i.removed);d(this.element).slideUp(this.options.animationSpeed,function(){d(this.element).trigger(j);d(this.element).remove()}.bind(this))};e.prototype._setUpListeners=function(){var j=this;d(this.element).on("click",this.options.collapseTrigger,function(k){if(k){k.preventDefault()}j.toggle()});d(this.element).on("click",this.options.removeTrigger,function(k){if(k){k.preventDefault()}j.remove()})};function g(j){return this.each(function(){var m=d(this);var l=m.data(b);if(!l){var k=d.extend({},f,m.data(),typeof j=="object"&&j);m.data(b,(l=new e(m,k)))}if(typeof j=="string"){if(typeof l[j]=="undefined"){throw new Error("No method named "+j)}l[j]()}})}var c=d.fn.boxWidget;d.fn.boxWidget=g;d.fn.boxWidget.Constructor=e;d.fn.boxWidget.noConflict=function(){d.fn.boxWidget=c;return this};d(window).on("load",function(){d(a.data).each(function(){g.call(d(this))})})}(jQuery)+function(d){var b="lte.controlsidebar";var e={slide:true};var a={sidebar:".control-sidebar",data:'[data-toggle="control-sidebar"]',open:".control-sidebar-open",bg:".control-sidebar-bg",wrapper:".wrapper",content:".content-wrapper",boxed:".layout-boxed"};var h={open:"control-sidebar-open",fixed:"fixed"};var i={collapsed:"collapsed.controlsidebar",expanded:"expanded.controlsidebar"};var g=function(k,j){this.element=k;this.options=j;this.hasBindedResize=false;this.init()};g.prototype.init=function(){if(!d(this.element).is(a.data)){d(this).on("click",this.toggle)}this.fix();d(window).resize(function(){this.fix()}.bind(this))};g.prototype.toggle=function(j){if(j){j.preventDefault()}this.fix();if(!d(a.sidebar).is(a.open)&&!d("body").is(a.open)){this.expand()}else{this.collapse()}};g.prototype.expand=function(){if(!this.options.slide){d("body").addClass(h.open)}else{d(a.sidebar).addClass(h.open)}d(this.element).trigger(d.Event(i.expanded))};g.prototype.collapse=function(){d("body, "+a.sidebar).removeClass(h.open);d(this.element).trigger(d.Event(i.collapsed))};g.prototype.fix=function(){if(d("body").is(a.boxed)){this._fixForBoxed(d(a.bg))}};g.prototype._fixForBoxed=function(j){j.css({position:"absolute",height:d(a.wrapper).height()})};function f(j){return this.each(function(){var m=d(this);var l=m.data(b);if(!l){var k=d.extend({},e,m.data(),typeof j=="object"&&j);m.data(b,(l=new g(m,k)))}if(typeof j=="string"){l.toggle()}})}var c=d.fn.controlSidebar;d.fn.controlSidebar=f;d.fn.controlSidebar.Constructor=g;d.fn.controlSidebar.noConflict=function(){d.fn.controlSidebar=c;return this};d(document).on("click",a.data,function(j){if(j){j.preventDefault()}f.call(d(this),"toggle")})}(jQuery)+function(g){var f="lte.directchat";var c={data:'[data-widget="chat-pane-toggle"]',box:".direct-chat"};var e={open:"direct-chat-contacts-open"};var a=function(h){this.element=h};a.prototype.toggle=function(h){h.parents(c.box).first().toggleClass(e.open)};function d(h){return this.each(function(){var j=g(this);var i=j.data(f);if(!i){j.data(f,(i=new a(j)))}if(typeof h=="string"){i.toggle(j)}})}var b=g.fn.directChat;g.fn.directChat=d;g.fn.directChat.Constructor=a;g.fn.directChat.noConflict=function(){g.fn.directChat=b;return this};g(document).on("click",c.data,function(h){if(h){h.preventDefault()}d.call(g(this),"toggle")})}(jQuery)+function(h){var g="lte.layout";var c={slimscroll:true,resetHeight:true};var b={wrapper:".wrapper",contentWrapper:".content-wrapper",layoutBoxed:".layout-boxed",mainFooter:".main-footer",mainHeader:".main-header",sidebar:".sidebar",controlSidebar:".control-sidebar",fixed:".fixed",sidebarMenu:".sidebar-menu",logo:".main-header .logo"};var f={fixed:"fixed",holdTransition:"hold-transition"};var e=function(i){this.options=i;this.bindedResize=false;this.activate()};e.prototype.activate=function(){this.fix();this.fixSidebar();h("body").removeClass(f.holdTransition);if(this.options.resetHeight){h("body, html, "+b.wrapper).css({height:"auto","min-height":"100%"})}if(!this.bindedResize){h(window).resize(function(){this.fix();this.fixSidebar();h(b.logo+", "+b.sidebar).one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",function(){this.fix();this.fixSidebar()}.bind(this))}.bind(this));this.bindedResize=true}h(b.sidebarMenu).on("expanded.tree",function(){this.fix();this.fixSidebar()}.bind(this));h(b.sidebarMenu).on("collapsed.tree",function(){this.fix();this.fixSidebar()}.bind(this))};e.prototype.fix=function(){h(b.layoutBoxed+" > "+b.wrapper).css("overflow","hidden");var l=h(b.mainFooter).outerHeight()||0;var n=h(b.mainHeader).outerHeight()+l;var m=h(window).height();var i=h(b.sidebar).height()||0;if(h("body").hasClass(f.fixed)){h(b.contentWrapper).css("min-height",m-l)}else{var k;if(m>=i){h(b.contentWrapper).css("min-height",m-n);k=m-n}else{h(b.contentWrapper).css("min-height",i);k=i}var j=h(b.controlSidebar);if(typeof j!=="undefined"){if(j.height()>k){h(b.contentWrapper).css("min-height",j.height())}}}};e.prototype.fixSidebar=function(){if(!h("body").hasClass(f.fixed)){if(typeof h.fn.slimScroll!=="undefined"){h(b.sidebar).slimScroll({destroy:true}).height("auto")}return}if(this.options.slimscroll){if(typeof h.fn.slimScroll!=="undefined"){h(b.sidebar).slimScroll({destroy:true}).height("auto");h(b.sidebar).slimScroll({height:(h(window).height()-h(b.mainHeader).height())+"px",color:"rgba(0,0,0,0.2)",size:"3px"})}}};function d(i){return this.each(function(){var l=h(this);var k=l.data(g);if(!k){var j=h.extend({},c,l.data(),typeof i==="object"&&i);l.data(g,(k=new e(j)))}if(typeof i==="string"){if(typeof k[i]==="undefined"){throw new Error("No method named "+i)}k[i]()}})}var a=h.fn.layout;h.fn.layout=d;h.fn.layout.Constuctor=e;h.fn.layout.noConflict=function(){h.fn.layout=a;return this};h(window).on("load",function(){d.call(h("body"))})}(jQuery)+function(d){var b="lte.pushmenu";var e={collapseScreenSize:767,expandOnHover:false,expandTransitionDelay:200};var a={collapsed:".sidebar-collapse",open:".sidebar-open",mainSidebar:".main-sidebar",contentWrapper:".content-wrapper",searchInput:".sidebar-form .form-control",button:'[data-toggle="push-menu"]',mini:".sidebar-mini",expanded:".sidebar-expanded-on-hover",layoutFixed:".fixed"};var h={collapsed:"sidebar-collapse",open:"sidebar-open",mini:"sidebar-mini",expanded:"sidebar-expanded-on-hover",expandFeature:"sidebar-mini-expand-feature",layoutFixed:"fixed"};var i={expanded:"expanded.pushMenu",collapsed:"collapsed.pushMenu"};var g=function(j){this.options=j;this.init()};g.prototype.init=function(){if(this.options.expandOnHover||(d("body").is(a.mini+a.layoutFixed))){this.expandOnHover();d("body").addClass(h.expandFeature)}d(a.contentWrapper).click(function(){if(d(window).width()<=this.options.collapseScreenSize&&d("body").hasClass(h.open)){this.close()}}.bind(this));d(a.searchInput).click(function(j){j.stopPropagation()})};g.prototype.toggle=function(){var k=d(window).width();var j=!d("body").hasClass(h.collapsed);if(k<=this.options.collapseScreenSize){j=d("body").hasClass(h.open)}if(!j){this.open()}else{this.close()}};g.prototype.open=function(){var j=d(window).width();if(j>this.options.collapseScreenSize){d("body").removeClass(h.collapsed).trigger(d.Event(i.expanded))}else{d("body").addClass(h.open).trigger(d.Event(i.expanded))}};g.prototype.close=function(){var j=d(window).width();if(j>this.options.collapseScreenSize){d("body").addClass(h.collapsed).trigger(d.Event(i.collapsed))}else{d("body").removeClass(h.open+" "+h.collapsed).trigger(d.Event(i.collapsed))}};g.prototype.expandOnHover=function(){d(a.mainSidebar).hover(function(){if(d("body").is(a.mini+a.collapsed)&&d(window).width()>this.options.collapseScreenSize){this.expand()}}.bind(this),function(){if(d("body").is(a.expanded)){this.collapse()}}.bind(this))};g.prototype.expand=function(){setTimeout(function(){d("body").removeClass(h.collapsed).addClass(h.expanded)},this.options.expandTransitionDelay)};g.prototype.collapse=function(){setTimeout(function(){d("body").removeClass(h.expanded).addClass(h.collapsed)},this.options.expandTransitionDelay)};function f(j){return this.each(function(){var m=d(this);var l=m.data(b);if(!l){var k=d.extend({},e,m.data(),typeof j=="object"&&j);m.data(b,(l=new g(k)))}if(j=="toggle"){l.toggle()}})}var c=d.fn.pushMenu;d.fn.pushMenu=f;d.fn.pushMenu.Constructor=g;d.fn.pushMenu.noConflict=function(){d.fn.pushMenu=c;return this};d(document).on("click",a.button,function(j){j.preventDefault();f.call(d(this),"toggle")});d(window).on("load",function(){f.call(d(a.button))})}(jQuery)+function(h){var g="lte.todolist";var c={onCheck:function(i){return i},onUnCheck:function(i){return i}};var b={data:'[data-widget="todo-list"]'};var e={done:"done"};var f=function(j,i){this.element=j;this.options=i;this._setUpListeners()};f.prototype.toggle=function(i){i.parents(b.li).first().toggleClass(e.done);if(!i.prop("checked")){this.unCheck(i);return}this.check(i)};f.prototype.check=function(i){this.options.onCheck.call(i)};f.prototype.unCheck=function(i){this.options.onUnCheck.call(i)};f.prototype._setUpListeners=function(){var i=this;h(this.element).on("change ifChanged","input:checkbox",function(){i.toggle(h(this))})};function d(i){return this.each(function(){var l=h(this);var k=l.data(g);if(!k){var j=h.extend({},c,l.data(),typeof i=="object"&&i);l.data(g,(k=new f(l,j)))}if(typeof k=="string"){if(typeof k[i]=="undefined"){throw new Error("No method named "+i)}k[i]()}})}var a=h.fn.todoList;h.fn.todoList=d;h.fn.todoList.Constructor=f;h.fn.todoList.noConflict=function(){h.fn.todoList=a;return this};h(window).on("load",function(){h(b.data).each(function(){d.call(h(this))})})}(jQuery)+function(e){var b="lte.tree";var f={animationSpeed:500,accordion:true,followLink:false,trigger:".treeview a"};var a={tree:".tree",treeview:".treeview",treeviewMenu:".treeview-menu",open:".menu-open, .active",li:"li",data:'[data-widget="tree"]',active:".active"};var h={open:"menu-open",tree:"tree"};var i={collapsed:"collapsed.tree",expanded:"expanded.tree"};var d=function(k,j){this.element=k;this.options=j;e(this.element).addClass(h.tree);e(a.treeview+a.active,this.element).addClass(h.open);this._setUpListeners()};d.prototype.toggle=function(n,m){var l=n.next(a.treeviewMenu);var j=n.parent();var k=j.hasClass(h.open);if(!j.is(a.treeview)){return}if(!this.options.followLink||n.attr("href")=="#"){m.preventDefault()}if(k){this.collapse(l,j)}else{this.expand(l,j)}};d.prototype.expand=function(k,l){var n=e.Event(i.expanded);if(this.options.accordion){var j=l.siblings(a.open);var m=j.children(a.treeviewMenu);this.collapse(m,j)}l.addClass(h.open);k.slideDown(this.options.animationSpeed,function(){e(this.element).trigger(n)}.bind(this))};d.prototype.collapse=function(k,j){var l=e.Event(i.collapsed);k.find(a.open).removeClass(h.open);j.removeClass(h.open);k.slideUp(this.options.animationSpeed,function(){k.find(a.open+" > "+a.treeview).slideUp();e(this.element).trigger(l)}.bind(this))};d.prototype._setUpListeners=function(){var j=this;e(this.element).on("click",this.options.trigger,function(k){j.toggle(e(this),k)})};function g(j){return this.each(function(){var m=e(this);var l=m.data(b);if(!l){var k=e.extend({},f,m.data(),typeof j=="object"&&j);m.data(b,new d(m,k))}})}var c=e.fn.tree;e.fn.tree=g;e.fn.tree.Constructor=d;e.fn.tree.noConflict=function(){e.fn.tree=c;return this};e(window).on("load",function(){e(a.data).each(function(){g.call(e(this))})})}(jQuery);
+
+// Make sure jQuery has been loaded
+if (typeof jQuery === 'undefined') {
+throw new Error('AdminLTE requires jQuery')
+}
+
+/* BoxRefresh()
+ * =========
+ * Adds AJAX content control to a box.
+ *
+ * @Usage: $('#my-box').boxRefresh(options)
+ *         or add [data-widget="box-refresh"] to the box element
+ *         Pass any option as data-option="value"
+ */
++function ($) {
+  'use strict'
+
+  var DataKey = 'lte.boxrefresh'
+
+  var Default = {
+    source         : '',
+    params         : {},
+    trigger        : '.refresh-btn',
+    content        : '.box-body',
+    loadInContent  : true,
+    responseType   : '',
+    overlayTemplate: '<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>',
+    onLoadStart    : function () {
+    },
+    onLoadDone     : function (response) {
+      return response
+    }
+  }
+
+  var Selector = {
+    data: '[data-widget="box-refresh"]'
+  }
+
+  // BoxRefresh Class Definition
+  // =========================
+  var BoxRefresh = function (element, options) {
+    this.element  = element
+    this.options  = options
+    this.$overlay = $(options.overlay)
+
+    if (options.source === '') {
+      throw new Error('Source url was not defined. Please specify a url in your BoxRefresh source option.')
+    }
+
+    this._setUpListeners()
+    this.load()
+  }
+
+  BoxRefresh.prototype.load = function () {
+    this._addOverlay()
+    this.options.onLoadStart.call($(this))
+
+    $.get(this.options.source, this.options.params, function (response) {
+      if (this.options.loadInContent) {
+        $(this.options.content).html(response)
+      }
+      this.options.onLoadDone.call($(this), response)
+      this._removeOverlay()
+    }.bind(this), this.options.responseType !== '' && this.options.responseType)
+  }
+
+  // Private
+
+  BoxRefresh.prototype._setUpListeners = function () {
+    $(this.element).on('click', Selector.trigger, function (event) {
+      if (event) event.preventDefault()
+      this.load()
+    }.bind(this))
+  }
+
+  BoxRefresh.prototype._addOverlay = function () {
+    $(this.element).append(this.$overlay)
+  }
+
+  BoxRefresh.prototype._removeOverlay = function () {
+    $(this.element).remove(this.$overlay)
+  }
+
+  // Plugin Definition
+  // =================
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data(DataKey)
+
+      if (!data) {
+        var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
+        $this.data(DataKey, (data = new BoxRefresh($this, options)))
+      }
+
+      if (typeof data == 'string') {
+        if (typeof data[option] == 'undefined') {
+          throw new Error('No method named ' + option)
+        }
+        data[option]()
+      }
+    })
+  }
+
+  var old = $.fn.boxRefresh
+
+  $.fn.boxRefresh             = Plugin
+  $.fn.boxRefresh.Constructor = BoxRefresh
+
+  // No Conflict Mode
+  // ================
+  $.fn.boxRefresh.noConflict = function () {
+    $.fn.boxRefresh = old
+    return this
+  }
+
+  // BoxRefresh Data API
+  // =================
+  $(window).on('load', function () {
+    $(Selector.data).each(function () {
+      Plugin.call($(this))
+    })
+  })
+
+}(jQuery)
+
+
+/* BoxWidget()
+ * ======
+ * Adds box widget functions to boxes.
+ *
+ * @Usage: $('.my-box').boxWidget(options)
+ *         This plugin auto activates on any element using the `.box` class
+ *         Pass any option as data-option="value"
+ */
++function ($) {
+  'use strict'
+
+  var DataKey = 'lte.boxwidget'
+
+  var Default = {
+    animationSpeed : 500,
+    collapseTrigger: '[data-widget="collapse"]',
+    removeTrigger  : '[data-widget="remove"]',
+    collapseIcon   : 'fa-minus',
+    expandIcon     : 'fa-plus',
+    removeIcon     : 'fa-times'
+  }
+
+  var Selector = {
+    data     : '.box',
+    collapsed: '.collapsed-box',
+    body     : '.box-body',
+    footer   : '.box-footer',
+    tools    : '.box-tools'
+  }
+
+  var ClassName = {
+    collapsed: 'collapsed-box'
+  }
+
+  var Event = {
+    collapsed: 'collapsed.boxwidget',
+    expanded : 'expanded.boxwidget',
+    removed  : 'removed.boxwidget'
+  }
+
+  // BoxWidget Class Definition
+  // =====================
+  var BoxWidget = function (element, options) {
+    this.element = element
+    this.options = options
+
+    this._setUpListeners()
+  }
+
+  BoxWidget.prototype.toggle = function () {
+    var isOpen = !$(this.element).is(Selector.collapsed)
+
+    if (isOpen) {
+      this.collapse()
+    } else {
+      this.expand()
+    }
+  }
+
+  BoxWidget.prototype.expand = function () {
+    var expandedEvent = $.Event(Event.expanded)
+    var collapseIcon  = this.options.collapseIcon
+    var expandIcon    = this.options.expandIcon
+
+    $(this.element).removeClass(ClassName.collapsed)
+
+    $(this.element)
+      .find(Selector.tools)
+      .find('.' + expandIcon)
+      .removeClass(expandIcon)
+      .addClass(collapseIcon)
+
+    $(this.element).find(Selector.body + ', ' + Selector.footer)
+      .slideDown(this.options.animationSpeed, function () {
+        $(this.element).trigger(expandedEvent)
+      }.bind(this))
+  }
+
+  BoxWidget.prototype.collapse = function () {
+    var collapsedEvent = $.Event(Event.collapsed)
+    var collapseIcon   = this.options.collapseIcon
+    var expandIcon     = this.options.expandIcon
+
+    $(this.element)
+      .find(Selector.tools)
+      .find('.' + collapseIcon)
+      .removeClass(collapseIcon)
+      .addClass(expandIcon)
+
+    $(this.element).find(Selector.body + ', ' + Selector.footer)
+      .slideUp(this.options.animationSpeed, function () {
+        $(this.element).addClass(ClassName.collapsed)
+        $(this.element).trigger(collapsedEvent)
+      }.bind(this))
+  }
+
+  BoxWidget.prototype.remove = function () {
+    var removedEvent = $.Event(Event.removed)
+
+    $(this.element).slideUp(this.options.animationSpeed, function () {
+      $(this.element).trigger(removedEvent)
+      $(this.element).remove()
+    }.bind(this))
+  }
+
+  // Private
+
+  BoxWidget.prototype._setUpListeners = function () {
+    var that = this
+
+    $(this.element).on('click', this.options.collapseTrigger, function (event) {
+      if (event) event.preventDefault()
+      that.toggle()
+    })
+
+    $(this.element).on('click', this.options.removeTrigger, function (event) {
+      if (event) event.preventDefault()
+      that.remove()
+    })
+  }
+
+  // Plugin Definition
+  // =================
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data(DataKey)
+
+      if (!data) {
+        var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
+        $this.data(DataKey, (data = new BoxWidget($this, options)))
+      }
+
+      if (typeof option == 'string') {
+        if (typeof data[option] == 'undefined') {
+          throw new Error('No method named ' + option)
+        }
+        data[option]()
+      }
+    })
+  }
+
+  var old = $.fn.boxWidget
+
+  $.fn.boxWidget             = Plugin
+  $.fn.boxWidget.Constructor = BoxWidget
+
+  // No Conflict Mode
+  // ================
+  $.fn.boxWidget.noConflict = function () {
+    $.fn.boxWidget = old
+    return this
+  }
+
+  // BoxWidget Data API
+  // ==================
+  $(window).on('load', function () {
+    $(Selector.data).each(function () {
+      Plugin.call($(this))
+    })
+  })
+
+}(jQuery)
+
+
+/* ControlSidebar()
+ * ===============
+ * Toggles the state of the control sidebar
+ *
+ * @Usage: $('#control-sidebar-trigger').controlSidebar(options)
+ *         or add [data-toggle="control-sidebar"] to the trigger
+ *         Pass any option as data-option="value"
+ */
++function ($) {
+  'use strict'
+
+  var DataKey = 'lte.controlsidebar'
+
+  var Default = {
+    slide: true
+  }
+
+  var Selector = {
+    sidebar: '.control-sidebar',
+    data   : '[data-toggle="control-sidebar"]',
+    open   : '.control-sidebar-open',
+    bg     : '.control-sidebar-bg',
+    wrapper: '.wrapper',
+    content: '.content-wrapper',
+    boxed  : '.layout-boxed'
+  }
+
+  var ClassName = {
+    open : 'control-sidebar-open',
+    fixed: 'fixed'
+  }
+
+  var Event = {
+    collapsed: 'collapsed.controlsidebar',
+    expanded : 'expanded.controlsidebar'
+  }
+
+  // ControlSidebar Class Definition
+  // ===============================
+  var ControlSidebar = function (element, options) {
+    this.element         = element
+    this.options         = options
+    this.hasBindedResize = false
+
+    this.init()
+  }
+
+  ControlSidebar.prototype.init = function () {
+    // Add click listener if the element hasn't been
+    // initialized using the data API
+    if (!$(this.element).is(Selector.data)) {
+      $(this).on('click', this.toggle)
+    }
+
+    this.fix()
+    $(window).resize(function () {
+      this.fix()
+    }.bind(this))
+  }
+
+  ControlSidebar.prototype.toggle = function (event) {
+    if (event) event.preventDefault()
+
+    this.fix()
+
+    if (!$(Selector.sidebar).is(Selector.open) && !$('body').is(Selector.open)) {
+      this.expand()
+    } else {
+      this.collapse()
+    }
+  }
+
+  ControlSidebar.prototype.expand = function () {
+    if (!this.options.slide) {
+      $('body').addClass(ClassName.open)
+    } else {
+      $(Selector.sidebar).addClass(ClassName.open)
+    }
+
+    $(this.element).trigger($.Event(Event.expanded))
+  }
+
+  ControlSidebar.prototype.collapse = function () {
+    $('body, ' + Selector.sidebar).removeClass(ClassName.open)
+    $(this.element).trigger($.Event(Event.collapsed))
+  }
+
+  ControlSidebar.prototype.fix = function () {
+    if ($('body').is(Selector.boxed)) {
+      this._fixForBoxed($(Selector.bg))
+    }
+  }
+
+  // Private
+
+  ControlSidebar.prototype._fixForBoxed = function (bg) {
+    bg.css({
+      position: 'absolute',
+      height  : $(Selector.wrapper).height()
+    })
+  }
+
+  // Plugin Definition
+  // =================
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data(DataKey)
+
+      if (!data) {
+        var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
+        $this.data(DataKey, (data = new ControlSidebar($this, options)))
+      }
+
+      if (typeof option == 'string') data.toggle()
+    })
+  }
+
+  var old = $.fn.controlSidebar
+
+  $.fn.controlSidebar             = Plugin
+  $.fn.controlSidebar.Constructor = ControlSidebar
+
+  // No Conflict Mode
+  // ================
+  $.fn.controlSidebar.noConflict = function () {
+    $.fn.controlSidebar = old
+    return this
+  }
+
+  // ControlSidebar Data API
+  // =======================
+  $(document).on('click', Selector.data, function (event) {
+    if (event) event.preventDefault()
+    Plugin.call($(this), 'toggle')
+  })
+
+}(jQuery)
+
+
+/* DirectChat()
+ * ===============
+ * Toggles the state of the control sidebar
+ *
+ * @Usage: $('#my-chat-box').directChat()
+ *         or add [data-widget="direct-chat"] to the trigger
+ */
++function ($) {
+  'use strict'
+
+  var DataKey = 'lte.directchat'
+
+  var Selector = {
+    data: '[data-widget="chat-pane-toggle"]',
+    box : '.direct-chat'
+  }
+
+  var ClassName = {
+    open: 'direct-chat-contacts-open'
+  }
+
+  // DirectChat Class Definition
+  // ===========================
+  var DirectChat = function (element) {
+    this.element = element
+  }
+
+  DirectChat.prototype.toggle = function ($trigger) {
+    $trigger.parents(Selector.box).first().toggleClass(ClassName.open)
+  }
+
+  // Plugin Definition
+  // =================
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data(DataKey)
+
+      if (!data) {
+        $this.data(DataKey, (data = new DirectChat($this)))
+      }
+
+      if (typeof option == 'string') data.toggle($this)
+    })
+  }
+
+  var old = $.fn.directChat
+
+  $.fn.directChat             = Plugin
+  $.fn.directChat.Constructor = DirectChat
+
+  // No Conflict Mode
+  // ================
+  $.fn.directChat.noConflict = function () {
+    $.fn.directChat = old
+    return this
+  }
+
+  // DirectChat Data API
+  // ===================
+  $(document).on('click', Selector.data, function (event) {
+    if (event) event.preventDefault()
+    Plugin.call($(this), 'toggle')
+  })
+
+}(jQuery)
+
+
+/* Layout()
+ * ========
+ * Implements AdminLTE layout.
+ * Fixes the layout height in case min-height fails.
+ *
+ * @usage activated automatically upon window load.
+ *        Configure any options by passing data-option="value"
+ *        to the body tag.
+ */
++function ($) {
+  'use strict'
+
+  var DataKey = 'lte.layout'
+
+  var Default = {
+    slimscroll : true,
+    resetHeight: true
+  }
+
+  var Selector = {
+    wrapper       : '.wrapper',
+    contentWrapper: '.content-wrapper',
+    layoutBoxed   : '.layout-boxed',
+    mainFooter    : '.main-footer',
+    mainHeader    : '.main-header',
+    sidebar       : '.sidebar',
+    controlSidebar: '.control-sidebar',
+    fixed         : '.fixed',
+    sidebarMenu   : '.sidebar-menu',
+    logo          : '.main-header .logo'
+  }
+
+  var ClassName = {
+    fixed         : 'fixed',
+    holdTransition: 'hold-transition'
+  }
+
+  var Layout = function (options) {
+    this.options      = options
+    this.bindedResize = false
+    this.activate()
+  }
+
+  Layout.prototype.activate = function () {
+    this.fix()
+    this.fixSidebar()
+
+    $('body').removeClass(ClassName.holdTransition)
+
+    if (this.options.resetHeight) {
+      $('body, html, ' + Selector.wrapper).css({
+        'height'    : 'auto',
+        'min-height': '100%'
+      })
+    }
+
+    if (!this.bindedResize) {
+      $(window).resize(function () {
+        this.fix()
+        this.fixSidebar()
+
+        $(Selector.logo + ', ' + Selector.sidebar).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
+          this.fix()
+          this.fixSidebar()
+        }.bind(this))
+      }.bind(this))
+
+      this.bindedResize = true
+    }
+
+    $(Selector.sidebarMenu).on('expanded.tree', function () {
+      this.fix()
+      this.fixSidebar()
+    }.bind(this))
+
+    $(Selector.sidebarMenu).on('collapsed.tree', function () {
+      this.fix()
+      this.fixSidebar()
+    }.bind(this))
+  }
+
+  Layout.prototype.fix = function () {
+    // Remove overflow from .wrapper if layout-boxed exists
+    $(Selector.layoutBoxed + ' > ' + Selector.wrapper).css('overflow', 'hidden')
+
+    // Get window height and the wrapper height
+    var footerHeight  = $(Selector.mainFooter).outerHeight() || 0
+    var neg           = $(Selector.mainHeader).outerHeight() + footerHeight
+    var windowHeight  = $(window).height()
+    var sidebarHeight = $(Selector.sidebar).height() || 0
+
+    // Set the min-height of the content and sidebar based on
+    // the height of the document.
+    if ($('body').hasClass(ClassName.fixed)) {
+      $(Selector.contentWrapper).css('min-height', windowHeight - footerHeight)
+    } else {
+      var postSetHeight
+
+      if (windowHeight >= sidebarHeight) {
+        $(Selector.contentWrapper).css('min-height', windowHeight - neg)
+        postSetHeight = windowHeight - neg
+      } else {
+        $(Selector.contentWrapper).css('min-height', sidebarHeight)
+        postSetHeight = sidebarHeight
+      }
+
+      // Fix for the control sidebar height
+      var $controlSidebar = $(Selector.controlSidebar)
+      if (typeof $controlSidebar !== 'undefined') {
+        if ($controlSidebar.height() > postSetHeight)
+          $(Selector.contentWrapper).css('min-height', $controlSidebar.height())
+      }
+    }
+  }
+
+  Layout.prototype.fixSidebar = function () {
+    // Make sure the body tag has the .fixed class
+    if (!$('body').hasClass(ClassName.fixed)) {
+      if (typeof $.fn.slimScroll !== 'undefined') {
+        $(Selector.sidebar).slimScroll({ destroy: true }).height('auto')
+      }
+      return
+    }
+
+    // Enable slimscroll for fixed layout
+    if (this.options.slimscroll) {
+      if (typeof $.fn.slimScroll !== 'undefined') {
+        // Destroy if it exists
+        $(Selector.sidebar).slimScroll({ destroy: true }).height('auto')
+
+        // Add slimscroll
+        $(Selector.sidebar).slimScroll({
+          height: ($(window).height() - $(Selector.mainHeader).height()) + 'px',
+          color : 'rgba(0,0,0,0.2)',
+          size  : '3px'
+        })
+      }
+    }
+  }
+
+  // Plugin Definition
+  // =================
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data(DataKey)
+
+      if (!data) {
+        var options = $.extend({}, Default, $this.data(), typeof option === 'object' && option)
+        $this.data(DataKey, (data = new Layout(options)))
+      }
+
+      if (typeof option === 'string') {
+        if (typeof data[option] === 'undefined') {
+          throw new Error('No method named ' + option)
+        }
+        data[option]()
+      }
+    })
+  }
+
+  var old = $.fn.layout
+
+  $.fn.layout            = Plugin
+  $.fn.layout.Constuctor = Layout
+
+  // No conflict mode
+  // ================
+  $.fn.layout.noConflict = function () {
+    $.fn.layout = old
+    return this
+  }
+
+  // Layout DATA-API
+  // ===============
+  $(window).on('load', function () {
+    Plugin.call($('body'))
+  })
+}(jQuery)
+
+
+/* PushMenu()
+ * ==========
+ * Adds the push menu functionality to the sidebar.
+ *
+ * @usage: $('.btn').pushMenu(options)
+ *          or add [data-toggle="push-menu"] to any button
+ *          Pass any option as data-option="value"
+ */
++function ($) {
+  'use strict'
+
+  var DataKey = 'lte.pushmenu'
+
+  var Default = {
+    collapseScreenSize   : 767,
+    expandOnHover        : false,
+    expandTransitionDelay: 200
+  }
+
+  var Selector = {
+    collapsed     : '.sidebar-collapse',
+    open          : '.sidebar-open',
+    mainSidebar   : '.main-sidebar',
+    contentWrapper: '.content-wrapper',
+    searchInput   : '.sidebar-form .form-control',
+    button        : '[data-toggle="push-menu"]',
+    mini          : '.sidebar-mini',
+    expanded      : '.sidebar-expanded-on-hover',
+    layoutFixed   : '.fixed'
+  }
+
+  var ClassName = {
+    collapsed    : 'sidebar-collapse',
+    open         : 'sidebar-open',
+    mini         : 'sidebar-mini',
+    expanded     : 'sidebar-expanded-on-hover',
+    expandFeature: 'sidebar-mini-expand-feature',
+    layoutFixed  : 'fixed'
+  }
+
+  var Event = {
+    expanded : 'expanded.pushMenu',
+    collapsed: 'collapsed.pushMenu'
+  }
+
+  // PushMenu Class Definition
+  // =========================
+  var PushMenu = function (options) {
+    this.options = options
+    this.init()
+  }
+
+  PushMenu.prototype.init = function () {
+    if (this.options.expandOnHover
+      || ($('body').is(Selector.mini + Selector.layoutFixed))) {
+      this.expandOnHover()
+      $('body').addClass(ClassName.expandFeature)
+    }
+
+    $(Selector.contentWrapper).click(function () {
+      // Enable hide menu when clicking on the content-wrapper on small screens
+      if ($(window).width() <= this.options.collapseScreenSize && $('body').hasClass(ClassName.open)) {
+        this.close()
+      }
+    }.bind(this))
+
+    // __Fix for android devices
+    $(Selector.searchInput).click(function (e) {
+      e.stopPropagation()
+    })
+  }
+
+  PushMenu.prototype.toggle = function () {
+    var windowWidth = $(window).width()
+    var isOpen      = !$('body').hasClass(ClassName.collapsed)
+
+    if (windowWidth <= this.options.collapseScreenSize) {
+      isOpen = $('body').hasClass(ClassName.open)
+    }
+
+    if (!isOpen) {
+      this.open()
+    } else {
+      this.close()
+    }
+  }
+
+  PushMenu.prototype.open = function () {
+    var windowWidth = $(window).width()
+
+    if (windowWidth > this.options.collapseScreenSize) {
+      $('body').removeClass(ClassName.collapsed)
+        .trigger($.Event(Event.expanded))
+    }
+    else {
+      $('body').addClass(ClassName.open)
+        .trigger($.Event(Event.expanded))
+    }
+  }
+
+  PushMenu.prototype.close = function () {
+    var windowWidth = $(window).width()
+    if (windowWidth > this.options.collapseScreenSize) {
+      $('body').addClass(ClassName.collapsed)
+        .trigger($.Event(Event.collapsed))
+    } else {
+      $('body').removeClass(ClassName.open + ' ' + ClassName.collapsed)
+        .trigger($.Event(Event.collapsed))
+    }
+  }
+
+  PushMenu.prototype.expandOnHover = function () {
+    $(Selector.mainSidebar).hover(function () {
+      if ($('body').is(Selector.mini + Selector.collapsed)
+        && $(window).width() > this.options.collapseScreenSize) {
+        this.expand()
+      }
+    }.bind(this), function () {
+      if ($('body').is(Selector.expanded)) {
+        this.collapse()
+      }
+    }.bind(this))
+  }
+
+  PushMenu.prototype.expand = function () {
+    setTimeout(function () {
+      $('body').removeClass(ClassName.collapsed)
+        .addClass(ClassName.expanded)
+    }, this.options.expandTransitionDelay)
+  }
+
+  PushMenu.prototype.collapse = function () {
+    setTimeout(function () {
+      $('body').removeClass(ClassName.expanded)
+        .addClass(ClassName.collapsed)
+    }, this.options.expandTransitionDelay)
+  }
+
+  // PushMenu Plugin Definition
+  // ==========================
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data(DataKey)
+
+      if (!data) {
+        var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
+        $this.data(DataKey, (data = new PushMenu(options)))
+      }
+
+      if (option == 'toggle') data.toggle()
+    })
+  }
+
+  var old = $.fn.pushMenu
+
+  $.fn.pushMenu             = Plugin
+  $.fn.pushMenu.Constructor = PushMenu
+
+  // No Conflict Mode
+  // ================
+  $.fn.pushMenu.noConflict = function () {
+    $.fn.pushMenu = old
+    return this
+  }
+
+  // Data API
+  // ========
+  $(document).on('click', Selector.button, function (e) {
+    e.preventDefault()
+    Plugin.call($(this), 'toggle')
+  })
+  $(window).on('load', function () {
+    Plugin.call($(Selector.button))
+  })
+}(jQuery)
+
+
+/* TodoList()
+ * =========
+ * Converts a list into a todoList.
+ *
+ * @Usage: $('.my-list').todoList(options)
+ *         or add [data-widget="todo-list"] to the ul element
+ *         Pass any option as data-option="value"
+ */
++function ($) {
+  'use strict'
+
+  var DataKey = 'lte.todolist'
+
+  var Default = {
+    onCheck  : function (item) {
+      return item
+    },
+    onUnCheck: function (item) {
+      return item
+    }
+  }
+
+  var Selector = {
+    data: '[data-widget="todo-list"]'
+  }
+
+  var ClassName = {
+    done: 'done'
+  }
+
+  // TodoList Class Definition
+  // =========================
+  var TodoList = function (element, options) {
+    this.element = element
+    this.options = options
+
+    this._setUpListeners()
+  }
+
+  TodoList.prototype.toggle = function (item) {
+    item.parents(Selector.li).first().toggleClass(ClassName.done)
+    if (!item.prop('checked')) {
+      this.unCheck(item)
+      return
+    }
+
+    this.check(item)
+  }
+
+  TodoList.prototype.check = function (item) {
+    this.options.onCheck.call(item)
+  }
+
+  TodoList.prototype.unCheck = function (item) {
+    this.options.onUnCheck.call(item)
+  }
+
+  // Private
+
+  TodoList.prototype._setUpListeners = function () {
+    var that = this
+    $(this.element).on('change ifChanged', 'input:checkbox', function () {
+      that.toggle($(this))
+    })
+  }
+
+  // Plugin Definition
+  // =================
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data(DataKey)
+
+      if (!data) {
+        var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
+        $this.data(DataKey, (data = new TodoList($this, options)))
+      }
+
+      if (typeof data == 'string') {
+        if (typeof data[option] == 'undefined') {
+          throw new Error('No method named ' + option)
+        }
+        data[option]()
+      }
+    })
+  }
+
+  var old = $.fn.todoList
+
+  $.fn.todoList         = Plugin
+  $.fn.todoList.Constructor = TodoList
+
+  // No Conflict Mode
+  // ================
+  $.fn.todoList.noConflict = function () {
+    $.fn.todoList = old
+    return this
+  }
+
+  // TodoList Data API
+  // =================
+  $(window).on('load', function () {
+    $(Selector.data).each(function () {
+      Plugin.call($(this))
+    })
+  })
+
+}(jQuery)
+
+
+/* Tree()
+ * ======
+ * Converts a nested list into a multilevel
+ * tree view menu.
+ *
+ * @Usage: $('.my-menu').tree(options)
+ *         or add [data-widget="tree"] to the ul element
+ *         Pass any option as data-option="value"
+ */
++function ($) {
+  'use strict'
+
+  var DataKey = 'lte.tree'
+
+  var Default = {
+    animationSpeed: 500,
+    accordion     : true,
+    followLink    : false,
+    trigger       : '.treeview a'
+  }
+
+  var Selector = {
+    tree        : '.tree',
+    treeview    : '.treeview',
+    treeviewMenu: '.treeview-menu',
+    open        : '.menu-open, .active',
+    li          : 'li',
+    data        : '[data-widget="tree"]',
+    active      : '.active'
+  }
+
+  var ClassName = {
+    open: 'menu-open',
+    tree: 'tree'
+  }
+
+  var Event = {
+    collapsed: 'collapsed.tree',
+    expanded : 'expanded.tree'
+  }
+
+  // Tree Class Definition
+  // =====================
+  var Tree = function (element, options) {
+    this.element = element
+    this.options = options
+
+    $(this.element).addClass(ClassName.tree)
+
+    $(Selector.treeview + Selector.active, this.element).addClass(ClassName.open)
+
+    this._setUpListeners()
+  }
+
+  Tree.prototype.toggle = function (link, event) {
+    var treeviewMenu = link.next(Selector.treeviewMenu)
+    var parentLi     = link.parent()
+    var isOpen       = parentLi.hasClass(ClassName.open)
+
+    if (!parentLi.is(Selector.treeview)) {
+      return
+    }
+
+    if (!this.options.followLink || link.attr('href') == '#') {
+      event.preventDefault()
+    }
+
+    if (isOpen) {
+      this.collapse(treeviewMenu, parentLi)
+    } else {
+      this.expand(treeviewMenu, parentLi)
+    }
+  }
+
+  Tree.prototype.expand = function (tree, parent) {
+    var expandedEvent = $.Event(Event.expanded)
+
+    if (this.options.accordion) {
+      var openMenuLi = parent.siblings(Selector.open)
+      var openTree   = openMenuLi.children(Selector.treeviewMenu)
+      this.collapse(openTree, openMenuLi)
+    }
+
+    parent.addClass(ClassName.open)
+    tree.slideDown(this.options.animationSpeed, function () {
+      $(this.element).trigger(expandedEvent)
+    }.bind(this))
+  }
+
+  Tree.prototype.collapse = function (tree, parentLi) {
+    var collapsedEvent = $.Event(Event.collapsed)
+
+    tree.find(Selector.open).removeClass(ClassName.open)
+    parentLi.removeClass(ClassName.open)
+    tree.slideUp(this.options.animationSpeed, function () {
+      tree.find(Selector.open + ' > ' + Selector.treeview).slideUp()
+      $(this.element).trigger(collapsedEvent)
+    }.bind(this))
+  }
+
+  // Private
+
+  Tree.prototype._setUpListeners = function () {
+    var that = this
+
+    $(this.element).on('click', this.options.trigger, function (event) {
+      that.toggle($(this), event)
+    })
+  }
+
+  // Plugin Definition
+  // =================
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data(DataKey)
+
+      if (!data) {
+        var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
+        $this.data(DataKey, new Tree($this, options))
+      }
+    })
+  }
+
+  var old = $.fn.tree
+
+  $.fn.tree             = Plugin
+  $.fn.tree.Constructor = Tree
+
+  // No Conflict Mode
+  // ================
+  $.fn.tree.noConflict = function () {
+    $.fn.tree = old
+    return this
+  }
+
+  // Tree Data API
+  // =============
+  $(window).on('load', function () {
+    $(Selector.data).each(function () {
+      Plugin.call($(this))
+    })
+  })
+
+}(jQuery)

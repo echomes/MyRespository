@@ -1,1 +1,1332 @@
-!function(i,d){var l={btnOk:"确定",btnCancel:"取消",title:"信息",promptTipA:"最多输入",promptTipB:"个字符",noPicture:"没有图片",photoError:"当前图片地址异常<br>是否继续查看下一张？",photoNextPage:"下一张",photoClose:"不看了"};if(i.lang=="en"){l={btnOk:"Ok",btnCancel:"Cancle",title:"Information",promptTipA:"Enter ",promptTipB:"character at most.",noPicture:"No picture",photoError:"Current image address error.<br>Next slide?",photoNextPage:"The next",photoClose:"Close"}}var e=i.layui&&layui.define,f,h,j={getPath:function(){var o=document.scripts,m=o[o.length-1],n=m.src;if(m.getAttribute("merge")){return}return n.substring(0,n.lastIndexOf("/")+1)}(),config:{},end:{},minIndex:0,minLeft:[],btn:[l.btnOk,l.btnCancel],type:["dialog","page","iframe","loading","tips"]};var g={v:"3.0.3",ie:function(){var m=navigator.userAgent.toLowerCase();return(!!i.ActiveXObject||"ActiveXObject" in i)?((m.match(/msie\s(\d+)/)||[])[1]||"11"):false}(),index:(i.layer&&i.layer.v)?100000:0,path:j.getPath,config:function(m,n){m=m||{};g.cache=j.config=f.extend({},j.config,m);g.path=j.config.path||g.path;typeof m.extend==="string"&&(m.extend=[m.extend]);if(j.config.path){g.ready()}if(!m.extend){return this}e?layui.addcss("modules/layer/"+m.extend):g.link("skin/"+m.extend);return this},link:function(m,t,n){if(!g.path){return}var u=f("head")[0],s=document.createElement("link");if(typeof t==="string"){n=t}var p=(n||m).replace(/\.|\//g,"");var o="layuicss-"+p,r=0;s.rel="stylesheet";s.href=g.path+m;s.id=o;if(!f("#"+o)[0]){u.appendChild(s)}if(typeof t!=="function"){return}(function q(){if(++r>8*1000/100){return i.console&&console.error("layer.css: Invalid")}parseInt(f("#"+o).css("width"))===1989?t():setTimeout(q,100)}())},ready:function(o){var n="skinlayercss",m="303";e?layui.addcss("modules/layer/default/layer.css?v="+g.v+m,o,n):g.link("skin/default/layer.css?v="+g.v+m,o,n);return this},alert:function(o,m,p){var n=typeof m==="function";if(n){p=m}return g.open(f.extend({content:o,yes:p},n?{}:m))},confirm:function(p,m,q,o){var n=typeof m==="function";if(n){o=q;q=m}return g.open(f.extend({content:p,btn:j.btn,yes:q,btn2:o},n?{}:m))},msg:function(p,n,m){var o=typeof n==="function",s=j.config.skin;var r=(s?s+" "+s+"-msg":"")||"layui-layer-msg";var q=c.anim.length-1;if(o){m=n}return g.open(f.extend({content:p,time:3000,shade:false,skin:r,title:false,closeBtn:false,btn:false,resize:false,end:m},(o&&!j.config.skin)?{skin:r+" layui-layer-hui",anim:q}:function(){n=n||{};if(n.icon===-1||n.icon===d&&!j.config.skin){n.skin=r+" "+(n.skin||"layui-layer-hui")}return n}()))},load:function(n,m){return g.open(f.extend({type:3,icon:n||0,resize:false,shade:0.01},m))},tips:function(o,m,n){return g.open(f.extend({type:4,content:[o,m],closeBtn:false,time:3000,shade:false,resize:false,fixed:false,maxWidth:210},n))}};var b=function(m){var n=this;n.index=++g.index;n.config=f.extend({},n.config,j.config,m);document.body?n.creat():setTimeout(function(){n.creat()},30)};b.pt=b.prototype;var c=["layui-layer",".layui-layer-title",".layui-layer-main",".layui-layer-dialog","layui-layer-iframe","layui-layer-content","layui-layer-btn","layui-layer-close"];c.anim=["layer-anim","layer-anim-01","layer-anim-02","layer-anim-03","layer-anim-04","layer-anim-05","layer-anim-06"];b.pt.config={type:0,shade:0.3,fixed:true,move:c[1],title:l.title,offset:"auto",area:"auto",closeBtn:1,time:0,zIndex:19891014,maxWidth:360,anim:0,isOutAnim:true,icon:-1,moveType:1,resize:true,scrollbar:true,tips:2};b.pt.vessel=function(q,u){var r=this,m=r.index,p=r.config;var t=p.zIndex+m,o=typeof p.title==="object";var s=p.maxmin&&(p.type===1||p.type===2);var n=(p.title?'<div class="layui-layer-title" style="'+(o?p.title[1]:"")+'">'+(o?p.title[0]:p.title)+"</div>":"");p.zIndex=t;u([p.shade?('<div class="layui-layer-shade" id="layui-layer-shade'+m+'" times="'+m+'" style="'+("z-index:"+(t-1)+"; background-color:"+(p.shade[1]||"#000")+"; opacity:"+(p.shade[0]||p.shade)+"; filter:alpha(opacity="+(p.shade[0]*100||p.shade*100)+");")+'"></div>'):"",'<div class="'+c[0]+(" layui-layer-"+j.type[p.type])+(((p.type==0||p.type==2)&&!p.shade)?" layui-layer-border":"")+" "+(p.skin||"")+'" id="'+c[0]+m+'" type="'+j.type[p.type]+'" times="'+m+'" showtime="'+p.time+'" conType="'+(q?"object":"string")+'" style="z-index: '+t+"; width:"+p.area[0]+";height:"+p.area[1]+(p.fixed?"":";position:absolute;")+'">'+(q&&p.type!=2?"":n)+'<div id="'+(p.id||"")+'" class="layui-layer-content'+((p.type==0&&p.icon!==-1)?" layui-layer-padding":"")+(p.type==3?" layui-layer-loading"+p.icon:"")+'">'+(p.type==0&&p.icon!==-1?'<i class="layui-layer-ico layui-layer-ico'+p.icon+'"></i>':"")+(p.type==1&&q?"":(p.content||""))+'</div><span class="layui-layer-setwin">'+function(){var v=s?'<a class="layui-layer-min" href="javascript:;"><cite></cite></a><a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>':"";p.closeBtn&&(v+='<a class="layui-layer-ico '+c[7]+" "+c[7]+(p.title?p.closeBtn:(p.type==4?"1":"2"))+'" href="javascript:;"></a>');return v}()+"</span>"+(p.btn?function(){var x="";typeof p.btn==="string"&&(p.btn=[p.btn]);for(var w=0,v=p.btn.length;w<v;w++){x+='<a class="'+c[6]+""+w+'">'+p.btn[w]+"</a>"}return'<div class="'+c[6]+(p.btnAlign?(" layui-layer-btn-"+p.btnAlign):"")+'">'+x+"</div>"}():"")+(p.resize?'<span class="layui-layer-resize"></span>':"")+"</div>"],n,f('<div class="layui-layer-move"></div>'));return r};b.pt.creat=function(){var t=this,o=t.config,m=t.index,r,u=o.content,q=typeof u==="object",s=f("body");if(o.id&&f("#"+o.id)[0]){return}if(typeof o.area==="string"){o.area=o.area==="auto"?["",""]:[o.area,""]}if(o.shift){o.anim=o.shift}if(g.ie==6){o.fixed=false}switch(o.type){case 0:o.btn=("btn" in o)?o.btn:j.btn[0];g.closeAll("dialog");break;case 2:var u=o.content=q?o.content:[o.content,"auto"];o.content='<iframe scrolling="'+(o.content[1]||"auto")+'" allowtransparency="true" id="'+c[4]+""+m+'" name="'+c[4]+""+m+'" onload="this.className=\'\';" class="layui-layer-load" frameborder="0"></iframe><form id="'+c[4]+"-form"+m+'" action="'+o.content[0]+'" method="post" target="'+c[4]+""+m+'">';break;case 3:delete o.title;delete o.closeBtn;o.icon===-1&&(o.icon===0);g.closeAll("loading");break;case 4:q||(o.content=[o.content,"body"]);o.follow=o.content[1];o.content=o.content[0]+'<i class="layui-layer-TipsG"></i>';delete o.title;o.tips=typeof o.tips==="object"?o.tips:[o.tips,true];o.tipsMore||g.closeAll("tips");break}t.vessel(q,function(x,w,y){s.append(x[0]);q?function(){(o.type==2||o.type==4)?function(){f("body").append(x[1])}():function(){if(!u.parents("."+c[0])[0]){u.data("display",u.css("display")).show().addClass("layui-layer-wrap").wrap(x[1]);f("#"+c[0]+m).find("."+c[5]).before(w)}}()}():s.append(x[1]);f(".layui-layer-move")[0]||s.append(j.moveElem=y);t.layero=f("#"+c[0]+m);o.scrollbar||c.html.css("overflow","hidden").attr("layer-full",m)}).auto(m);if(o.type==2){var n=t.layero.find("#"+c[4]+"-form"+m),p=o.contentFormData;for(var v in p||{}){n.append('<input type="hidden" name="'+v+'" value="'+p[v]+'"/>')}n.submit()}o.type==4?t.tips():t.offset();if(o.fixed){h.on("resize",function(){t.offset();(/^\d+%$/.test(o.area[0])||/^\d+%$/.test(o.area[1]))&&t.auto(m);o.type==4&&t.tips()})}o.time<=0||setTimeout(function(){g.close(t.index)},o.time);t.move().callback();if(c.anim[o.anim]){t.layero.addClass(c.anim[o.anim])}if(o.isOutAnim){t.layero.data("isOutAnim",true)}};b.pt.auto=function(q){var s=this,p=s.config,o=f("#"+c[0]+q);if(p.area[0]===""&&p.maxWidth>0){if(g.ie&&g.ie<8&&p.btn){o.width(o.innerWidth())}o.outerWidth()>p.maxWidth&&o.width(p.maxWidth)}var r=[o.innerWidth(),o.innerHeight()];var t=o.find(c[1]).outerHeight()||0;var n=o.find("."+c[6]).outerHeight()||0;function m(u){u=o.find(u);u.height(r[1]-t-n-2*(parseFloat(u.css("padding-top"))|0))}switch(p.type){case 2:m("iframe");break;default:if(p.area[1]===""){if(p.fixed&&r[1]>=h.height()){r[1]=h.height();m("."+c[5])}}else{m("."+c[5])}break}return s};b.pt.offset=function(){var q=this,n=q.config,m=q.layero;var p=[m.outerWidth(),m.outerHeight()];var o=typeof n.offset==="object";q.offsetTop=(h.height()-p[1])/2;q.offsetLeft=(h.width()-p[0])/2;if(o){q.offsetTop=n.offset[0];q.offsetLeft=n.offset[1]||q.offsetLeft}else{if(n.offset!=="auto"){if(n.offset==="t"){q.offsetTop=0}else{if(n.offset==="r"){q.offsetLeft=h.width()-p[0]}else{if(n.offset==="b"){q.offsetTop=h.height()-p[1]}else{if(n.offset==="l"){q.offsetLeft=0}else{if(n.offset==="lt"){q.offsetTop=0;q.offsetLeft=0}else{if(n.offset==="lb"){q.offsetTop=h.height()-p[1];q.offsetLeft=0}else{if(n.offset==="rt"){q.offsetTop=0;q.offsetLeft=h.width()-p[0]}else{if(n.offset==="rb"){q.offsetTop=h.height()-p[1];q.offsetLeft=h.width()-p[0]}else{q.offsetTop=n.offset}}}}}}}}}}if(!n.fixed){q.offsetTop=/%$/.test(q.offsetTop)?h.height()*parseFloat(q.offsetTop)/100:parseFloat(q.offsetTop);q.offsetLeft=/%$/.test(q.offsetLeft)?h.width()*parseFloat(q.offsetLeft)/100:parseFloat(q.offsetLeft);q.offsetTop+=h.scrollTop();q.offsetLeft+=h.scrollLeft()}if(m.attr("minLeft")){q.offsetTop=h.height()-(m.find(c[1]).outerHeight()||0);q.offsetLeft=m.css("left")}q.offsetTop=q.offsetTop>0?q.offsetTop:0;m.css({top:q.offsetTop,left:q.offsetLeft})};b.pt.tips=function(){var t=this,s=t.config,o=t.layero;var r=[o.outerWidth(),o.outerHeight()],n=f(s.follow);if(!n[0]){n=f("body")}var q={width:n.outerWidth(),height:n.outerHeight(),top:n.offset().top,left:n.offset().left},p=o.find(".layui-layer-TipsG");var m=s.tips[0];s.tips[1]||p.remove();q.autoLeft=function(){if(q.left+r[0]-h.width()>0){q.tipLeft=q.left+q.width-r[0];p.css({right:12,left:"auto"})}else{q.tipLeft=q.left}};q.where=[function(){q.autoLeft();q.tipTop=q.top-r[1]-10;p.removeClass("layui-layer-TipsB").addClass("layui-layer-TipsT").css("border-right-color",s.tips[1])},function(){q.tipLeft=q.left+q.width+10;q.tipTop=q.top;p.removeClass("layui-layer-TipsL").addClass("layui-layer-TipsR").css("border-bottom-color",s.tips[1])},function(){q.autoLeft();q.tipTop=q.top+q.height+10;p.removeClass("layui-layer-TipsT").addClass("layui-layer-TipsB").css("border-right-color",s.tips[1])},function(){q.tipLeft=q.left-r[0]-10;q.tipTop=q.top;p.removeClass("layui-layer-TipsR").addClass("layui-layer-TipsL").css("border-bottom-color",s.tips[1])}];q.where[m-1]();if(m===1){q.top-(h.scrollTop()+r[1]+8*2)<0&&q.where[2]()}else{if(m===2){h.width()-(q.left+q.width+r[0]+8*2)>0||q.where[3]()}else{if(m===3){(q.top-h.scrollTop()+q.height+r[1]+8*2)-h.height()>0&&q.where[0]()}else{if(m===4){r[0]+8*2-q.left>0&&q.where[1]()}}}}o.find("."+c[5]).css({"background-color":s.tips[1],"padding-right":(s.closeBtn?"30px":"")});o.css({left:q.tipLeft-(s.fixed?h.scrollLeft():0),top:q.tipTop-(s.fixed?h.scrollTop():0)})};b.pt.move=function(){var q=this,n=q.config,p=f(document),m=q.layero,o=m.find(n.move),r=m.find(".layui-layer-resize"),s={};if(n.move){o.css("cursor","move")}o.on("mousedown",function(t){t.preventDefault();if(n.move){s.moveStart=true;s.offset=[t.clientX-parseFloat(m.css("left")),t.clientY-parseFloat(m.css("top"))];j.moveElem.css("cursor","move").show()}});r.on("mousedown",function(t){t.preventDefault();s.resizeStart=true;s.offset=[t.clientX,t.clientY];s.area=[m.outerWidth(),m.outerHeight()];j.moveElem.css("cursor","se-resize").show()});p.on("mousemove",function(w){if(s.moveStart){var y=w.clientX-s.offset[0],x=w.clientY-s.offset[1],u=m.css("position")==="fixed";w.preventDefault();s.stX=u?0:h.scrollLeft();s.stY=u?0:h.scrollTop();if(!n.moveOut){var t=h.width()-m.outerWidth()+s.stX,v=h.height()-m.outerHeight()+s.stY;y<s.stX&&(y=s.stX);y>t&&(y=t);x<s.stY&&(x=s.stY);x>v&&(x=v)}m.css({left:y,top:x})}if(n.resize&&s.resizeStart){var y=w.clientX-s.offset[0],x=w.clientY-s.offset[1];w.preventDefault();g.style(q.index,{width:s.area[0]+y,height:s.area[1]+x});s.isResize=true;n.resizing&&n.resizing(m)}}).on("mouseup",function(t){if(s.moveStart){delete s.moveStart;j.moveElem.hide();n.moveEnd&&n.moveEnd(m)}if(s.resizeStart){delete s.resizeStart;j.moveElem.hide()}});return q};b.pt.callback=function(){var p=this,m=p.layero,n=p.config;p.openLayer();if(n.success){if(n.type==2){m.find("iframe").on("load",function(){n.success(m,p.index)})}else{n.success(m,p.index)}}g.ie==6&&p.IE6(m);m.find("."+c[6]).children("a").on("click",function(){var q=f(this).index();if(q===0){if(n.yes){var r=n.yes(p.index,m);r===false||g.close(p.index)}else{if(n.btn1){var r=n.btn1(p.index,m);r===false||g.close(p.index)}else{g.close(p.index)}}}else{var r=n["btn"+(q+1)]&&n["btn"+(q+1)](p.index,m);r===false||g.close(p.index)}});function o(){var q=n.cancel&&n.cancel(p.index,m);q===false||g.close(p.index)}m.find("."+c[7]).on("click",o);if(n.shadeClose){f("#layui-layer-shade"+p.index).on("click",function(){g.close(p.index)})}m.find(".layui-layer-min").on("click",function(){var q=n.min&&n.min(m);q===false||g.min(p.index,n)});m.find(".layui-layer-max").on("click",function(){if(f(this).hasClass("layui-layer-maxmin")){g.restore(p.index);n.restore&&n.restore(m)}else{g.full(p.index,n);setTimeout(function(){n.full&&n.full(m)},100)}});n.end&&(j.end[p.index]=n.end)};j.reselect=function(){f.each(f("select"),function(m,n){var o=f(this);if(!o.parents("."+c[0])[0]){(o.attr("layer")==1&&f("."+c[0]).length<1)&&o.removeAttr("layer").show()}o=null})};b.pt.IE6=function(m){f("select").each(function(n,o){var p=f(this);if(!p.parents("."+c[0])[0]){p.css("display")==="none"||p.attr({layer:"1"}).hide()}p=null})};b.pt.openLayer=function(){var m=this;g.zIndex=m.config.zIndex;g.setTop=function(n){var o=function(){g.zIndex++;n.css("z-index",g.zIndex+1)};g.zIndex=parseInt(n[0].style.zIndex);n.on("mousedown",o);return g.zIndex}};j.record=function(m){var n=[m.width(),m.height(),m.position().top,m.position().left+parseFloat(m.css("margin-left"))];m.find(".layui-layer-max").addClass("layui-layer-maxmin");m.attr({area:n})};j.rescollbar=function(m){if(c.html.attr("layer-full")==m){if(c.html[0].style.removeProperty){c.html[0].style.removeProperty("overflow")}else{c.html[0].style.removeAttribute("overflow")}c.html.removeAttr("layer-full")}};i.layer=g;g.$=g.jQuery=jQuery;g.window=i;g.getChildFrame=function(m,n){n=n||f("."+c[4]).attr("times");return f("#"+c[0]+n).find("iframe").contents().find(m)};g.getFrameIndex=function(m){return f("#"+m).parents("."+c[4]).attr("times")};g.iframeAuto=function(p){if(!p){return}var o=g.getChildFrame("html",p).outerHeight();var n=f("#"+c[0]+p);var q=n.find(c[1]).outerHeight()||0;var m=n.find("."+c[6]).outerHeight()||0;n.css({height:o+q+m});n.find("iframe").css({height:o})};g.iframeSrc=function(n,m){f("#"+c[0]+n).find("iframe").attr("src",m)};g.iframeWindow=function(m){var n=f("#"+c[0]+m).find("iframe");if(n.length>0){return n[0].contentWindow}return null};g.style=function(q,u,n){var r=f("#"+c[0]+q),s=r.find(".layui-layer-content"),t=r.attr("type"),m=r.find(c[1]).outerHeight()||0,p=r.find("."+c[6]).outerHeight()||0,o=r.attr("minLeft");if(t===j.type[3]||t===j.type[4]){return}if(!n){if(parseFloat(u.width)<=260){u.width=260}if(parseFloat(u.height)-m-p<=64){u.height=64+m+p}}r.css(u);p=r.find("."+c[6]).outerHeight();if(t===j.type[2]){r.find("iframe").css({height:parseFloat(u.height)-m-p})}else{s.css({height:parseFloat(u.height)-m-p-parseFloat(s.css("padding-top"))-parseFloat(s.css("padding-bottom"))})}};g.min=function(p,o){var n=f("#"+c[0]+p),r=n.find(c[1]).outerHeight()||0,q=n.attr("minLeft")||(181*j.minIndex)+"px",m=n.css("position");j.record(n);if(j.minLeft[0]){q=j.minLeft[0];j.minLeft.shift()}n.attr("position",m);g.style(p,{width:180,height:r,left:q,top:h.height()-r,position:"fixed",overflow:"hidden"},true);n.find(".layui-layer-min").hide();n.attr("type")==="page"&&n.find(c[4]).hide();j.rescollbar(p);if(!n.attr("minLeft")){j.minIndex++}n.attr("minLeft",q)};g.restore=function(n){var m=f("#"+c[0]+n),p=m.attr("area").split(",");var o=m.attr("type");g.style(n,{width:parseFloat(p[0]),height:parseFloat(p[1]),top:parseFloat(p[2]),left:parseFloat(p[3]),position:m.attr("position"),overflow:"visible"},true);m.find(".layui-layer-max").removeClass("layui-layer-maxmin");m.find(".layui-layer-min").show();m.attr("type")==="page"&&m.find(c[4]).show();j.rescollbar(n)};g.full=function(n){var m=f("#"+c[0]+n),o;j.record(m);if(!c.html.attr("layer-full")){c.html.css("overflow","hidden").attr("layer-full",n)}clearTimeout(o);o=setTimeout(function(){var p=m.css("position")==="fixed";g.style(n,{top:p?0:h.scrollTop(),left:p?0:h.scrollLeft(),width:h.width(),height:h.height()},true);m.find(".layui-layer-min").hide()},100)};g.title=function(n,m){var o=f("#"+c[0]+(m||g.index)).find(c[1]);o.html(n)};g.close=function(o){var n=f("#"+c[0]+o),p=n.attr("type"),q="layer-anim-close";if(!n[0]){return}var r="layui-layer-wrap",m=function(){if(p===j.type[1]&&n.attr("conType")==="object"){n.children(":not(."+c[5]+")").remove();var u=n.find("."+r);for(var s=0;s<2;s++){u.unwrap()}u.css("display",u.data("display")).removeClass(r)}else{if(p===j.type[2]){try{var t=f("#"+c[4]+o)[0];t.contentWindow.document.write("");t.contentWindow.close();n.find("."+c[5])[0].removeChild(t)}catch(v){}}n[0].innerHTML="";n.remove()}typeof j.end[o]==="function"&&j.end[o]();delete j.end[o]};if(n.data("isOutAnim")){n.addClass(q)}f("#layui-layer-moves, #layui-layer-shade"+o).remove();g.ie==6&&j.reselect();j.rescollbar(o);if(n.attr("minLeft")){j.minIndex--;j.minLeft.push(n.attr("minLeft"))}if((g.ie&&g.ie<10)||!n.data("isOutAnim")){m()}else{setTimeout(function(){m()},200)}};g.closeAll=function(m){f.each(f("."+c[0]),function(){var o=f(this);var n=m?(o.attr("type")===m):1;n&&g.close(o.attr("times"));n=null})};var a=g.cache||{},k=function(m){return(a.skin?(" "+a.skin+" "+a.skin+"-"+m):"")};g.prompt=function(n,s){var o="";n=n||{};if(typeof n==="function"){s=n}if(n.area){var q=n.area;o='style="width: '+q[0]+"; height: "+q[1]+';"';delete n.area}var m,p=n.formType==2?'<textarea class="layui-layer-input"'+o+">"+(n.value||"")+"</textarea>":function(){return'<input type="'+(n.formType==1?"password":"text")+'" class="layui-layer-input" value="'+(n.value||"")+'">'}();var r=n.success;delete n.success;return g.open(f.extend({type:1,btn:[l.btnOk,l.btnCancel],content:p,skin:"layui-layer-prompt"+k("prompt"),maxWidth:h.width(),success:function(t){m=t.find(".layui-layer-input");m.focus();typeof r==="function"&&r(t)},resize:false,yes:function(t){var u=m.val();if(u===""){m.focus()}else{if(u.length>(n.maxlength||500)){g.tips(l.promptTipA+(n.maxlength||500)+l.promptTipB,m,{tips:1})}else{s&&s(u,t,m)}}}},n))};g.tab=function(m){m=m||{};var n=m.tab||{},o=m.success;delete m.success;return g.open(f.extend({type:1,skin:"layui-layer-tab"+k("tab"),resize:false,title:function(){var p=n.length,q=1,r="";if(p>0){r='<span class="layui-layer-tabnow">'+n[0].title+"</span>";for(;q<p;q++){r+="<span>"+n[q].title+"</span>"}}return r}(),content:'<ul class="layui-layer-tabmain">'+function(){var p=n.length,q=1,r="";if(p>0){r='<li class="layui-layer-tabli xubox_tab_layer">'+(n[0].content||"no content")+"</li>";for(;q<p;q++){r+='<li class="layui-layer-tabli">'+(n[q].content||"no  content")+"</li>"}}return r}()+"</ul>",success:function(q){var r=q.find(".layui-layer-title").children();var p=q.find(".layui-layer-tabmain").children();r.on("mousedown",function(u){u.stopPropagation?u.stopPropagation():u.cancelBubble=true;var t=f(this),s=t.index();t.addClass("layui-layer-tabnow").siblings().removeClass("layui-layer-tabnow");p.eq(s).show().siblings().hide();typeof m.change==="function"&&m.change(s)});typeof o==="function"&&o(q)}},m))};g.photos=function(x,r,u){var o={};x=x||{};if(!x.photos){return}var s=x.photos.constructor===Object;var w=s?x.photos:{},q=w.data||[];var n=w.start||0;o.imgIndex=(n|0)+1;x.img=x.img||"img";var v=x.success;delete x.success;if(!s){var t=f(x.photos),p=function(){q=[];t.find(x.img).each(function(y){var z=f(this);z.attr("layer-index",y);q.push({alt:z.attr("alt"),pid:z.attr("layer-pid"),src:z.attr("layer-src")||z.attr("src"),thumb:z.attr("src")})})};p();if(q.length===0){return}r||t.on("click",x.img,function(){var z=f(this),y=z.attr("layer-index");g.photos(f.extend(x,{photos:{start:y,data:q,tab:x.tab},full:x.full}),true);p()});if(!r){return}}else{if(q.length===0){return g.msg(message.noPicture)}}o.imgprev=function(y){o.imgIndex--;if(o.imgIndex<1){o.imgIndex=q.length}o.tabimg(y)};o.imgnext=function(y,z){o.imgIndex++;if(o.imgIndex>q.length){o.imgIndex=1;if(z){return}}o.tabimg(y)};o.keyup=function(z){if(!o.end){var y=z.keyCode;z.preventDefault();if(y===37){o.imgprev(true)}else{if(y===39){o.imgnext(true)}else{if(y===27){g.close(o.index)}}}}};o.tabimg=function(y){if(q.length<=1){return}w.start=o.imgIndex-1;g.close(o.index);return g.photos(x,true,y);setTimeout(function(){g.photos(x,true,y)},200)};o.event=function(){o.bigimg.hover(function(){o.imgsee.show()},function(){o.imgsee.hide()});o.bigimg.find(".layui-layer-imgprev").on("click",function(y){y.preventDefault();o.imgprev()});o.bigimg.find(".layui-layer-imgnext").on("click",function(y){y.preventDefault();o.imgnext()});f(document).on("keyup",o.keyup)};function m(A,B,z){var y=new Image();y.src=A;if(y.complete){return B(y)}y.onload=function(){y.onload=null;B(y)};y.onerror=function(C){y.onerror=null;z(C)}}o.loadi=g.load(1,{shade:"shade" in x?false:0.9,scrollbar:false});m(q[n].src,function(y){g.close(o.loadi);o.index=g.open(f.extend({type:1,id:"layui-layer-photos",area:function(){var B=[y.width,y.height];var A=[f(i).width()-100,f(i).height()-100];if(!x.full&&(B[0]>A[0]||B[1]>A[1])){var z=[B[0]/A[0],B[1]/A[1]];if(z[0]>z[1]){B[0]=B[0]/z[0];B[1]=B[1]/z[0]}else{if(z[0]<z[1]){B[0]=B[0]/z[1];B[1]=B[1]/z[1]}}}return[B[0]+"px",B[1]+"px"]}(),title:false,shade:0.9,shadeClose:true,closeBtn:false,move:".layui-layer-phimg img",moveType:1,scrollbar:false,moveOut:true,isOutAnim:false,skin:"layui-layer-photos"+k("photos"),content:'<div class="layui-layer-phimg"><img src="'+q[n].src+'" alt="'+(q[n].alt||"")+'" layer-pid="'+q[n].pid+'"><div class="layui-layer-imgsee">'+(q.length>1?'<span class="layui-layer-imguide"><a href="javascript:;" class="layui-layer-iconext layui-layer-imgprev"></a><a href="javascript:;" class="layui-layer-iconext layui-layer-imgnext"></a></span>':"")+'<div class="layui-layer-imgbar" style="display:'+(u?"block":"")+'"><span class="layui-layer-imgtit"><a href="javascript:;">'+(q[n].alt||"")+"</a><em>"+o.imgIndex+"/"+q.length+"</em></span></div></div></div>",success:function(z,A){o.bigimg=z.find(".layui-layer-phimg");o.imgsee=z.find(".layui-layer-imguide,.layui-layer-imgbar");o.event(z);x.tab&&x.tab(q[n],z);typeof v==="function"&&v(z)},end:function(){o.end=true;f(document).off("keyup",o.keyup)}},x))},function(){g.close(o.loadi);g.msg(l.photoError,{time:30000,btn:[l.photoNextPage,l.photoClose],yes:function(){q.length>1&&o.imgnext(true,true)}})})};j.run=function(m){f=m;h=f(i);c.html=f("html");g.open=function(p){var n=new b(p);return n.index}};i.layui&&layui.define?(g.ready(),layui.define("jquery",function(m){g.path=layui.cache.dir;j.run(layui.jquery);i.layer=g;m("layer",g)})):((typeof define==="function"&&define.amd)?define(["jquery"],function(){j.run(i.jQuery);return g}):function(){j.run(i.jQuery);g.ready()}())}(window);
+﻿/**
+
+ @Name：layer v3.0.3 Web弹层组件
+ @Author：贤心
+ @Site：http://layer.layui.com
+ @License：MIT
+    
+ */
+
+;!function(window, undefined){
+"use strict";
+
+var i18n = {
+	btnOk: '确定',
+	btnCancel: '取消',
+	title: '信息',
+	promptTipA: '最多输入',
+	promptTipB: '个字符',
+	noPicture: '没有图片',
+	photoError: '当前图片地址异常<br>是否继续查看下一张？',
+	photoNextPage: '下一张',
+	photoClose: '不看了'
+};
+
+if (window.lang == 'en'){
+	i18n = {
+		btnOk: 'Ok',
+		btnCancel: 'Cancle',
+		title: 'Information',
+		promptTipA: 'Enter ',
+		promptTipB: 'character at most.',
+		noPicture: 'No picture',
+		photoError: 'Current image address error.<br>Next slide?',
+		photoNextPage: 'The next',
+		photoClose: 'Close'
+	};
+}
+
+var isLayui = window.layui && layui.define, $, win, ready = {
+  getPath: function(){
+    var js = document.scripts, script = js[js.length - 1], jsPath = script.src;
+    if(script.getAttribute('merge')) return;
+    return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
+  }(),
+
+  config: {}, end: {}, minIndex: 0, minLeft: [],
+  btn: [i18n.btnOk, i18n.btnCancel],
+
+  //五种原始层模式
+  type: ['dialog', 'page', 'iframe', 'loading', 'tips']
+};
+
+//默认内置方法。
+var layer = {
+  v: '3.0.3',
+  ie: function(){ //ie版本
+    var agent = navigator.userAgent.toLowerCase();
+    return (!!window.ActiveXObject || "ActiveXObject" in window) ? (
+      (agent.match(/msie\s(\d+)/) || [])[1] || '11' //由于ie11并没有msie的标识
+    ) : false;
+  }(),
+  index: (window.layer && window.layer.v) ? 100000 : 0,
+  path: ready.getPath,
+  config: function(options, fn){
+    options = options || {};
+    layer.cache = ready.config = $.extend({}, ready.config, options);
+    layer.path = ready.config.path || layer.path;
+    typeof options.extend === 'string' && (options.extend = [options.extend]);
+    
+    if(ready.config.path) layer.ready();
+    
+    if(!options.extend) return this;
+    
+    isLayui 
+      ? layui.addcss('modules/layer/' + options.extend)
+    : layer.link('skin/' + options.extend);
+    
+    return this;
+  },
+  
+  //载入CSS配件
+  link: function(href, fn, cssname){
+    
+    //未设置路径，则不主动加载css
+    if(!layer.path) return;
+    
+    var head = $('head')[0], link = document.createElement('link');
+    if(typeof fn === 'string') cssname = fn;
+    var app = (cssname || href).replace(/\.|\//g, '');
+    var id = 'layuicss-'+app, timeout = 0;
+    
+    link.rel = 'stylesheet';
+    link.href = layer.path + href;
+    link.id = id;
+    
+    if(!$('#'+ id)[0]){
+      head.appendChild(link);
+    }
+    
+    if(typeof fn !== 'function') return;
+    
+    //轮询css是否加载完毕
+    (function poll() {
+      if(++timeout > 8 * 1000 / 100){
+        return window.console && console.error('layer.css: Invalid');
+      };
+      parseInt($('#'+id).css('width')) === 1989 ? fn() : setTimeout(poll, 100);
+    }());
+  },
+  
+  ready: function(callback){
+    var cssname = 'skinlayercss', ver = '303';
+    isLayui ? layui.addcss('modules/layer/default/layer.css?v='+layer.v+ver, callback, cssname)
+    : layer.link('skin/default/layer.css?v='+layer.v+ver, callback, cssname);
+    return this;
+  },
+  
+  //各种快捷引用
+  alert: function(content, options, yes){
+    var type = typeof options === 'function';
+    if(type) yes = options;
+    return layer.open($.extend({
+      content: content,
+      yes: yes
+    }, type ? {} : options));
+  }, 
+  
+  confirm: function(content, options, yes, cancel){ 
+    var type = typeof options === 'function';
+    if(type){
+      cancel = yes;
+      yes = options;
+    }
+    return layer.open($.extend({
+      content: content,
+      btn: ready.btn,
+      yes: yes,
+      btn2: cancel
+    }, type ? {} : options));
+  },
+  
+  msg: function(content, options, end){ //最常用提示层
+    var type = typeof options === 'function', rskin = ready.config.skin;
+    var skin = (rskin ? rskin + ' ' + rskin + '-msg' : '')||'layui-layer-msg';
+    var anim = doms.anim.length - 1;
+    if(type) end = options;
+    return layer.open($.extend({
+      content: content,
+      time: 3000,
+      shade: false,
+      skin: skin,
+      title: false,
+      closeBtn: false,
+      btn: false,
+      resize: false,
+      end: end
+    }, (type && !ready.config.skin) ? {
+      skin: skin + ' layui-layer-hui',
+      anim: anim
+    } : function(){
+       options = options || {};
+       if(options.icon === -1 || options.icon === undefined && !ready.config.skin){
+         options.skin = skin + ' ' + (options.skin||'layui-layer-hui');
+       }
+       return options;
+    }()));  
+  },
+  
+  load: function(icon, options){
+    return layer.open($.extend({
+      type: 3,
+      icon: icon || 0,
+      resize: false,
+      shade: 0.01
+    }, options));
+  }, 
+  
+  tips: function(content, follow, options){
+    return layer.open($.extend({
+      type: 4,
+      content: [content, follow],
+      closeBtn: false,
+      time: 3000,
+      shade: false,
+      resize: false,
+      fixed: false,
+      maxWidth: 210
+    }, options));
+  }
+};
+
+var Class = function(setings){  
+  var that = this;
+  that.index = ++layer.index;
+  that.config = $.extend({}, that.config, ready.config, setings);
+  document.body ? that.creat() : setTimeout(function(){
+    that.creat();
+  }, 30);
+};
+
+Class.pt = Class.prototype;
+
+//缓存常用字符
+var doms = ['layui-layer', '.layui-layer-title', '.layui-layer-main', '.layui-layer-dialog', 'layui-layer-iframe', 'layui-layer-content', 'layui-layer-btn', 'layui-layer-close'];
+doms.anim = ['layer-anim', 'layer-anim-01', 'layer-anim-02', 'layer-anim-03', 'layer-anim-04', 'layer-anim-05', 'layer-anim-06'];
+
+//默认配置
+Class.pt.config = {
+  type: 0,
+  shade: 0.3,
+  fixed: true,
+  move: doms[1],
+  title: i18n.title,
+  offset: 'auto',
+  area: 'auto',
+  closeBtn: 1,
+  time: 0, //0表示不自动关闭
+  zIndex: 19891014, 
+  maxWidth: 360,
+  anim: 0,
+  isOutAnim: true,
+  icon: -1,
+  moveType: 1,
+  resize: true,
+  scrollbar: true, //是否允许浏览器滚动条
+  tips: 2
+};
+
+//容器
+Class.pt.vessel = function(conType, callback){
+  var that = this, times = that.index, config = that.config;
+  var zIndex = config.zIndex + times, titype = typeof config.title === 'object';
+  var ismax = config.maxmin && (config.type === 1 || config.type === 2);
+  var titleHTML = (config.title ? '<div class="layui-layer-title" style="'+ (titype ? config.title[1] : '') +'">' 
+    + (titype ? config.title[0] : config.title) 
+  + '</div>' : '');
+  
+  config.zIndex = zIndex;
+  callback([
+    //遮罩
+    config.shade ? ('<div class="layui-layer-shade" id="layui-layer-shade'+ times +'" times="'+ times +'" style="'+ ('z-index:'+ (zIndex-1) +'; background-color:'+ (config.shade[1]||'#000') +'; opacity:'+ (config.shade[0]||config.shade) +'; filter:alpha(opacity='+ (config.shade[0]*100||config.shade*100) +');') +'"></div>') : '',
+    
+    //主体
+    '<div class="'+ doms[0] + (' layui-layer-'+ready.type[config.type]) + (((config.type == 0 || config.type == 2) && !config.shade) ? ' layui-layer-border' : '') + ' ' + (config.skin||'') +'" id="'+ doms[0] + times +'" type="'+ ready.type[config.type] +'" times="'+ times +'" showtime="'+ config.time +'" conType="'+ (conType ? 'object' : 'string') +'" style="z-index: '+ zIndex +'; width:'+ config.area[0] + ';height:' + config.area[1] + (config.fixed ? '' : ';position:absolute;') +'">'
+      + (conType && config.type != 2 ? '' : titleHTML)
+      + '<div id="'+ (config.id||'') +'" class="layui-layer-content'+ ((config.type == 0 && config.icon !== -1) ? ' layui-layer-padding' :'') + (config.type == 3 ? ' layui-layer-loading'+config.icon : '') +'">'
+        + (config.type == 0 && config.icon !== -1 ? '<i class="layui-layer-ico layui-layer-ico'+ config.icon +'"></i>' : '')
+        + (config.type == 1 && conType ? '' : (config.content||''))
+      + '</div>'
+      + '<span class="layui-layer-setwin">'+ function(){
+        var closebtn = ismax ? '<a class="layui-layer-min" href="javascript:;"><cite></cite></a><a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>' : '';
+        config.closeBtn && (closebtn += '<a class="layui-layer-ico '+ doms[7] +' '+ doms[7] + (config.title ? config.closeBtn : (config.type == 4 ? '1' : '2')) +'" href="javascript:;"></a>');
+        return closebtn;
+      }() + '</span>'
+      + (config.btn ? function(){
+        var button = '';
+        typeof config.btn === 'string' && (config.btn = [config.btn]);
+        for(var i = 0, len = config.btn.length; i < len; i++){
+          button += '<a class="'+ doms[6] +''+ i +'">'+ config.btn[i] +'</a>'
+        }
+        return '<div class="'+ doms[6] + (config.btnAlign ? (' layui-layer-btn-' + config.btnAlign) : '') +'">'+ button +'</div>'
+      }() : '')
+      + (config.resize ? '<span class="layui-layer-resize"></span>' : '')
+    + '</div>'
+  ], titleHTML, $('<div class="layui-layer-move"></div>'));
+  return that;
+};
+
+//创建骨架
+Class.pt.creat = function(){
+  var that = this
+  ,config = that.config
+  ,times = that.index, nodeIndex
+  ,content = config.content
+  ,conType = typeof content === 'object'
+  ,body = $('body');
+  
+  if(config.id && $('#'+config.id)[0])  return;
+
+  if(typeof config.area === 'string'){
+    config.area = config.area === 'auto' ? ['', ''] : [config.area, ''];
+  }
+  
+  //anim兼容旧版shift
+  if(config.shift){
+    config.anim = config.shift;
+  }
+  
+  if(layer.ie == 6){
+    config.fixed = false;
+  }
+  
+  switch(config.type){
+    case 0:
+      config.btn = ('btn' in config) ? config.btn : ready.btn[0];
+      layer.closeAll('dialog');
+    break;
+    case 2:
+      var content = config.content = conType ? config.content : [config.content, 'auto'];
+//      config.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'
+//      	+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times 
+//      	+'" onload="this.className=\'\';" class="layui-layer-load" frameborder="0" src="' 
+//      	+ config.content[0] + '"></iframe>';
+      // 2017-5-13 ThinkGem 支持post方式提交iframe
+      config.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'
+			+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times 
+			+ '" onload="this.className=\'\';" class="layui-layer-load" frameborder="0"></iframe><form id="'
+			+ doms[4] + '-form' + times+'" action="' + config.content[0] + '" method="post" target="'
+			+ doms[4] + '' + times +'">';
+    break;
+    case 3:
+      delete config.title;
+      delete config.closeBtn;
+      config.icon === -1 && (config.icon === 0);
+      layer.closeAll('loading');
+    break;
+    case 4:
+      conType || (config.content = [config.content, 'body']);
+      config.follow = config.content[1];
+      config.content = config.content[0] + '<i class="layui-layer-TipsG"></i>';
+      delete config.title;
+      config.tips = typeof config.tips === 'object' ? config.tips : [config.tips, true];
+      config.tipsMore || layer.closeAll('tips');
+    break;
+  }
+  
+  //建立容器
+  that.vessel(conType, function(html, titleHTML, moveElem){
+    body.append(html[0]);
+    conType ? function(){
+      (config.type == 2 || config.type == 4) ? function(){
+        $('body').append(html[1]);
+      }() : function(){
+        if(!content.parents('.'+doms[0])[0]){
+          content.data('display', content.css('display')).show().addClass('layui-layer-wrap').wrap(html[1]);
+          $('#'+ doms[0] + times).find('.'+doms[5]).before(titleHTML);
+        }
+      }();
+    }() : body.append(html[1]);
+    $('.layui-layer-move')[0] || body.append(ready.moveElem = moveElem);
+    that.layero = $('#'+ doms[0] + times);
+    config.scrollbar || doms.html.css('overflow', 'hidden').attr('layer-full', times);
+  }).auto(times);
+
+  //config.type == 2 && layer.ie == 6 && that.layero.find('iframe').attr('src', content[0]); // ThinkGem 不需要ie6
+  
+  // 2017-5-13 ThinkGem 支持post方式提交iframe
+  if (config.type == 2){
+	var form = that.layero.find('#' + doms[4] + '-form' + times), formData = config.contentFormData;
+	for(var key in formData || {}){
+		form.append('<input type="hidden" name="'+key+'" value="'+formData[key]+'"/>');
+	}
+	form.submit();
+  }
+
+  //坐标自适应浏览器窗口尺寸
+  config.type == 4 ? that.tips() : that.offset();
+  if(config.fixed){
+    win.on('resize', function(){
+      that.offset();
+      (/^\d+%$/.test(config.area[0]) || /^\d+%$/.test(config.area[1])) && that.auto(times);
+      config.type == 4 && that.tips();
+    });
+  }
+  
+  config.time <= 0 || setTimeout(function(){
+    layer.close(that.index)
+  }, config.time);
+  that.move().callback();
+  
+  //为兼容jQuery3.0的css动画影响元素尺寸计算
+  if(doms.anim[config.anim]){
+    that.layero.addClass(doms.anim[config.anim]);
+  };
+  
+  //记录关闭动画
+  if(config.isOutAnim){
+    that.layero.data('isOutAnim', true);
+  }
+};
+
+//自适应
+Class.pt.auto = function(index){
+  var that = this, config = that.config, layero = $('#'+ doms[0] + index);
+  if(config.area[0] === '' && config.maxWidth > 0){
+    //为了修复IE7下一个让人难以理解的bug
+    if(layer.ie && layer.ie < 8 && config.btn){
+      layero.width(layero.innerWidth());
+    }
+    layero.outerWidth() > config.maxWidth && layero.width(config.maxWidth);
+  }
+  var area = [layero.innerWidth(), layero.innerHeight()];
+  var titHeight = layero.find(doms[1]).outerHeight() || 0;
+  var btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
+  function setHeight(elem){
+    elem = layero.find(elem);
+    elem.height(area[1] - titHeight - btnHeight - 2*(parseFloat(elem.css('padding-top'))|0));
+  }
+  switch(config.type){
+    case 2: 
+      setHeight('iframe');
+    break;
+    default:
+      if(config.area[1] === ''){
+        if(config.fixed && area[1] >= win.height()){
+          area[1] = win.height();
+          setHeight('.'+doms[5]);
+        }
+      } else {
+        setHeight('.'+doms[5]);
+      }
+    break;
+  }
+  return that;
+};
+
+//计算坐标
+Class.pt.offset = function(){
+  var that = this, config = that.config, layero = that.layero;
+  var area = [layero.outerWidth(), layero.outerHeight()];
+  var type = typeof config.offset === 'object';
+  that.offsetTop = (win.height() - area[1])/2;
+  that.offsetLeft = (win.width() - area[0])/2;
+  
+  if(type){
+    that.offsetTop = config.offset[0];
+    that.offsetLeft = config.offset[1]||that.offsetLeft;
+  } else if(config.offset !== 'auto'){
+    
+    if(config.offset === 't'){ //上
+      that.offsetTop = 0;
+    } else if(config.offset === 'r'){ //右
+      that.offsetLeft = win.width() - area[0];
+    } else if(config.offset === 'b'){ //下
+      that.offsetTop = win.height() - area[1];
+    } else if(config.offset === 'l'){ //左
+      that.offsetLeft = 0;
+    } else if(config.offset === 'lt'){ //左上角
+      that.offsetTop = 0;
+      that.offsetLeft = 0;
+    } else if(config.offset === 'lb'){ //左下角
+      that.offsetTop = win.height() - area[1];
+      that.offsetLeft = 0;
+    } else if(config.offset === 'rt'){ //右上角
+      that.offsetTop = 0;
+      that.offsetLeft = win.width() - area[0];
+    } else if(config.offset === 'rb'){ //右下角
+      that.offsetTop = win.height() - area[1];
+      that.offsetLeft = win.width() - area[0];
+    } else {
+      that.offsetTop = config.offset;
+    }
+    
+  }
+ 
+  if(!config.fixed){
+    that.offsetTop = /%$/.test(that.offsetTop) ? 
+      win.height()*parseFloat(that.offsetTop)/100
+    : parseFloat(that.offsetTop);
+    that.offsetLeft = /%$/.test(that.offsetLeft) ? 
+      win.width()*parseFloat(that.offsetLeft)/100
+    : parseFloat(that.offsetLeft);
+    that.offsetTop += win.scrollTop();
+    that.offsetLeft += win.scrollLeft();
+  }
+  
+  if(layero.attr('minLeft')){
+    that.offsetTop = win.height() - (layero.find(doms[1]).outerHeight() || 0);
+    that.offsetLeft = layero.css('left');
+  }
+
+  that.offsetTop = that.offsetTop>0?that.offsetTop:0; // 2017-5-8 ThinkGem Top值不小于0
+  
+  layero.css({top: that.offsetTop, left: that.offsetLeft});
+};
+
+//Tips
+Class.pt.tips = function(){
+  var that = this, config = that.config, layero = that.layero;
+  var layArea = [layero.outerWidth(), layero.outerHeight()], follow = $(config.follow);
+  if(!follow[0]) follow = $('body');
+  var goal = {
+    width: follow.outerWidth(),
+    height: follow.outerHeight(),
+    top: follow.offset().top,
+    left: follow.offset().left
+  }, tipsG = layero.find('.layui-layer-TipsG');
+  
+  var guide = config.tips[0];
+  config.tips[1] || tipsG.remove();
+  
+  goal.autoLeft = function(){
+    if(goal.left + layArea[0] - win.width() > 0){
+      goal.tipLeft = goal.left + goal.width - layArea[0];
+      tipsG.css({right: 12, left: 'auto'});
+    } else {
+      goal.tipLeft = goal.left;
+    };
+  };
+  
+  //辨别tips的方位
+  goal.where = [function(){ //上        
+    goal.autoLeft();
+    goal.tipTop = goal.top - layArea[1] - 10;
+    tipsG.removeClass('layui-layer-TipsB').addClass('layui-layer-TipsT').css('border-right-color', config.tips[1]);
+  }, function(){ //右
+    goal.tipLeft = goal.left + goal.width + 10;
+    goal.tipTop = goal.top;
+    tipsG.removeClass('layui-layer-TipsL').addClass('layui-layer-TipsR').css('border-bottom-color', config.tips[1]); 
+  }, function(){ //下
+    goal.autoLeft();
+    goal.tipTop = goal.top + goal.height + 10;
+    tipsG.removeClass('layui-layer-TipsT').addClass('layui-layer-TipsB').css('border-right-color', config.tips[1]);
+  }, function(){ //左
+    goal.tipLeft = goal.left - layArea[0] - 10;
+    goal.tipTop = goal.top;
+    tipsG.removeClass('layui-layer-TipsR').addClass('layui-layer-TipsL').css('border-bottom-color', config.tips[1]);
+  }];
+  goal.where[guide-1]();
+  
+  /* 8*2为小三角形占据的空间 */
+  if(guide === 1){
+    goal.top - (win.scrollTop() + layArea[1] + 8*2) < 0 && goal.where[2]();
+  } else if(guide === 2){
+    win.width() - (goal.left + goal.width + layArea[0] + 8*2) > 0 || goal.where[3]()
+  } else if(guide === 3){
+    (goal.top - win.scrollTop() + goal.height + layArea[1] + 8*2) - win.height() > 0 && goal.where[0]();
+  } else if(guide === 4){
+     layArea[0] + 8*2 - goal.left > 0 && goal.where[1]()
+  }
+
+  layero.find('.'+doms[5]).css({
+    'background-color': config.tips[1], 
+    'padding-right': (config.closeBtn ? '30px' : '')
+  });
+  layero.css({
+    left: goal.tipLeft - (config.fixed ? win.scrollLeft() : 0), 
+    top: goal.tipTop  - (config.fixed ? win.scrollTop() : 0)
+  });
+}
+
+//拖拽层
+Class.pt.move = function(){
+  var that = this
+  ,config = that.config
+  ,_DOC = $(document)
+  ,layero = that.layero
+  ,moveElem = layero.find(config.move)
+  ,resizeElem = layero.find('.layui-layer-resize')
+  ,dict = {};
+  
+  if(config.move){
+    moveElem.css('cursor', 'move');
+  }
+
+  moveElem.on('mousedown', function(e){
+    e.preventDefault();
+    if(config.move){
+      dict.moveStart = true;
+      dict.offset = [
+        e.clientX - parseFloat(layero.css('left'))
+        ,e.clientY - parseFloat(layero.css('top'))
+      ];
+      ready.moveElem.css('cursor', 'move').show();
+    }
+  });
+  
+  resizeElem.on('mousedown', function(e){
+    e.preventDefault();
+    dict.resizeStart = true;
+    dict.offset = [e.clientX, e.clientY];
+    dict.area = [
+      layero.outerWidth()
+      ,layero.outerHeight()
+    ];
+    ready.moveElem.css('cursor', 'se-resize').show();
+  });
+  
+  _DOC.on('mousemove', function(e){
+
+    //拖拽移动
+    if(dict.moveStart){
+      var X = e.clientX - dict.offset[0]
+      ,Y = e.clientY - dict.offset[1]
+      ,fixed = layero.css('position') === 'fixed';
+      
+      e.preventDefault();
+      
+      dict.stX = fixed ? 0 : win.scrollLeft();
+      dict.stY = fixed ? 0 : win.scrollTop();
+
+      //控制元素不被拖出窗口外
+      if(!config.moveOut){
+        var setRig = win.width() - layero.outerWidth() + dict.stX
+        ,setBot = win.height() - layero.outerHeight() + dict.stY;  
+        X < dict.stX && (X = dict.stX);
+        X > setRig && (X = setRig); 
+        Y < dict.stY && (Y = dict.stY);
+        Y > setBot && (Y = setBot);
+      }
+      
+      layero.css({
+        left: X
+        ,top: Y
+      });
+    }
+    
+    //Resize
+    if(config.resize && dict.resizeStart){
+      var X = e.clientX - dict.offset[0]
+      ,Y = e.clientY - dict.offset[1];
+      
+      e.preventDefault();
+      
+      layer.style(that.index, {
+        width: dict.area[0] + X
+        ,height: dict.area[1] + Y
+      })
+      dict.isResize = true;
+      config.resizing && config.resizing(layero);
+    }
+  }).on('mouseup', function(e){
+    if(dict.moveStart){
+      delete dict.moveStart;
+      ready.moveElem.hide();
+      config.moveEnd && config.moveEnd(layero);
+    }
+    if(dict.resizeStart){
+      delete dict.resizeStart;
+      ready.moveElem.hide();
+    }
+  });
+  
+  return that;
+};
+
+Class.pt.callback = function(){
+  var that = this, layero = that.layero, config = that.config;
+  that.openLayer();
+  if(config.success){
+    if(config.type == 2){
+      layero.find('iframe').on('load', function(){
+        config.success(layero, that.index);
+      });
+    } else {
+      config.success(layero, that.index);
+    }
+  }
+  layer.ie == 6 && that.IE6(layero);
+  
+  //按钮
+  layero.find('.'+ doms[6]).children('a').on('click', function(){
+    var index = $(this).index();
+    if(index === 0){
+      if(config.yes){
+    	var close = config.yes(that.index, layero);
+        close === false || layer.close(that.index); // 2017-3-31 ThinkGem 添加返回值如果是false则关闭窗口
+      } else if(config['btn1']){
+    	var close = config['btn1'](that.index, layero);
+        close === false || layer.close(that.index); // 2017-3-31 ThinkGem 添加返回值如果是false则关闭窗口
+      } else {
+        layer.close(that.index);
+      }
+    } else {
+      var close = config['btn'+(index+1)] && config['btn'+(index+1)](that.index, layero);
+      close === false || layer.close(that.index);
+    }
+  });
+  
+  //取消
+  function cancel(){
+    var close = config.cancel && config.cancel(that.index, layero);
+    close === false || layer.close(that.index);
+  }
+  
+  //右上角关闭回调
+  layero.find('.'+ doms[7]).on('click', cancel);
+  
+  //点遮罩关闭
+  if(config.shadeClose){
+    $('#layui-layer-shade'+ that.index).on('click', function(){
+      layer.close(that.index);
+    });
+  } 
+  
+  //最小化
+  layero.find('.layui-layer-min').on('click', function(){
+    var min = config.min && config.min(layero);
+    min === false || layer.min(that.index, config); 
+  });
+  
+  //全屏/还原
+  layero.find('.layui-layer-max').on('click', function(){
+    if($(this).hasClass('layui-layer-maxmin')){
+      layer.restore(that.index);
+      config.restore && config.restore(layero);
+    } else {
+      layer.full(that.index, config);
+      setTimeout(function(){
+        config.full && config.full(layero);
+      }, 100);
+    }
+  });
+
+  config.end && (ready.end[that.index] = config.end);
+};
+
+//for ie6 恢复select
+ready.reselect = function(){
+  $.each($('select'), function(index , value){
+    var sthis = $(this);
+    if(!sthis.parents('.'+doms[0])[0]){
+      (sthis.attr('layer') == 1 && $('.'+doms[0]).length < 1) && sthis.removeAttr('layer').show(); 
+    }
+    sthis = null;
+  });
+}; 
+
+Class.pt.IE6 = function(layero){
+  //隐藏select
+  $('select').each(function(index , value){
+    var sthis = $(this);
+    if(!sthis.parents('.'+doms[0])[0]){
+      sthis.css('display') === 'none' || sthis.attr({'layer' : '1'}).hide();
+    }
+    sthis = null;
+  });
+};
+
+//需依赖原型的对外方法
+Class.pt.openLayer = function(){
+  var that = this;
+  
+  //置顶当前窗口
+  layer.zIndex = that.config.zIndex;
+  layer.setTop = function(layero){
+    var setZindex = function(){
+      layer.zIndex++;
+      layero.css('z-index', layer.zIndex + 1);
+    };
+    layer.zIndex = parseInt(layero[0].style.zIndex);
+    layero.on('mousedown', setZindex);
+    return layer.zIndex;
+  };
+};
+
+ready.record = function(layero){
+  var area = [
+    layero.width(),
+    layero.height(),
+    layero.position().top, 
+    layero.position().left + parseFloat(layero.css('margin-left'))
+  ];
+  layero.find('.layui-layer-max').addClass('layui-layer-maxmin');
+  layero.attr({area: area});
+};
+
+ready.rescollbar = function(index){
+  if(doms.html.attr('layer-full') == index){
+    if(doms.html[0].style.removeProperty){
+      doms.html[0].style.removeProperty('overflow');
+    } else {
+      doms.html[0].style.removeAttribute('overflow');
+    }
+    doms.html.removeAttr('layer-full');
+  }
+};
+
+/** 内置成员 */
+
+window.layer = layer;
+
+//获取当前对话框所在窗口的jQuery对象和Window对象  ThinkGem
+layer.$ = layer.jQuery = jQuery;
+layer.window = window;
+
+//获取子iframe的DOM
+layer.getChildFrame = function(selector, index){
+  index = index || $('.'+doms[4]).attr('times');
+  return $('#'+ doms[0] + index).find('iframe').contents().find(selector);  
+};
+
+//得到当前iframe层的索引，子iframe时使用
+layer.getFrameIndex = function(name){
+  return $('#'+ name).parents('.'+doms[4]).attr('times');
+};
+
+//iframe层自适应宽高
+layer.iframeAuto = function(index){
+  if(!index) return;
+  var heg = layer.getChildFrame('html', index).outerHeight();
+  var layero = $('#'+ doms[0] + index);
+  var titHeight = layero.find(doms[1]).outerHeight() || 0;
+  var btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
+  layero.css({height: heg + titHeight + btnHeight});
+  layero.find('iframe').css({height: heg});
+};
+
+//重置iframe url
+layer.iframeSrc = function(index, url){
+  $('#'+ doms[0] + index).find('iframe').attr('src', url);
+};
+
+//返回当前layer的iframe对象的window对象 ThinkGem
+layer.iframeWindow = function(index){
+	var ifr = $('#'+ doms[0] + index).find('iframe');
+	if (ifr.length > 0){
+		return ifr[0].contentWindow;
+	}
+	// 取不到iframe返回null
+	return null;
+};
+
+//设定层的样式
+layer.style = function(index, options, limit){
+  var layero = $('#'+ doms[0] + index)
+  ,contElem = layero.find('.layui-layer-content')
+  ,type = layero.attr('type')
+  ,titHeight = layero.find(doms[1]).outerHeight() || 0
+  ,btnHeight = layero.find('.'+doms[6]).outerHeight() || 0
+  ,minLeft = layero.attr('minLeft');
+  
+  if(type === ready.type[3] || type === ready.type[4]){
+    return;
+  }
+  
+  if(!limit){
+    if(parseFloat(options.width) <= 260){
+      options.width = 260;
+    };
+    
+    if(parseFloat(options.height) - titHeight - btnHeight <= 64){
+      options.height = 64 + titHeight + btnHeight;
+    };
+  }
+  
+  layero.css(options);
+  btnHeight = layero.find('.'+doms[6]).outerHeight();
+  
+  if(type === ready.type[2]){
+    layero.find('iframe').css({
+      height: parseFloat(options.height) - titHeight - btnHeight
+    });
+  } else {
+    contElem.css({
+      height: parseFloat(options.height) - titHeight - btnHeight
+      - parseFloat(contElem.css('padding-top'))
+      - parseFloat(contElem.css('padding-bottom'))
+    })
+  }
+};
+
+//最小化
+layer.min = function(index, options){
+  var layero = $('#'+ doms[0] + index)
+  ,titHeight = layero.find(doms[1]).outerHeight() || 0
+  ,left = layero.attr('minLeft') || (181*ready.minIndex)+'px'
+  ,position = layero.css('position');
+  
+  ready.record(layero);
+  
+  if(ready.minLeft[0]){
+    left = ready.minLeft[0];
+    ready.minLeft.shift();
+  }
+  
+  layero.attr('position', position);
+  
+  layer.style(index, {
+    width: 180
+    ,height: titHeight
+    ,left: left
+    ,top: win.height() - titHeight
+    ,position: 'fixed'
+    ,overflow: 'hidden'
+  }, true);
+
+  layero.find('.layui-layer-min').hide();
+  layero.attr('type') === 'page' && layero.find(doms[4]).hide();
+  ready.rescollbar(index);
+  
+  if(!layero.attr('minLeft')){
+    ready.minIndex++;
+  }
+  layero.attr('minLeft', left);
+};
+
+//还原
+layer.restore = function(index){
+  var layero = $('#'+ doms[0] + index), area = layero.attr('area').split(',');
+  var type = layero.attr('type');
+  layer.style(index, {
+    width: parseFloat(area[0]), 
+    height: parseFloat(area[1]), 
+    top: parseFloat(area[2]), 
+    left: parseFloat(area[3]),
+    position: layero.attr('position'),
+    overflow: 'visible'
+  }, true);
+  layero.find('.layui-layer-max').removeClass('layui-layer-maxmin');
+  layero.find('.layui-layer-min').show();
+  layero.attr('type') === 'page' && layero.find(doms[4]).show();
+  ready.rescollbar(index);
+};
+
+//全屏
+layer.full = function(index){
+  var layero = $('#'+ doms[0] + index), timer;
+  ready.record(layero);
+  if(!doms.html.attr('layer-full')){
+    doms.html.css('overflow','hidden').attr('layer-full', index);
+  }
+  clearTimeout(timer);
+  timer = setTimeout(function(){
+    var isfix = layero.css('position') === 'fixed';
+    layer.style(index, {
+      top: isfix ? 0 : win.scrollTop(),
+      left: isfix ? 0 : win.scrollLeft(),
+      width: win.width(),
+      height: win.height()
+    }, true);
+    layero.find('.layui-layer-min').hide();
+  }, 100);
+};
+
+//改变title
+layer.title = function(name, index){
+  var title = $('#'+ doms[0] + (index||layer.index)).find(doms[1]);
+  title.html(name);
+};
+
+//关闭layer总方法
+layer.close = function(index){
+  var layero = $('#'+ doms[0] + index), type = layero.attr('type'), closeAnim = 'layer-anim-close';
+  if(!layero[0]) return;
+  var WRAP = 'layui-layer-wrap', remove = function(){
+    if(type === ready.type[1] && layero.attr('conType') === 'object'){
+      layero.children(':not(.'+ doms[5] +')').remove();
+      var wrap = layero.find('.'+WRAP);
+      for(var i = 0; i < 2; i++){
+        wrap.unwrap();
+      }
+      wrap.css('display', wrap.data('display')).removeClass(WRAP);
+    } else {
+      //低版本IE 回收 iframe
+      if(type === ready.type[2]){
+        try {
+          var iframe = $('#'+doms[4]+index)[0];
+          iframe.contentWindow.document.write('');
+          iframe.contentWindow.close();
+          layero.find('.'+doms[5])[0].removeChild(iframe);
+        } catch(e){}
+      }
+      layero[0].innerHTML = '';
+      layero.remove();
+    }
+    typeof ready.end[index] === 'function' && ready.end[index]();
+    delete ready.end[index];
+  };
+  
+  if(layero.data('isOutAnim')){
+    layero.addClass(closeAnim);
+  }
+  
+  $('#layui-layer-moves, #layui-layer-shade' + index).remove();
+  layer.ie == 6 && ready.reselect();
+  ready.rescollbar(index); 
+  if(layero.attr('minLeft')){
+    ready.minIndex--;
+    ready.minLeft.push(layero.attr('minLeft'));
+  }
+  
+  if((layer.ie && layer.ie < 10) || !layero.data('isOutAnim')){
+    remove()
+  } else {
+    setTimeout(function(){
+      remove();
+    }, 200);
+  }
+};
+
+//关闭所有层
+layer.closeAll = function(type){
+  $.each($('.'+doms[0]), function(){
+    var othis = $(this);
+    var is = type ? (othis.attr('type') === type) : 1;
+    is && layer.close(othis.attr('times'));
+    is = null;
+  });
+};
+
+/** 
+
+  拓展模块，layui开始合并在一起
+
+ */
+
+var cache = layer.cache||{}, skin = function(type){
+  return (cache.skin ? (' ' + cache.skin + ' ' + cache.skin + '-'+type) : '');
+}; 
+ 
+//仿系统prompt
+layer.prompt = function(options, yes){
+  var style = '';
+  options = options || {};
+  
+  if(typeof options === 'function') yes = options;
+  
+  if(options.area){
+    var area = options.area;
+    style = 'style="width: '+ area[0] +'; height: '+ area[1] + ';"';
+    delete options.area;
+  }
+  var prompt, content = options.formType == 2 ? '<textarea class="layui-layer-input"' + style +'>' + (options.value||'') +'</textarea>' : function(){
+    return '<input type="'+ (options.formType == 1 ? 'password' : 'text') +'" class="layui-layer-input" value="'+ (options.value||'') +'">';
+  }();
+  
+  var success = options.success;
+  delete options.success;
+  
+  return layer.open($.extend({
+    type: 1
+    ,btn: [i18n.btnOk,i18n.btnCancel]
+    ,content: content
+    ,skin: 'layui-layer-prompt' + skin('prompt')
+    ,maxWidth: win.width()
+    ,success: function(layero){
+      prompt = layero.find('.layui-layer-input');
+      prompt.focus();
+      typeof success === 'function' && success(layero);
+    }
+    ,resize: false
+    ,yes: function(index){
+      var value = prompt.val();
+      if(value === ''){
+        prompt.focus();
+      } else if(value.length > (options.maxlength||500)) {
+        layer.tips(i18n.promptTipA + (options.maxlength || 500) + i18n.promptTipB, prompt, {tips: 1});
+      } else {
+        yes && yes(value, index, prompt);
+      }
+    }
+  }, options));
+};
+
+//tab层
+layer.tab = function(options){
+  options = options || {};
+  
+  var tab = options.tab || {}
+  ,success = options.success;
+  
+  delete options.success;
+  
+  return layer.open($.extend({
+    type: 1,
+    skin: 'layui-layer-tab' + skin('tab'),
+    resize: false,
+    title: function(){
+      var len = tab.length, ii = 1, str = '';
+      if(len > 0){
+        str = '<span class="layui-layer-tabnow">'+ tab[0].title +'</span>';
+        for(; ii < len; ii++){
+          str += '<span>'+ tab[ii].title +'</span>';
+        }
+      }
+      return str;
+    }(),
+    content: '<ul class="layui-layer-tabmain">'+ function(){
+      var len = tab.length, ii = 1, str = '';
+      if(len > 0){
+        str = '<li class="layui-layer-tabli xubox_tab_layer">'+ (tab[0].content || 'no content') +'</li>';
+        for(; ii < len; ii++){
+          str += '<li class="layui-layer-tabli">'+ (tab[ii].content || 'no  content') +'</li>';
+        }
+      }
+      return str;
+    }() +'</ul>',
+    success: function(layero){
+      var btn = layero.find('.layui-layer-title').children();
+      var main = layero.find('.layui-layer-tabmain').children();
+      btn.on('mousedown', function(e){
+        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+        var othis = $(this), index = othis.index();
+        othis.addClass('layui-layer-tabnow').siblings().removeClass('layui-layer-tabnow');
+        main.eq(index).show().siblings().hide();
+        typeof options.change === 'function' && options.change(index);
+      });
+      typeof success === 'function' && success(layero);
+    }
+  }, options));
+};
+
+//相册层
+layer.photos = function(options, loop, key){
+  var dict = {};
+  options = options || {};
+  if(!options.photos) return;
+  var type = options.photos.constructor === Object;
+  var photos = type ? options.photos : {}, data = photos.data || [];
+  var start = photos.start || 0;
+  dict.imgIndex = (start|0) + 1;
+  
+  options.img = options.img || 'img';
+  
+  var success = options.success;
+  delete options.success;
+
+  if(!type){ //页面直接获取
+    var parent = $(options.photos), pushData = function(){
+      data = [];
+      parent.find(options.img).each(function(index){
+        var othis = $(this);
+        othis.attr('layer-index', index);
+        data.push({
+          alt: othis.attr('alt'),
+          pid: othis.attr('layer-pid'),
+          src: othis.attr('layer-src') || othis.attr('src'),
+          thumb: othis.attr('src')
+        });
+      })
+    };
+    
+    pushData();
+    
+    if (data.length === 0) return;
+    
+    loop || parent.on('click', options.img, function(){
+      var othis = $(this), index = othis.attr('layer-index'); 
+      layer.photos($.extend(options, {
+        photos: {
+          start: index,
+          data: data,
+          tab: options.tab
+        },
+        full: options.full
+      }), true);
+      pushData();
+    })
+    
+    //不直接弹出
+    if(!loop) return;
+    
+  } else if (data.length === 0){
+    return layer.msg(message.noPicture);
+  }
+  
+  //上一张
+  dict.imgprev = function(key){
+    dict.imgIndex--;
+    if(dict.imgIndex < 1){
+      dict.imgIndex = data.length;
+    }
+    dict.tabimg(key);
+  };
+  
+  //下一张
+  dict.imgnext = function(key,errorMsg){
+    dict.imgIndex++;
+    if(dict.imgIndex > data.length){
+      dict.imgIndex = 1;
+      if (errorMsg) {return};
+    }
+    dict.tabimg(key)
+  };
+  
+  //方向键
+  dict.keyup = function(event){
+    if(!dict.end){
+      var code = event.keyCode;
+      event.preventDefault();
+      if(code === 37){
+        dict.imgprev(true);
+      } else if(code === 39) {
+        dict.imgnext(true);
+      } else if(code === 27) {
+        layer.close(dict.index);
+      }
+    }
+  }
+  
+  //切换
+  dict.tabimg = function(key){
+    if(data.length <= 1) return;
+    photos.start = dict.imgIndex - 1;
+    layer.close(dict.index);
+    return layer.photos(options, true, key);
+    setTimeout(function(){
+      layer.photos(options, true, key);
+    }, 200);
+  }
+  
+  //一些动作
+  dict.event = function(){
+    dict.bigimg.hover(function(){
+      dict.imgsee.show();
+    }, function(){
+      dict.imgsee.hide();
+    });
+    
+    dict.bigimg.find('.layui-layer-imgprev').on('click', function(event){
+      event.preventDefault();
+      dict.imgprev();
+    });  
+    
+    dict.bigimg.find('.layui-layer-imgnext').on('click', function(event){     
+      event.preventDefault();
+      dict.imgnext();
+    });
+    
+    $(document).on('keyup', dict.keyup);
+  };
+  
+  //图片预加载
+  function loadImage(url, callback, error) {   
+    var img = new Image();
+    img.src = url; 
+    if(img.complete){
+      return callback(img);
+    }
+    img.onload = function(){
+      img.onload = null;
+      callback(img);
+    };
+    img.onerror = function(e){
+      img.onerror = null;
+      error(e);
+    };  
+  };
+  
+  dict.loadi = layer.load(1, {
+    shade: 'shade' in options ? false : 0.9,
+    scrollbar: false
+  });
+
+  loadImage(data[start].src, function(img){
+    layer.close(dict.loadi);
+    dict.index = layer.open($.extend({
+      type: 1,
+      id: 'layui-layer-photos',
+      area: function(){
+        var imgarea = [img.width, img.height];
+        var winarea = [$(window).width() - 100, $(window).height() - 100];
+        
+        //如果 实际图片的宽或者高比 屏幕大（那么进行缩放）
+        if(!options.full && (imgarea[0]>winarea[0]||imgarea[1]>winarea[1])){
+          var wh = [imgarea[0]/winarea[0],imgarea[1]/winarea[1]];//取宽度缩放比例、高度缩放比例
+          if(wh[0] > wh[1]){//取缩放比例最大的进行缩放
+            imgarea[0] = imgarea[0]/wh[0];
+            imgarea[1] = imgarea[1]/wh[0];
+          } else if(wh[0] < wh[1]){
+            imgarea[0] = imgarea[0]/wh[1];
+            imgarea[1] = imgarea[1]/wh[1];
+          }
+        }
+        
+        return [imgarea[0]+'px', imgarea[1]+'px']; 
+      }(),
+      title: false,
+      shade: 0.9,
+      shadeClose: true,
+      closeBtn: false,
+      move: '.layui-layer-phimg img',
+      moveType: 1,
+      scrollbar: false,
+      moveOut: true,
+      //anim: Math.random()*5|0,
+      isOutAnim: false,
+      skin: 'layui-layer-photos' + skin('photos'),
+      content: '<div class="layui-layer-phimg">'
+        +'<img src="'+ data[start].src +'" alt="'+ (data[start].alt||'') +'" layer-pid="'+ data[start].pid +'">'
+        +'<div class="layui-layer-imgsee">'
+          +(data.length > 1 ? '<span class="layui-layer-imguide"><a href="javascript:;" class="layui-layer-iconext layui-layer-imgprev"></a><a href="javascript:;" class="layui-layer-iconext layui-layer-imgnext"></a></span>' : '')
+          +'<div class="layui-layer-imgbar" style="display:'+ (key ? 'block' : '') +'"><span class="layui-layer-imgtit"><a href="javascript:;">'+ (data[start].alt||'') +'</a><em>'+ dict.imgIndex +'/'+ data.length +'</em></span></div>'
+        +'</div>'
+      +'</div>',
+      success: function(layero, index){
+        dict.bigimg = layero.find('.layui-layer-phimg');
+        dict.imgsee = layero.find('.layui-layer-imguide,.layui-layer-imgbar');
+        dict.event(layero);
+        options.tab && options.tab(data[start], layero);
+        typeof success === 'function' && success(layero);
+      }, end: function(){
+        dict.end = true;
+        $(document).off('keyup', dict.keyup);
+      }
+    }, options));
+  }, function(){
+    layer.close(dict.loadi);
+    layer.msg(i18n.photoError, {
+      time: 30000, 
+      btn: [i18n.photoNextPage, i18n.photoClose], 
+      yes: function(){
+        data.length > 1 && dict.imgnext(true,true);
+      }
+    });
+  });
+};
+
+//主入口
+ready.run = function(_$){
+  $ = _$;
+  win = $(window);
+  doms.html = $('html');
+  layer.open = function(deliver){
+    var o = new Class(deliver);
+    return o.index;
+  };
+};
+
+//加载方式
+window.layui && layui.define ? (
+  layer.ready()
+  ,layui.define('jquery', function(exports){ //layui加载
+    layer.path = layui.cache.dir;
+    ready.run(layui.jquery);
+
+    //暴露模块
+    window.layer = layer;
+    exports('layer', layer);
+  })
+) : (
+  (typeof define === 'function' && define.amd) ? define(['jquery'], function(){ //requirejs加载
+    ready.run(window.jQuery);
+    return layer;
+  }) : function(){ //普通script标签加载
+    ready.run(window.jQuery);
+    layer.ready();
+  }()
+);
+
+}(window);

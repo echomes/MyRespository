@@ -2,7 +2,24 @@
 * http://jqueryui.com
 * Includes: effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
-(function(a){if(typeof define==="function"&&define.amd){define(["jquery"],a)}else{a(jQuery)}}(function(d){d.ui=d.ui||{};var c=d.ui.version="1.12.1";
+
+(function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+
+		// AMD. Register as an anonymous module.
+		define([ "jquery" ], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+}(function( $ ) {
+
+$.ui = $.ui || {};
+
+var version = $.ui.version = "1.12.1";
+
+
 /*!
  * jQuery UI Effects 1.12.1
  * http://jqueryui.com
@@ -11,7 +28,29 @@
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var k="ui-effects-",e="ui-effects-style",p="ui-effects-animated",i=d;d.effects={effect:{}};
+
+//>>label: Effects Core
+//>>group: Effects
+// jscs:disable maximumLineLength
+//>>description: Extends the internal jQuery effects. Includes morphing and easing. Required by all other effects.
+// jscs:enable maximumLineLength
+//>>docs: http://api.jqueryui.com/category/effects-core/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var dataSpace = "ui-effects-",
+	dataSpaceStyle = "ui-effects-style",
+	dataSpaceAnimated = "ui-effects-animated",
+
+	// Create a local jQuery because jQuery Color relies on it and the
+	// global may not exist with AMD and a custom build (#10199)
+	jQuery = $;
+
+$.effects = {
+	effect: {}
+};
+
 /*!
  * jQuery Color Animations v2.1.2
  * https://github.com/jquery/jquery-color
@@ -22,7 +61,1590 @@ var k="ui-effects-",e="ui-effects-style",p="ui-effects-animated",i=d;d.effects={
  *
  * Date: Wed Jan 16 08:47:09 2013 -0600
  */
-(function(K,z){var G="backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",D=/^([\-+])=\s*(\d+\.?\d*)/,C=[{re:/rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,parse:function(L){return[L[1],L[2],L[3],L[4]]}},{re:/rgba?\(\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,parse:function(L){return[L[1]*2.55,L[2]*2.55,L[3]*2.55,L[4]]}},{re:/#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/,parse:function(L){return[parseInt(L[1],16),parseInt(L[2],16),parseInt(L[3],16)]}},{re:/#([a-f0-9])([a-f0-9])([a-f0-9])/,parse:function(L){return[parseInt(L[1]+L[1],16),parseInt(L[2]+L[2],16),parseInt(L[3]+L[3],16)]}},{re:/hsla?\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,space:"hsla",parse:function(L){return[L[1],L[2]/100,L[3]/100,L[4]]}}],A=K.Color=function(M,N,L,O){return new K.Color.fn.parse(M,N,L,O)},F={rgba:{props:{red:{idx:0,type:"byte"},green:{idx:1,type:"byte"},blue:{idx:2,type:"byte"}}},hsla:{props:{hue:{idx:0,type:"degrees"},saturation:{idx:1,type:"percent"},lightness:{idx:2,type:"percent"}}}},J={"byte":{floor:true,max:255},percent:{max:1},degrees:{mod:360,floor:true}},I=A.support={},x=K("<p>")[0],w,H=K.each;x.style.cssText="background-color:rgba(1,1,1,.5)";I.rgba=x.style.backgroundColor.indexOf("rgba")>-1;H(F,function(L,M){M.cache="_"+L;M.props.alpha={idx:3,type:"percent",def:1}});function E(M,O,N){var L=J[O.type]||{};if(M==null){return(N||!O.def)?null:O.def}M=L.floor?~~M:parseFloat(M);if(isNaN(M)){return O.def}if(L.mod){return(M+L.mod)%L.mod}return 0>M?0:L.max<M?L.max:M}function B(L){var N=A(),M=N._rgba=[];L=L.toLowerCase();H(C,function(S,T){var Q,R=T.re.exec(L),P=R&&T.parse(R),O=T.space||"rgba";if(P){Q=N[O](P);N[F[O].cache]=Q[F[O].cache];M=N._rgba=Q._rgba;return false}});if(M.length){if(M.join()==="0,0,0,0"){K.extend(M,w.transparent)}return N}return w[L]}A.fn=K.extend(A.prototype,{parse:function(R,P,L,Q){if(R===z){this._rgba=[null,null,null,null];return this}if(R.jquery||R.nodeType){R=K(R).css(P);P=z}var O=this,N=K.type(R),M=this._rgba=[];if(P!==z){R=[R,P,L,Q];N="array"}if(N==="string"){return this.parse(B(R)||w._default)}if(N==="array"){H(F.rgba.props,function(S,T){M[T.idx]=E(R[T.idx],T)});return this}if(N==="object"){if(R instanceof A){H(F,function(S,T){if(R[T.cache]){O[T.cache]=R[T.cache].slice()}})}else{H(F,function(T,U){var S=U.cache;H(U.props,function(V,W){if(!O[S]&&U.to){if(V==="alpha"||R[V]==null){return}O[S]=U.to(O._rgba)}O[S][W.idx]=E(R[V],W,true)});if(O[S]&&K.inArray(null,O[S].slice(0,3))<0){O[S][3]=1;if(U.from){O._rgba=U.from(O[S])}}})}return this}},is:function(N){var L=A(N),O=true,M=this;H(F,function(P,R){var S,Q=L[R.cache];if(Q){S=M[R.cache]||R.to&&R.to(M._rgba)||[];H(R.props,function(T,U){if(Q[U.idx]!=null){O=(Q[U.idx]===S[U.idx]);return O}})}return O});return O},_space:function(){var L=[],M=this;H(F,function(N,O){if(M[O.cache]){L.push(N)}});return L.pop()},transition:function(M,S){var N=A(M),O=N._space(),P=F[O],Q=this.alpha()===0?A("transparent"):this,R=Q[P.cache]||P.to(Q._rgba),L=R.slice();N=N[P.cache];H(P.props,function(W,Y){var V=Y.idx,U=R[V],T=N[V],X=J[Y.type]||{};if(T===null){return}if(U===null){L[V]=T}else{if(X.mod){if(T-U>X.mod/2){U+=X.mod}else{if(U-T>X.mod/2){U-=X.mod}}}L[V]=E((T-U)*S+U,Y)}});return this[O](L)},blend:function(O){if(this._rgba[3]===1){return this}var N=this._rgba.slice(),M=N.pop(),L=A(O)._rgba;return A(K.map(N,function(P,Q){return(1-M)*L[Q]+M*P}))},toRgbaString:function(){var M="rgba(",L=K.map(this._rgba,function(N,O){return N==null?(O>2?1:0):N});if(L[3]===1){L.pop();M="rgb("}return M+L.join()+")"},toHslaString:function(){var M="hsla(",L=K.map(this.hsla(),function(N,O){if(N==null){N=O>2?1:0}if(O&&O<3){N=Math.round(N*100)+"%"}return N});if(L[3]===1){L.pop();M="hsl("}return M+L.join()+")"},toHexString:function(L){var M=this._rgba.slice(),N=M.pop();if(L){M.push(~~(N*255))}return"#"+K.map(M,function(O){O=(O||0).toString(16);return O.length===1?"0"+O:O}).join("")},toString:function(){return this._rgba[3]===0?"transparent":this.toRgbaString()}});A.fn.parse.prototype=A.fn;function y(N,M,L){L=(L+1)%1;if(L*6<1){return N+(M-N)*L*6}if(L*2<1){return M}if(L*3<2){return N+(M-N)*((2/3)-L)*6}return N}F.hsla.to=function(N){if(N[0]==null||N[1]==null||N[2]==null){return[null,null,null,N[3]]}var L=N[0]/255,Q=N[1]/255,R=N[2]/255,T=N[3],S=Math.max(L,Q,R),O=Math.min(L,Q,R),U=S-O,V=S+O,M=V*0.5,P,W;if(O===S){P=0}else{if(L===S){P=(60*(Q-R)/U)+360}else{if(Q===S){P=(60*(R-L)/U)+120}else{P=(60*(L-Q)/U)+240}}}if(U===0){W=0}else{if(M<=0.5){W=U/V}else{W=U/(2-V)}}return[Math.round(P)%360,W,M,T==null?1:T]};F.hsla.from=function(P){if(P[0]==null||P[1]==null||P[2]==null){return[null,null,null,P[3]]}var O=P[0]/360,N=P[1],M=P[2],L=P[3],Q=M<=0.5?M*(1+N):M+N-M*N,R=2*M-Q;return[Math.round(y(R,Q,O+(1/3))*255),Math.round(y(R,Q,O)*255),Math.round(y(R,Q,O-(1/3))*255),L]};H(F,function(M,O){var N=O.props,L=O.cache,Q=O.to,P=O.from;A.fn[M]=function(V){if(Q&&!this[L]){this[L]=Q(this._rgba)}if(V===z){return this[L].slice()}var S,U=K.type(V),R=(U==="array"||U==="object")?V:arguments,T=this[L].slice();H(N,function(W,Y){var X=R[U==="object"?W:Y.idx];if(X==null){X=T[Y.idx]}T[Y.idx]=E(X,Y)});if(P){S=A(P(T));S[L]=T;return S}else{return A(T)}};H(N,function(R,S){if(A.fn[R]){return}A.fn[R]=function(W){var Y=K.type(W),V=(R==="alpha"?(this._hsla?"hsla":"rgba"):M),U=this[V](),X=U[S.idx],T;if(Y==="undefined"){return X}if(Y==="function"){W=W.call(this,X);Y=K.type(W)}if(W==null&&S.empty){return this}if(Y==="string"){T=D.exec(W);if(T){W=X+parseFloat(T[2])*(T[1]==="+"?1:-1)}}U[S.idx]=W;return this[V](U)}})});A.hook=function(M){var L=M.split(" ");H(L,function(N,O){K.cssHooks[O]={set:function(S,T){var Q,R,P="";if(T!=="transparent"&&(K.type(T)!=="string"||(Q=B(T)))){T=A(Q||T);if(!I.rgba&&T._rgba[3]!==1){R=O==="backgroundColor"?S.parentNode:S;while((P===""||P==="transparent")&&R&&R.style){try{P=K.css(R,"backgroundColor");R=R.parentNode}catch(U){}}T=T.blend(P&&P!=="transparent"?P:"_default")}T=T.toRgbaString()}try{S.style[O]=T}catch(U){}}};K.fx.step[O]=function(P){if(!P.colorInit){P.start=A(P.elem,O);P.end=A(P.end);P.colorInit=true}K.cssHooks[O].set(P.elem,P.start.transition(P.end,P.pos))}})};A.hook(G);K.cssHooks.borderColor={expand:function(M){var L={};H(["Top","Right","Bottom","Left"],function(O,N){L["border"+N+"Color"]=M});return L}};w=K.Color.names={aqua:"#00ffff",black:"#000000",blue:"#0000ff",fuchsia:"#ff00ff",gray:"#808080",green:"#008000",lime:"#00ff00",maroon:"#800000",navy:"#000080",olive:"#808000",purple:"#800080",red:"#ff0000",silver:"#c0c0c0",teal:"#008080",white:"#ffffff",yellow:"#ffff00",transparent:[null,null,null,0],_default:"#ffffff"}})(i);(function(){var x=["add","remove","toggle"],y={border:1,borderBottom:1,borderColor:1,borderLeft:1,borderRight:1,borderTop:1,borderWidth:1,margin:1,padding:1};d.each(["borderLeftStyle","borderRightStyle","borderBottomStyle","borderTopStyle"],function(A,B){d.fx.step[B]=function(C){if(C.end!=="none"&&!C.setAttr||C.pos===1&&!C.setAttr){i.style(C.elem,B,C.end);C.setAttr=true}}});function z(E){var B,A,C=E.ownerDocument.defaultView?E.ownerDocument.defaultView.getComputedStyle(E,null):E.currentStyle,D={};if(C&&C.length&&C[0]&&C[C[0]]){A=C.length;while(A--){B=C[A];if(typeof C[B]==="string"){D[d.camelCase(B)]=C[B]}}}else{for(B in C){if(typeof C[B]==="string"){D[B]=C[B]}}}return D}function w(A,C){var E={},B,D;for(B in C){D=C[B];if(A[B]!==D){if(!y[B]){if(d.fx.step[B]||!isNaN(parseFloat(D))){E[B]=D}}}}return E}if(!d.fn.addBack){d.fn.addBack=function(A){return this.add(A==null?this.prevObject:this.prevObject.filter(A))}}d.effects.animateClass=function(A,B,E,D){var C=d.speed(B,E,D);return this.queue(function(){var H=d(this),F=H.attr("class")||"",G,I=C.children?H.find("*").addBack():H;I=I.map(function(){var J=d(this);return{el:J,start:z(this)}});G=function(){d.each(x,function(J,K){if(A[K]){H[K+"Class"](A[K])}})};G();I=I.map(function(){this.end=z(this.el[0]);this.diff=w(this.start,this.end);return this});H.attr("class",F);I=I.map(function(){var L=this,J=d.Deferred(),K=d.extend({},C,{queue:false,complete:function(){J.resolve(L)}});this.el.animate(this.diff,K);return J.promise()});d.when.apply(d,I.get()).done(function(){G();d.each(arguments,function(){var J=this.el;d.each(this.diff,function(K){J.css(K,"")})});C.complete.call(H[0])})})};d.fn.extend({addClass:(function(A){return function(C,B,E,D){return B?d.effects.animateClass.call(this,{add:C},B,E,D):A.apply(this,arguments)}})(d.fn.addClass),removeClass:(function(A){return function(C,B,E,D){return arguments.length>1?d.effects.animateClass.call(this,{remove:C},B,E,D):A.apply(this,arguments)}})(d.fn.removeClass),toggleClass:(function(A){return function(D,C,B,F,E){if(typeof C==="boolean"||C===undefined){if(!B){return A.apply(this,arguments)}else{return d.effects.animateClass.call(this,(C?{add:D}:{remove:D}),B,F,E)}}else{return d.effects.animateClass.call(this,{toggle:D},C,B,F)}}})(d.fn.toggleClass),switchClass:function(A,C,B,E,D){return d.effects.animateClass.call(this,{add:C,remove:A},B,E,D)}})})();(function(){if(d.expr&&d.expr.filters&&d.expr.filters.animated){d.expr.filters.animated=(function(z){return function(A){return !!d(A).data(p)||z(A)}})(d.expr.filters.animated)}if(d.uiBackCompat!==false){d.extend(d.effects,{save:function(A,C){var z=0,B=C.length;for(;z<B;z++){if(C[z]!==null){A.data(k+C[z],A[0].style[C[z]])}}},restore:function(A,D){var C,z=0,B=D.length;for(;z<B;z++){if(D[z]!==null){C=A.data(k+D[z]);A.css(D[z],C)}}},setMode:function(z,A){if(A==="toggle"){A=z.is(":hidden")?"show":"hide"}return A},createWrapper:function(A){if(A.parent().is(".ui-effects-wrapper")){return A.parent()}var B={width:A.outerWidth(true),height:A.outerHeight(true),"float":A.css("float")},E=d("<div></div>").addClass("ui-effects-wrapper").css({fontSize:"100%",background:"transparent",border:"none",margin:0,padding:0}),z={width:A.width(),height:A.height()},D=document.activeElement;try{D.id}catch(C){D=document.body}A.wrap(E);if(A[0]===D||d.contains(A[0],D)){d(D).trigger("focus")}E=A.parent();if(A.css("position")==="static"){E.css({position:"relative"});A.css({position:"relative"})}else{d.extend(B,{position:A.css("position"),zIndex:A.css("z-index")});d.each(["top","left","bottom","right"],function(F,G){B[G]=A.css(G);if(isNaN(parseInt(B[G],10))){B[G]="auto"}});A.css({position:"relative",top:0,left:0,right:"auto",bottom:"auto"})}A.css(z);return E.css(B).show()},removeWrapper:function(z){var A=document.activeElement;if(z.parent().is(".ui-effects-wrapper")){z.parent().replaceWith(z);if(z[0]===A||d.contains(z[0],A)){d(A).trigger("focus")}}return z}})}d.extend(d.effects,{version:"1.12.1",define:function(z,B,A){if(!A){A=B;B="effect"}d.effects.effect[z]=A;d.effects.effect[z].mode=B;return A},scaledDimensions:function(A,B,C){if(B===0){return{height:0,width:0,outerHeight:0,outerWidth:0}}var z=C!=="horizontal"?((B||100)/100):1,D=C!=="vertical"?((B||100)/100):1;return{height:A.height()*D,width:A.width()*z,outerHeight:A.outerHeight()*D,outerWidth:A.outerWidth()*z}},clipToBox:function(z){return{width:z.clip.right-z.clip.left,height:z.clip.bottom-z.clip.top,left:z.clip.left,top:z.clip.top}},unshift:function(A,C,B){var z=A.queue();if(C>1){z.splice.apply(z,[1,0].concat(z.splice(C,B)))}A.dequeue()},saveStyle:function(z){z.data(e,z[0].style.cssText)},restoreStyle:function(z){z[0].style.cssText=z.data(e)||"";z.removeData(e)},mode:function(z,B){var A=z.is(":hidden");if(B==="toggle"){B=A?"show":"hide"}if(A?B==="hide":B==="show"){B="none"}return B},getBaseline:function(A,B){var C,z;switch(A[0]){case"top":C=0;break;case"middle":C=0.5;break;case"bottom":C=1;break;default:C=A[0]/B.height}switch(A[1]){case"left":z=0;break;case"center":z=0.5;break;case"right":z=1;break;default:z=A[1]/B.width}return{x:z,y:C}},createPlaceholder:function(A){var C,B=A.css("position"),z=A.position();A.css({marginTop:A.css("marginTop"),marginBottom:A.css("marginBottom"),marginLeft:A.css("marginLeft"),marginRight:A.css("marginRight")}).outerWidth(A.outerWidth()).outerHeight(A.outerHeight());if(/^(static|relative)/.test(B)){B="absolute";C=d("<"+A[0].nodeName+">").insertAfter(A).css({display:/^(inline|ruby)/.test(A.css("display"))?"inline-block":"block",visibility:"hidden",marginTop:A.css("marginTop"),marginBottom:A.css("marginBottom"),marginLeft:A.css("marginLeft"),marginRight:A.css("marginRight"),"float":A.css("float")}).outerWidth(A.outerWidth()).outerHeight(A.outerHeight()).addClass("ui-effects-placeholder");A.data(k+"placeholder",C)}A.css({position:B,left:z.left,top:z.top});return C},removePlaceholder:function(z){var B=k+"placeholder",A=z.data(B);if(A){A.remove();z.removeData(B)}},cleanUp:function(z){d.effects.restoreStyle(z);d.effects.removePlaceholder(z)},setTransition:function(A,C,z,B){B=B||{};d.each(C,function(E,D){var F=A.cssUnit(D);if(F[0]>0){B[D]=F[0]*z+F[1]}});return B}});function x(A,z,B,C){if(d.isPlainObject(A)){z=A;A=A.effect}A={effect:A};if(z==null){z={}}if(d.isFunction(z)){C=z;B=null;z={}}if(typeof z==="number"||d.fx.speeds[z]){C=B;B=z;z={}}if(d.isFunction(B)){C=B;B=null}if(z){d.extend(A,z)}B=B||z.duration;A.duration=d.fx.off?0:typeof B==="number"?B:B in d.fx.speeds?d.fx.speeds[B]:d.fx.speeds._default;A.complete=C||z.complete;return A}function y(z){if(!z||typeof z==="number"||d.fx.speeds[z]){return true}if(typeof z==="string"&&!d.effects.effect[z]){return true}if(d.isFunction(z)){return true}if(typeof z==="object"&&!z.effect){return true}return false}d.fn.extend({effect:function(){var H=x.apply(this,arguments),G=d.effects.effect[H.effect],D=G.mode,F=H.queue,C=F||"fx",z=H.complete,E=H.mode,A=[],I=function(L){var K=d(this),J=d.effects.mode(K,E)||D;K.data(p,true);A.push(J);if(D&&(J==="show"||(J===D&&J==="hide"))){K.show()}if(!D||J!=="none"){d.effects.saveStyle(K)}if(d.isFunction(L)){L()}};if(d.fx.off||!G){if(E){return this[E](H.duration,z)}else{return this.each(function(){if(z){z.call(this)}})}}function B(L){var M=d(this);function K(){M.removeData(p);d.effects.cleanUp(M);if(H.mode==="hide"){M.hide()}J()}function J(){if(d.isFunction(z)){z.call(M[0])}if(d.isFunction(L)){L()}}H.mode=A.shift();if(d.uiBackCompat!==false&&!D){if(M.is(":hidden")?E==="hide":E==="show"){M[E]();J()}else{G.call(M[0],H,J)}}else{if(H.mode==="none"){M[E]();J()}else{G.call(M[0],H,K)}}}return F===false?this.each(I).each(B):this.queue(C,I).queue(C,B)},show:(function(z){return function(B){if(y(B)){return z.apply(this,arguments)}else{var A=x.apply(this,arguments);A.mode="show";return this.effect.call(this,A)}}})(d.fn.show),hide:(function(z){return function(B){if(y(B)){return z.apply(this,arguments)}else{var A=x.apply(this,arguments);A.mode="hide";return this.effect.call(this,A)}}})(d.fn.hide),toggle:(function(z){return function(B){if(y(B)||typeof B==="boolean"){return z.apply(this,arguments)}else{var A=x.apply(this,arguments);A.mode="toggle";return this.effect.call(this,A)}}})(d.fn.toggle),cssUnit:function(z){var A=this.css(z),B=[];d.each(["em","px","%","pt"],function(C,D){if(A.indexOf(D)>0){B=[parseFloat(A),D]}});return B},cssClip:function(z){if(z){return this.css("clip","rect("+z.top+"px "+z.right+"px "+z.bottom+"px "+z.left+"px)")}return w(this.css("clip"),this)},transfer:function(K,C){var E=d(this),G=d(K.to),J=G.css("position")==="fixed",F=d("body"),H=J?F.scrollTop():0,I=J?F.scrollLeft():0,z=G.offset(),B={top:z.top-H,left:z.left-I,height:G.innerHeight(),width:G.innerWidth()},D=E.offset(),A=d("<div class='ui-effects-transfer'></div>").appendTo("body").addClass(K.className).css({top:D.top-H,left:D.left-I,height:E.innerHeight(),width:E.innerWidth(),position:J?"fixed":"absolute"}).animate(B,K.duration,K.easing,function(){A.remove();if(d.isFunction(C)){C()}})}});function w(E,B){var D=B.outerWidth(),C=B.outerHeight(),A=/^rect\((-?\d*\.?\d*px|-?\d+%|auto),?\s*(-?\d*\.?\d*px|-?\d+%|auto),?\s*(-?\d*\.?\d*px|-?\d+%|auto),?\s*(-?\d*\.?\d*px|-?\d+%|auto)\)$/,z=A.exec(E)||["",0,D,C,0];return{top:parseFloat(z[1])||0,right:z[2]==="auto"?D:parseFloat(z[2]),bottom:z[3]==="auto"?C:parseFloat(z[3]),left:parseFloat(z[4])||0}}d.fx.step.clip=function(z){if(!z.clipInit){z.start=d(z.elem).cssClip();if(typeof z.end==="string"){z.end=w(z.end,z.elem)}z.clipInit=true}d(z.elem).cssClip({top:z.pos*(z.end.top-z.start.top)+z.start.top,right:z.pos*(z.end.right-z.start.right)+z.start.right,bottom:z.pos*(z.end.bottom-z.start.bottom)+z.start.bottom,left:z.pos*(z.end.left-z.start.left)+z.start.left})}})();(function(){var w={};d.each(["Quad","Cubic","Quart","Quint","Expo"],function(y,x){w[x]=function(z){return Math.pow(z,y+2)}});d.extend(w,{Sine:function(x){return 1-Math.cos(x*Math.PI/2)},Circ:function(x){return 1-Math.sqrt(1-x*x)},Elastic:function(x){return x===0||x===1?x:-Math.pow(2,8*(x-1))*Math.sin(((x-1)*80-7.5)*Math.PI/15)},Back:function(x){return x*x*(3*x-2)},Bounce:function(z){var x,y=4;while(z<((x=Math.pow(2,--y))-1)/11){}return 1/Math.pow(4,3-y)-7.5625*Math.pow((x*3-2)/22-z,2)}});d.each(w,function(y,x){d.easing["easeIn"+y]=x;d.easing["easeOut"+y]=function(z){return 1-x(1-z)};d.easing["easeInOut"+y]=function(z){return z<0.5?x(z*2)/2:1-x(z*-2+2)/2}})})();var m=d.effects;
+( function( jQuery, undefined ) {
+
+	var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor " +
+		"borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",
+
+	// Plusequals test for += 100 -= 100
+	rplusequals = /^([\-+])=\s*(\d+\.?\d*)/,
+
+	// A set of RE's that can match strings and generate color tuples.
+	stringParsers = [ {
+			re: /rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
+			parse: function( execResult ) {
+				return [
+					execResult[ 1 ],
+					execResult[ 2 ],
+					execResult[ 3 ],
+					execResult[ 4 ]
+				];
+			}
+		}, {
+			re: /rgba?\(\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
+			parse: function( execResult ) {
+				return [
+					execResult[ 1 ] * 2.55,
+					execResult[ 2 ] * 2.55,
+					execResult[ 3 ] * 2.55,
+					execResult[ 4 ]
+				];
+			}
+		}, {
+
+			// This regex ignores A-F because it's compared against an already lowercased string
+			re: /#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/,
+			parse: function( execResult ) {
+				return [
+					parseInt( execResult[ 1 ], 16 ),
+					parseInt( execResult[ 2 ], 16 ),
+					parseInt( execResult[ 3 ], 16 )
+				];
+			}
+		}, {
+
+			// This regex ignores A-F because it's compared against an already lowercased string
+			re: /#([a-f0-9])([a-f0-9])([a-f0-9])/,
+			parse: function( execResult ) {
+				return [
+					parseInt( execResult[ 1 ] + execResult[ 1 ], 16 ),
+					parseInt( execResult[ 2 ] + execResult[ 2 ], 16 ),
+					parseInt( execResult[ 3 ] + execResult[ 3 ], 16 )
+				];
+			}
+		}, {
+			re: /hsla?\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
+			space: "hsla",
+			parse: function( execResult ) {
+				return [
+					execResult[ 1 ],
+					execResult[ 2 ] / 100,
+					execResult[ 3 ] / 100,
+					execResult[ 4 ]
+				];
+			}
+		} ],
+
+	// JQuery.Color( )
+	color = jQuery.Color = function( color, green, blue, alpha ) {
+		return new jQuery.Color.fn.parse( color, green, blue, alpha );
+	},
+	spaces = {
+		rgba: {
+			props: {
+				red: {
+					idx: 0,
+					type: "byte"
+				},
+				green: {
+					idx: 1,
+					type: "byte"
+				},
+				blue: {
+					idx: 2,
+					type: "byte"
+				}
+			}
+		},
+
+		hsla: {
+			props: {
+				hue: {
+					idx: 0,
+					type: "degrees"
+				},
+				saturation: {
+					idx: 1,
+					type: "percent"
+				},
+				lightness: {
+					idx: 2,
+					type: "percent"
+				}
+			}
+		}
+	},
+	propTypes = {
+		"byte": {
+			floor: true,
+			max: 255
+		},
+		"percent": {
+			max: 1
+		},
+		"degrees": {
+			mod: 360,
+			floor: true
+		}
+	},
+	support = color.support = {},
+
+	// Element for support tests
+	supportElem = jQuery( "<p>" )[ 0 ],
+
+	// Colors = jQuery.Color.names
+	colors,
+
+	// Local aliases of functions called often
+	each = jQuery.each;
+
+// Determine rgba support immediately
+supportElem.style.cssText = "background-color:rgba(1,1,1,.5)";
+support.rgba = supportElem.style.backgroundColor.indexOf( "rgba" ) > -1;
+
+// Define cache name and alpha properties
+// for rgba and hsla spaces
+each( spaces, function( spaceName, space ) {
+	space.cache = "_" + spaceName;
+	space.props.alpha = {
+		idx: 3,
+		type: "percent",
+		def: 1
+	};
+} );
+
+function clamp( value, prop, allowEmpty ) {
+	var type = propTypes[ prop.type ] || {};
+
+	if ( value == null ) {
+		return ( allowEmpty || !prop.def ) ? null : prop.def;
+	}
+
+	// ~~ is an short way of doing floor for positive numbers
+	value = type.floor ? ~~value : parseFloat( value );
+
+	// IE will pass in empty strings as value for alpha,
+	// which will hit this case
+	if ( isNaN( value ) ) {
+		return prop.def;
+	}
+
+	if ( type.mod ) {
+
+		// We add mod before modding to make sure that negatives values
+		// get converted properly: -10 -> 350
+		return ( value + type.mod ) % type.mod;
+	}
+
+	// For now all property types without mod have min and max
+	return 0 > value ? 0 : type.max < value ? type.max : value;
+}
+
+function stringParse( string ) {
+	var inst = color(),
+		rgba = inst._rgba = [];
+
+	string = string.toLowerCase();
+
+	each( stringParsers, function( i, parser ) {
+		var parsed,
+			match = parser.re.exec( string ),
+			values = match && parser.parse( match ),
+			spaceName = parser.space || "rgba";
+
+		if ( values ) {
+			parsed = inst[ spaceName ]( values );
+
+			// If this was an rgba parse the assignment might happen twice
+			// oh well....
+			inst[ spaces[ spaceName ].cache ] = parsed[ spaces[ spaceName ].cache ];
+			rgba = inst._rgba = parsed._rgba;
+
+			// Exit each( stringParsers ) here because we matched
+			return false;
+		}
+	} );
+
+	// Found a stringParser that handled it
+	if ( rgba.length ) {
+
+		// If this came from a parsed string, force "transparent" when alpha is 0
+		// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
+		if ( rgba.join() === "0,0,0,0" ) {
+			jQuery.extend( rgba, colors.transparent );
+		}
+		return inst;
+	}
+
+	// Named colors
+	return colors[ string ];
+}
+
+color.fn = jQuery.extend( color.prototype, {
+	parse: function( red, green, blue, alpha ) {
+		if ( red === undefined ) {
+			this._rgba = [ null, null, null, null ];
+			return this;
+		}
+		if ( red.jquery || red.nodeType ) {
+			red = jQuery( red ).css( green );
+			green = undefined;
+		}
+
+		var inst = this,
+			type = jQuery.type( red ),
+			rgba = this._rgba = [];
+
+		// More than 1 argument specified - assume ( red, green, blue, alpha )
+		if ( green !== undefined ) {
+			red = [ red, green, blue, alpha ];
+			type = "array";
+		}
+
+		if ( type === "string" ) {
+			return this.parse( stringParse( red ) || colors._default );
+		}
+
+		if ( type === "array" ) {
+			each( spaces.rgba.props, function( key, prop ) {
+				rgba[ prop.idx ] = clamp( red[ prop.idx ], prop );
+			} );
+			return this;
+		}
+
+		if ( type === "object" ) {
+			if ( red instanceof color ) {
+				each( spaces, function( spaceName, space ) {
+					if ( red[ space.cache ] ) {
+						inst[ space.cache ] = red[ space.cache ].slice();
+					}
+				} );
+			} else {
+				each( spaces, function( spaceName, space ) {
+					var cache = space.cache;
+					each( space.props, function( key, prop ) {
+
+						// If the cache doesn't exist, and we know how to convert
+						if ( !inst[ cache ] && space.to ) {
+
+							// If the value was null, we don't need to copy it
+							// if the key was alpha, we don't need to copy it either
+							if ( key === "alpha" || red[ key ] == null ) {
+								return;
+							}
+							inst[ cache ] = space.to( inst._rgba );
+						}
+
+						// This is the only case where we allow nulls for ALL properties.
+						// call clamp with alwaysAllowEmpty
+						inst[ cache ][ prop.idx ] = clamp( red[ key ], prop, true );
+					} );
+
+					// Everything defined but alpha?
+					if ( inst[ cache ] &&
+							jQuery.inArray( null, inst[ cache ].slice( 0, 3 ) ) < 0 ) {
+
+						// Use the default of 1
+						inst[ cache ][ 3 ] = 1;
+						if ( space.from ) {
+							inst._rgba = space.from( inst[ cache ] );
+						}
+					}
+				} );
+			}
+			return this;
+		}
+	},
+	is: function( compare ) {
+		var is = color( compare ),
+			same = true,
+			inst = this;
+
+		each( spaces, function( _, space ) {
+			var localCache,
+				isCache = is[ space.cache ];
+			if ( isCache ) {
+				localCache = inst[ space.cache ] || space.to && space.to( inst._rgba ) || [];
+				each( space.props, function( _, prop ) {
+					if ( isCache[ prop.idx ] != null ) {
+						same = ( isCache[ prop.idx ] === localCache[ prop.idx ] );
+						return same;
+					}
+				} );
+			}
+			return same;
+		} );
+		return same;
+	},
+	_space: function() {
+		var used = [],
+			inst = this;
+		each( spaces, function( spaceName, space ) {
+			if ( inst[ space.cache ] ) {
+				used.push( spaceName );
+			}
+		} );
+		return used.pop();
+	},
+	transition: function( other, distance ) {
+		var end = color( other ),
+			spaceName = end._space(),
+			space = spaces[ spaceName ],
+			startColor = this.alpha() === 0 ? color( "transparent" ) : this,
+			start = startColor[ space.cache ] || space.to( startColor._rgba ),
+			result = start.slice();
+
+		end = end[ space.cache ];
+		each( space.props, function( key, prop ) {
+			var index = prop.idx,
+				startValue = start[ index ],
+				endValue = end[ index ],
+				type = propTypes[ prop.type ] || {};
+
+			// If null, don't override start value
+			if ( endValue === null ) {
+				return;
+			}
+
+			// If null - use end
+			if ( startValue === null ) {
+				result[ index ] = endValue;
+			} else {
+				if ( type.mod ) {
+					if ( endValue - startValue > type.mod / 2 ) {
+						startValue += type.mod;
+					} else if ( startValue - endValue > type.mod / 2 ) {
+						startValue -= type.mod;
+					}
+				}
+				result[ index ] = clamp( ( endValue - startValue ) * distance + startValue, prop );
+			}
+		} );
+		return this[ spaceName ]( result );
+	},
+	blend: function( opaque ) {
+
+		// If we are already opaque - return ourself
+		if ( this._rgba[ 3 ] === 1 ) {
+			return this;
+		}
+
+		var rgb = this._rgba.slice(),
+			a = rgb.pop(),
+			blend = color( opaque )._rgba;
+
+		return color( jQuery.map( rgb, function( v, i ) {
+			return ( 1 - a ) * blend[ i ] + a * v;
+		} ) );
+	},
+	toRgbaString: function() {
+		var prefix = "rgba(",
+			rgba = jQuery.map( this._rgba, function( v, i ) {
+				return v == null ? ( i > 2 ? 1 : 0 ) : v;
+			} );
+
+		if ( rgba[ 3 ] === 1 ) {
+			rgba.pop();
+			prefix = "rgb(";
+		}
+
+		return prefix + rgba.join() + ")";
+	},
+	toHslaString: function() {
+		var prefix = "hsla(",
+			hsla = jQuery.map( this.hsla(), function( v, i ) {
+				if ( v == null ) {
+					v = i > 2 ? 1 : 0;
+				}
+
+				// Catch 1 and 2
+				if ( i && i < 3 ) {
+					v = Math.round( v * 100 ) + "%";
+				}
+				return v;
+			} );
+
+		if ( hsla[ 3 ] === 1 ) {
+			hsla.pop();
+			prefix = "hsl(";
+		}
+		return prefix + hsla.join() + ")";
+	},
+	toHexString: function( includeAlpha ) {
+		var rgba = this._rgba.slice(),
+			alpha = rgba.pop();
+
+		if ( includeAlpha ) {
+			rgba.push( ~~( alpha * 255 ) );
+		}
+
+		return "#" + jQuery.map( rgba, function( v ) {
+
+			// Default to 0 when nulls exist
+			v = ( v || 0 ).toString( 16 );
+			return v.length === 1 ? "0" + v : v;
+		} ).join( "" );
+	},
+	toString: function() {
+		return this._rgba[ 3 ] === 0 ? "transparent" : this.toRgbaString();
+	}
+} );
+color.fn.parse.prototype = color.fn;
+
+// Hsla conversions adapted from:
+// https://code.google.com/p/maashaack/source/browse/packages/graphics/trunk/src/graphics/colors/HUE2RGB.as?r=5021
+
+function hue2rgb( p, q, h ) {
+	h = ( h + 1 ) % 1;
+	if ( h * 6 < 1 ) {
+		return p + ( q - p ) * h * 6;
+	}
+	if ( h * 2 < 1 ) {
+		return q;
+	}
+	if ( h * 3 < 2 ) {
+		return p + ( q - p ) * ( ( 2 / 3 ) - h ) * 6;
+	}
+	return p;
+}
+
+spaces.hsla.to = function( rgba ) {
+	if ( rgba[ 0 ] == null || rgba[ 1 ] == null || rgba[ 2 ] == null ) {
+		return [ null, null, null, rgba[ 3 ] ];
+	}
+	var r = rgba[ 0 ] / 255,
+		g = rgba[ 1 ] / 255,
+		b = rgba[ 2 ] / 255,
+		a = rgba[ 3 ],
+		max = Math.max( r, g, b ),
+		min = Math.min( r, g, b ),
+		diff = max - min,
+		add = max + min,
+		l = add * 0.5,
+		h, s;
+
+	if ( min === max ) {
+		h = 0;
+	} else if ( r === max ) {
+		h = ( 60 * ( g - b ) / diff ) + 360;
+	} else if ( g === max ) {
+		h = ( 60 * ( b - r ) / diff ) + 120;
+	} else {
+		h = ( 60 * ( r - g ) / diff ) + 240;
+	}
+
+	// Chroma (diff) == 0 means greyscale which, by definition, saturation = 0%
+	// otherwise, saturation is based on the ratio of chroma (diff) to lightness (add)
+	if ( diff === 0 ) {
+		s = 0;
+	} else if ( l <= 0.5 ) {
+		s = diff / add;
+	} else {
+		s = diff / ( 2 - add );
+	}
+	return [ Math.round( h ) % 360, s, l, a == null ? 1 : a ];
+};
+
+spaces.hsla.from = function( hsla ) {
+	if ( hsla[ 0 ] == null || hsla[ 1 ] == null || hsla[ 2 ] == null ) {
+		return [ null, null, null, hsla[ 3 ] ];
+	}
+	var h = hsla[ 0 ] / 360,
+		s = hsla[ 1 ],
+		l = hsla[ 2 ],
+		a = hsla[ 3 ],
+		q = l <= 0.5 ? l * ( 1 + s ) : l + s - l * s,
+		p = 2 * l - q;
+
+	return [
+		Math.round( hue2rgb( p, q, h + ( 1 / 3 ) ) * 255 ),
+		Math.round( hue2rgb( p, q, h ) * 255 ),
+		Math.round( hue2rgb( p, q, h - ( 1 / 3 ) ) * 255 ),
+		a
+	];
+};
+
+each( spaces, function( spaceName, space ) {
+	var props = space.props,
+		cache = space.cache,
+		to = space.to,
+		from = space.from;
+
+	// Makes rgba() and hsla()
+	color.fn[ spaceName ] = function( value ) {
+
+		// Generate a cache for this space if it doesn't exist
+		if ( to && !this[ cache ] ) {
+			this[ cache ] = to( this._rgba );
+		}
+		if ( value === undefined ) {
+			return this[ cache ].slice();
+		}
+
+		var ret,
+			type = jQuery.type( value ),
+			arr = ( type === "array" || type === "object" ) ? value : arguments,
+			local = this[ cache ].slice();
+
+		each( props, function( key, prop ) {
+			var val = arr[ type === "object" ? key : prop.idx ];
+			if ( val == null ) {
+				val = local[ prop.idx ];
+			}
+			local[ prop.idx ] = clamp( val, prop );
+		} );
+
+		if ( from ) {
+			ret = color( from( local ) );
+			ret[ cache ] = local;
+			return ret;
+		} else {
+			return color( local );
+		}
+	};
+
+	// Makes red() green() blue() alpha() hue() saturation() lightness()
+	each( props, function( key, prop ) {
+
+		// Alpha is included in more than one space
+		if ( color.fn[ key ] ) {
+			return;
+		}
+		color.fn[ key ] = function( value ) {
+			var vtype = jQuery.type( value ),
+				fn = ( key === "alpha" ? ( this._hsla ? "hsla" : "rgba" ) : spaceName ),
+				local = this[ fn ](),
+				cur = local[ prop.idx ],
+				match;
+
+			if ( vtype === "undefined" ) {
+				return cur;
+			}
+
+			if ( vtype === "function" ) {
+				value = value.call( this, cur );
+				vtype = jQuery.type( value );
+			}
+			if ( value == null && prop.empty ) {
+				return this;
+			}
+			if ( vtype === "string" ) {
+				match = rplusequals.exec( value );
+				if ( match ) {
+					value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
+				}
+			}
+			local[ prop.idx ] = value;
+			return this[ fn ]( local );
+		};
+	} );
+} );
+
+// Add cssHook and .fx.step function for each named hook.
+// accept a space separated string of properties
+color.hook = function( hook ) {
+	var hooks = hook.split( " " );
+	each( hooks, function( i, hook ) {
+		jQuery.cssHooks[ hook ] = {
+			set: function( elem, value ) {
+				var parsed, curElem,
+					backgroundColor = "";
+
+				if ( value !== "transparent" && ( jQuery.type( value ) !== "string" ||
+						( parsed = stringParse( value ) ) ) ) {
+					value = color( parsed || value );
+					if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
+						curElem = hook === "backgroundColor" ? elem.parentNode : elem;
+						while (
+							( backgroundColor === "" || backgroundColor === "transparent" ) &&
+							curElem && curElem.style
+						) {
+							try {
+								backgroundColor = jQuery.css( curElem, "backgroundColor" );
+								curElem = curElem.parentNode;
+							} catch ( e ) {
+							}
+						}
+
+						value = value.blend( backgroundColor && backgroundColor !== "transparent" ?
+							backgroundColor :
+							"_default" );
+					}
+
+					value = value.toRgbaString();
+				}
+				try {
+					elem.style[ hook ] = value;
+				} catch ( e ) {
+
+					// Wrapped to prevent IE from throwing errors on "invalid" values like
+					// 'auto' or 'inherit'
+				}
+			}
+		};
+		jQuery.fx.step[ hook ] = function( fx ) {
+			if ( !fx.colorInit ) {
+				fx.start = color( fx.elem, hook );
+				fx.end = color( fx.end );
+				fx.colorInit = true;
+			}
+			jQuery.cssHooks[ hook ].set( fx.elem, fx.start.transition( fx.end, fx.pos ) );
+		};
+	} );
+
+};
+
+color.hook( stepHooks );
+
+jQuery.cssHooks.borderColor = {
+	expand: function( value ) {
+		var expanded = {};
+
+		each( [ "Top", "Right", "Bottom", "Left" ], function( i, part ) {
+			expanded[ "border" + part + "Color" ] = value;
+		} );
+		return expanded;
+	}
+};
+
+// Basic color names only.
+// Usage of any of the other color names requires adding yourself or including
+// jquery.color.svg-names.js.
+colors = jQuery.Color.names = {
+
+	// 4.1. Basic color keywords
+	aqua: "#00ffff",
+	black: "#000000",
+	blue: "#0000ff",
+	fuchsia: "#ff00ff",
+	gray: "#808080",
+	green: "#008000",
+	lime: "#00ff00",
+	maroon: "#800000",
+	navy: "#000080",
+	olive: "#808000",
+	purple: "#800080",
+	red: "#ff0000",
+	silver: "#c0c0c0",
+	teal: "#008080",
+	white: "#ffffff",
+	yellow: "#ffff00",
+
+	// 4.2.3. "transparent" color keyword
+	transparent: [ null, null, null, 0 ],
+
+	_default: "#ffffff"
+};
+
+} )( jQuery );
+
+/******************************************************************************/
+/****************************** CLASS ANIMATIONS ******************************/
+/******************************************************************************/
+( function() {
+
+var classAnimationActions = [ "add", "remove", "toggle" ],
+	shorthandStyles = {
+		border: 1,
+		borderBottom: 1,
+		borderColor: 1,
+		borderLeft: 1,
+		borderRight: 1,
+		borderTop: 1,
+		borderWidth: 1,
+		margin: 1,
+		padding: 1
+	};
+
+$.each(
+	[ "borderLeftStyle", "borderRightStyle", "borderBottomStyle", "borderTopStyle" ],
+	function( _, prop ) {
+		$.fx.step[ prop ] = function( fx ) {
+			if ( fx.end !== "none" && !fx.setAttr || fx.pos === 1 && !fx.setAttr ) {
+				jQuery.style( fx.elem, prop, fx.end );
+				fx.setAttr = true;
+			}
+		};
+	}
+);
+
+function getElementStyles( elem ) {
+	var key, len,
+		style = elem.ownerDocument.defaultView ?
+			elem.ownerDocument.defaultView.getComputedStyle( elem, null ) :
+			elem.currentStyle,
+		styles = {};
+
+	if ( style && style.length && style[ 0 ] && style[ style[ 0 ] ] ) {
+		len = style.length;
+		while ( len-- ) {
+			key = style[ len ];
+			if ( typeof style[ key ] === "string" ) {
+				styles[ $.camelCase( key ) ] = style[ key ];
+			}
+		}
+
+	// Support: Opera, IE <9
+	} else {
+		for ( key in style ) {
+			if ( typeof style[ key ] === "string" ) {
+				styles[ key ] = style[ key ];
+			}
+		}
+	}
+
+	return styles;
+}
+
+function styleDifference( oldStyle, newStyle ) {
+	var diff = {},
+		name, value;
+
+	for ( name in newStyle ) {
+		value = newStyle[ name ];
+		if ( oldStyle[ name ] !== value ) {
+			if ( !shorthandStyles[ name ] ) {
+				if ( $.fx.step[ name ] || !isNaN( parseFloat( value ) ) ) {
+					diff[ name ] = value;
+				}
+			}
+		}
+	}
+
+	return diff;
+}
+
+// Support: jQuery <1.8
+if ( !$.fn.addBack ) {
+	$.fn.addBack = function( selector ) {
+		return this.add( selector == null ?
+			this.prevObject : this.prevObject.filter( selector )
+		);
+	};
+}
+
+$.effects.animateClass = function( value, duration, easing, callback ) {
+	var o = $.speed( duration, easing, callback );
+
+	return this.queue( function() {
+		var animated = $( this ),
+			baseClass = animated.attr( "class" ) || "",
+			applyClassChange,
+			allAnimations = o.children ? animated.find( "*" ).addBack() : animated;
+
+		// Map the animated objects to store the original styles.
+		allAnimations = allAnimations.map( function() {
+			var el = $( this );
+			return {
+				el: el,
+				start: getElementStyles( this )
+			};
+		} );
+
+		// Apply class change
+		applyClassChange = function() {
+			$.each( classAnimationActions, function( i, action ) {
+				if ( value[ action ] ) {
+					animated[ action + "Class" ]( value[ action ] );
+				}
+			} );
+		};
+		applyClassChange();
+
+		// Map all animated objects again - calculate new styles and diff
+		allAnimations = allAnimations.map( function() {
+			this.end = getElementStyles( this.el[ 0 ] );
+			this.diff = styleDifference( this.start, this.end );
+			return this;
+		} );
+
+		// Apply original class
+		animated.attr( "class", baseClass );
+
+		// Map all animated objects again - this time collecting a promise
+		allAnimations = allAnimations.map( function() {
+			var styleInfo = this,
+				dfd = $.Deferred(),
+				opts = $.extend( {}, o, {
+					queue: false,
+					complete: function() {
+						dfd.resolve( styleInfo );
+					}
+				} );
+
+			this.el.animate( this.diff, opts );
+			return dfd.promise();
+		} );
+
+		// Once all animations have completed:
+		$.when.apply( $, allAnimations.get() ).done( function() {
+
+			// Set the final class
+			applyClassChange();
+
+			// For each animated element,
+			// clear all css properties that were animated
+			$.each( arguments, function() {
+				var el = this.el;
+				$.each( this.diff, function( key ) {
+					el.css( key, "" );
+				} );
+			} );
+
+			// This is guarnteed to be there if you use jQuery.speed()
+			// it also handles dequeuing the next anim...
+			o.complete.call( animated[ 0 ] );
+		} );
+	} );
+};
+
+$.fn.extend( {
+	addClass: ( function( orig ) {
+		return function( classNames, speed, easing, callback ) {
+			return speed ?
+				$.effects.animateClass.call( this,
+					{ add: classNames }, speed, easing, callback ) :
+				orig.apply( this, arguments );
+		};
+	} )( $.fn.addClass ),
+
+	removeClass: ( function( orig ) {
+		return function( classNames, speed, easing, callback ) {
+			return arguments.length > 1 ?
+				$.effects.animateClass.call( this,
+					{ remove: classNames }, speed, easing, callback ) :
+				orig.apply( this, arguments );
+		};
+	} )( $.fn.removeClass ),
+
+	toggleClass: ( function( orig ) {
+		return function( classNames, force, speed, easing, callback ) {
+			if ( typeof force === "boolean" || force === undefined ) {
+				if ( !speed ) {
+
+					// Without speed parameter
+					return orig.apply( this, arguments );
+				} else {
+					return $.effects.animateClass.call( this,
+						( force ? { add: classNames } : { remove: classNames } ),
+						speed, easing, callback );
+				}
+			} else {
+
+				// Without force parameter
+				return $.effects.animateClass.call( this,
+					{ toggle: classNames }, force, speed, easing );
+			}
+		};
+	} )( $.fn.toggleClass ),
+
+	switchClass: function( remove, add, speed, easing, callback ) {
+		return $.effects.animateClass.call( this, {
+			add: add,
+			remove: remove
+		}, speed, easing, callback );
+	}
+} );
+
+} )();
+
+/******************************************************************************/
+/*********************************** EFFECTS **********************************/
+/******************************************************************************/
+
+( function() {
+
+if ( $.expr && $.expr.filters && $.expr.filters.animated ) {
+	$.expr.filters.animated = ( function( orig ) {
+		return function( elem ) {
+			return !!$( elem ).data( dataSpaceAnimated ) || orig( elem );
+		};
+	} )( $.expr.filters.animated );
+}
+
+if ( $.uiBackCompat !== false ) {
+	$.extend( $.effects, {
+
+		// Saves a set of properties in a data storage
+		save: function( element, set ) {
+			var i = 0, length = set.length;
+			for ( ; i < length; i++ ) {
+				if ( set[ i ] !== null ) {
+					element.data( dataSpace + set[ i ], element[ 0 ].style[ set[ i ] ] );
+				}
+			}
+		},
+
+		// Restores a set of previously saved properties from a data storage
+		restore: function( element, set ) {
+			var val, i = 0, length = set.length;
+			for ( ; i < length; i++ ) {
+				if ( set[ i ] !== null ) {
+					val = element.data( dataSpace + set[ i ] );
+					element.css( set[ i ], val );
+				}
+			}
+		},
+
+		setMode: function( el, mode ) {
+			if ( mode === "toggle" ) {
+				mode = el.is( ":hidden" ) ? "show" : "hide";
+			}
+			return mode;
+		},
+
+		// Wraps the element around a wrapper that copies position properties
+		createWrapper: function( element ) {
+
+			// If the element is already wrapped, return it
+			if ( element.parent().is( ".ui-effects-wrapper" ) ) {
+				return element.parent();
+			}
+
+			// Wrap the element
+			var props = {
+					width: element.outerWidth( true ),
+					height: element.outerHeight( true ),
+					"float": element.css( "float" )
+				},
+				wrapper = $( "<div></div>" )
+					.addClass( "ui-effects-wrapper" )
+					.css( {
+						fontSize: "100%",
+						background: "transparent",
+						border: "none",
+						margin: 0,
+						padding: 0
+					} ),
+
+				// Store the size in case width/height are defined in % - Fixes #5245
+				size = {
+					width: element.width(),
+					height: element.height()
+				},
+				active = document.activeElement;
+
+			// Support: Firefox
+			// Firefox incorrectly exposes anonymous content
+			// https://bugzilla.mozilla.org/show_bug.cgi?id=561664
+			try {
+				active.id;
+			} catch ( e ) {
+				active = document.body;
+			}
+
+			element.wrap( wrapper );
+
+			// Fixes #7595 - Elements lose focus when wrapped.
+			if ( element[ 0 ] === active || $.contains( element[ 0 ], active ) ) {
+				$( active ).trigger( "focus" );
+			}
+
+			// Hotfix for jQuery 1.4 since some change in wrap() seems to actually
+			// lose the reference to the wrapped element
+			wrapper = element.parent();
+
+			// Transfer positioning properties to the wrapper
+			if ( element.css( "position" ) === "static" ) {
+				wrapper.css( { position: "relative" } );
+				element.css( { position: "relative" } );
+			} else {
+				$.extend( props, {
+					position: element.css( "position" ),
+					zIndex: element.css( "z-index" )
+				} );
+				$.each( [ "top", "left", "bottom", "right" ], function( i, pos ) {
+					props[ pos ] = element.css( pos );
+					if ( isNaN( parseInt( props[ pos ], 10 ) ) ) {
+						props[ pos ] = "auto";
+					}
+				} );
+				element.css( {
+					position: "relative",
+					top: 0,
+					left: 0,
+					right: "auto",
+					bottom: "auto"
+				} );
+			}
+			element.css( size );
+
+			return wrapper.css( props ).show();
+		},
+
+		removeWrapper: function( element ) {
+			var active = document.activeElement;
+
+			if ( element.parent().is( ".ui-effects-wrapper" ) ) {
+				element.parent().replaceWith( element );
+
+				// Fixes #7595 - Elements lose focus when wrapped.
+				if ( element[ 0 ] === active || $.contains( element[ 0 ], active ) ) {
+					$( active ).trigger( "focus" );
+				}
+			}
+
+			return element;
+		}
+	} );
+}
+
+$.extend( $.effects, {
+	version: "1.12.1",
+
+	define: function( name, mode, effect ) {
+		if ( !effect ) {
+			effect = mode;
+			mode = "effect";
+		}
+
+		$.effects.effect[ name ] = effect;
+		$.effects.effect[ name ].mode = mode;
+
+		return effect;
+	},
+
+	scaledDimensions: function( element, percent, direction ) {
+		if ( percent === 0 ) {
+			return {
+				height: 0,
+				width: 0,
+				outerHeight: 0,
+				outerWidth: 0
+			};
+		}
+
+		var x = direction !== "horizontal" ? ( ( percent || 100 ) / 100 ) : 1,
+			y = direction !== "vertical" ? ( ( percent || 100 ) / 100 ) : 1;
+
+		return {
+			height: element.height() * y,
+			width: element.width() * x,
+			outerHeight: element.outerHeight() * y,
+			outerWidth: element.outerWidth() * x
+		};
+
+	},
+
+	clipToBox: function( animation ) {
+		return {
+			width: animation.clip.right - animation.clip.left,
+			height: animation.clip.bottom - animation.clip.top,
+			left: animation.clip.left,
+			top: animation.clip.top
+		};
+	},
+
+	// Injects recently queued functions to be first in line (after "inprogress")
+	unshift: function( element, queueLength, count ) {
+		var queue = element.queue();
+
+		if ( queueLength > 1 ) {
+			queue.splice.apply( queue,
+				[ 1, 0 ].concat( queue.splice( queueLength, count ) ) );
+		}
+		element.dequeue();
+	},
+
+	saveStyle: function( element ) {
+		element.data( dataSpaceStyle, element[ 0 ].style.cssText );
+	},
+
+	restoreStyle: function( element ) {
+		element[ 0 ].style.cssText = element.data( dataSpaceStyle ) || "";
+		element.removeData( dataSpaceStyle );
+	},
+
+	mode: function( element, mode ) {
+		var hidden = element.is( ":hidden" );
+
+		if ( mode === "toggle" ) {
+			mode = hidden ? "show" : "hide";
+		}
+		if ( hidden ? mode === "hide" : mode === "show" ) {
+			mode = "none";
+		}
+		return mode;
+	},
+
+	// Translates a [top,left] array into a baseline value
+	getBaseline: function( origin, original ) {
+		var y, x;
+
+		switch ( origin[ 0 ] ) {
+		case "top":
+			y = 0;
+			break;
+		case "middle":
+			y = 0.5;
+			break;
+		case "bottom":
+			y = 1;
+			break;
+		default:
+			y = origin[ 0 ] / original.height;
+		}
+
+		switch ( origin[ 1 ] ) {
+		case "left":
+			x = 0;
+			break;
+		case "center":
+			x = 0.5;
+			break;
+		case "right":
+			x = 1;
+			break;
+		default:
+			x = origin[ 1 ] / original.width;
+		}
+
+		return {
+			x: x,
+			y: y
+		};
+	},
+
+	// Creates a placeholder element so that the original element can be made absolute
+	createPlaceholder: function( element ) {
+		var placeholder,
+			cssPosition = element.css( "position" ),
+			position = element.position();
+
+		// Lock in margins first to account for form elements, which
+		// will change margin if you explicitly set height
+		// see: http://jsfiddle.net/JZSMt/3/ https://bugs.webkit.org/show_bug.cgi?id=107380
+		// Support: Safari
+		element.css( {
+			marginTop: element.css( "marginTop" ),
+			marginBottom: element.css( "marginBottom" ),
+			marginLeft: element.css( "marginLeft" ),
+			marginRight: element.css( "marginRight" )
+		} )
+		.outerWidth( element.outerWidth() )
+		.outerHeight( element.outerHeight() );
+
+		if ( /^(static|relative)/.test( cssPosition ) ) {
+			cssPosition = "absolute";
+
+			placeholder = $( "<" + element[ 0 ].nodeName + ">" ).insertAfter( element ).css( {
+
+				// Convert inline to inline block to account for inline elements
+				// that turn to inline block based on content (like img)
+				display: /^(inline|ruby)/.test( element.css( "display" ) ) ?
+					"inline-block" :
+					"block",
+				visibility: "hidden",
+
+				// Margins need to be set to account for margin collapse
+				marginTop: element.css( "marginTop" ),
+				marginBottom: element.css( "marginBottom" ),
+				marginLeft: element.css( "marginLeft" ),
+				marginRight: element.css( "marginRight" ),
+				"float": element.css( "float" )
+			} )
+			.outerWidth( element.outerWidth() )
+			.outerHeight( element.outerHeight() )
+			.addClass( "ui-effects-placeholder" );
+
+			element.data( dataSpace + "placeholder", placeholder );
+		}
+
+		element.css( {
+			position: cssPosition,
+			left: position.left,
+			top: position.top
+		} );
+
+		return placeholder;
+	},
+
+	removePlaceholder: function( element ) {
+		var dataKey = dataSpace + "placeholder",
+				placeholder = element.data( dataKey );
+
+		if ( placeholder ) {
+			placeholder.remove();
+			element.removeData( dataKey );
+		}
+	},
+
+	// Removes a placeholder if it exists and restores
+	// properties that were modified during placeholder creation
+	cleanUp: function( element ) {
+		$.effects.restoreStyle( element );
+		$.effects.removePlaceholder( element );
+	},
+
+	setTransition: function( element, list, factor, value ) {
+		value = value || {};
+		$.each( list, function( i, x ) {
+			var unit = element.cssUnit( x );
+			if ( unit[ 0 ] > 0 ) {
+				value[ x ] = unit[ 0 ] * factor + unit[ 1 ];
+			}
+		} );
+		return value;
+	}
+} );
+
+// Return an effect options object for the given parameters:
+function _normalizeArguments( effect, options, speed, callback ) {
+
+	// Allow passing all options as the first parameter
+	if ( $.isPlainObject( effect ) ) {
+		options = effect;
+		effect = effect.effect;
+	}
+
+	// Convert to an object
+	effect = { effect: effect };
+
+	// Catch (effect, null, ...)
+	if ( options == null ) {
+		options = {};
+	}
+
+	// Catch (effect, callback)
+	if ( $.isFunction( options ) ) {
+		callback = options;
+		speed = null;
+		options = {};
+	}
+
+	// Catch (effect, speed, ?)
+	if ( typeof options === "number" || $.fx.speeds[ options ] ) {
+		callback = speed;
+		speed = options;
+		options = {};
+	}
+
+	// Catch (effect, options, callback)
+	if ( $.isFunction( speed ) ) {
+		callback = speed;
+		speed = null;
+	}
+
+	// Add options to effect
+	if ( options ) {
+		$.extend( effect, options );
+	}
+
+	speed = speed || options.duration;
+	effect.duration = $.fx.off ? 0 :
+		typeof speed === "number" ? speed :
+		speed in $.fx.speeds ? $.fx.speeds[ speed ] :
+		$.fx.speeds._default;
+
+	effect.complete = callback || options.complete;
+
+	return effect;
+}
+
+function standardAnimationOption( option ) {
+
+	// Valid standard speeds (nothing, number, named speed)
+	if ( !option || typeof option === "number" || $.fx.speeds[ option ] ) {
+		return true;
+	}
+
+	// Invalid strings - treat as "normal" speed
+	if ( typeof option === "string" && !$.effects.effect[ option ] ) {
+		return true;
+	}
+
+	// Complete callback
+	if ( $.isFunction( option ) ) {
+		return true;
+	}
+
+	// Options hash (but not naming an effect)
+	if ( typeof option === "object" && !option.effect ) {
+		return true;
+	}
+
+	// Didn't match any standard API
+	return false;
+}
+
+$.fn.extend( {
+	effect: function( /* effect, options, speed, callback */ ) {
+		var args = _normalizeArguments.apply( this, arguments ),
+			effectMethod = $.effects.effect[ args.effect ],
+			defaultMode = effectMethod.mode,
+			queue = args.queue,
+			queueName = queue || "fx",
+			complete = args.complete,
+			mode = args.mode,
+			modes = [],
+			prefilter = function( next ) {
+				var el = $( this ),
+					normalizedMode = $.effects.mode( el, mode ) || defaultMode;
+
+				// Sentinel for duck-punching the :animated psuedo-selector
+				el.data( dataSpaceAnimated, true );
+
+				// Save effect mode for later use,
+				// we can't just call $.effects.mode again later,
+				// as the .show() below destroys the initial state
+				modes.push( normalizedMode );
+
+				// See $.uiBackCompat inside of run() for removal of defaultMode in 1.13
+				if ( defaultMode && ( normalizedMode === "show" ||
+						( normalizedMode === defaultMode && normalizedMode === "hide" ) ) ) {
+					el.show();
+				}
+
+				if ( !defaultMode || normalizedMode !== "none" ) {
+					$.effects.saveStyle( el );
+				}
+
+				if ( $.isFunction( next ) ) {
+					next();
+				}
+			};
+
+		if ( $.fx.off || !effectMethod ) {
+
+			// Delegate to the original method (e.g., .show()) if possible
+			if ( mode ) {
+				return this[ mode ]( args.duration, complete );
+			} else {
+				return this.each( function() {
+					if ( complete ) {
+						complete.call( this );
+					}
+				} );
+			}
+		}
+
+		function run( next ) {
+			var elem = $( this );
+
+			function cleanup() {
+				elem.removeData( dataSpaceAnimated );
+
+				$.effects.cleanUp( elem );
+
+				if ( args.mode === "hide" ) {
+					elem.hide();
+				}
+
+				done();
+			}
+
+			function done() {
+				if ( $.isFunction( complete ) ) {
+					complete.call( elem[ 0 ] );
+				}
+
+				if ( $.isFunction( next ) ) {
+					next();
+				}
+			}
+
+			// Override mode option on a per element basis,
+			// as toggle can be either show or hide depending on element state
+			args.mode = modes.shift();
+
+			if ( $.uiBackCompat !== false && !defaultMode ) {
+				if ( elem.is( ":hidden" ) ? mode === "hide" : mode === "show" ) {
+
+					// Call the core method to track "olddisplay" properly
+					elem[ mode ]();
+					done();
+				} else {
+					effectMethod.call( elem[ 0 ], args, done );
+				}
+			} else {
+				if ( args.mode === "none" ) {
+
+					// Call the core method to track "olddisplay" properly
+					elem[ mode ]();
+					done();
+				} else {
+					effectMethod.call( elem[ 0 ], args, cleanup );
+				}
+			}
+		}
+
+		// Run prefilter on all elements first to ensure that
+		// any showing or hiding happens before placeholder creation,
+		// which ensures that any layout changes are correctly captured.
+		return queue === false ?
+			this.each( prefilter ).each( run ) :
+			this.queue( queueName, prefilter ).queue( queueName, run );
+	},
+
+	show: ( function( orig ) {
+		return function( option ) {
+			if ( standardAnimationOption( option ) ) {
+				return orig.apply( this, arguments );
+			} else {
+				var args = _normalizeArguments.apply( this, arguments );
+				args.mode = "show";
+				return this.effect.call( this, args );
+			}
+		};
+	} )( $.fn.show ),
+
+	hide: ( function( orig ) {
+		return function( option ) {
+			if ( standardAnimationOption( option ) ) {
+				return orig.apply( this, arguments );
+			} else {
+				var args = _normalizeArguments.apply( this, arguments );
+				args.mode = "hide";
+				return this.effect.call( this, args );
+			}
+		};
+	} )( $.fn.hide ),
+
+	toggle: ( function( orig ) {
+		return function( option ) {
+			if ( standardAnimationOption( option ) || typeof option === "boolean" ) {
+				return orig.apply( this, arguments );
+			} else {
+				var args = _normalizeArguments.apply( this, arguments );
+				args.mode = "toggle";
+				return this.effect.call( this, args );
+			}
+		};
+	} )( $.fn.toggle ),
+
+	cssUnit: function( key ) {
+		var style = this.css( key ),
+			val = [];
+
+		$.each( [ "em", "px", "%", "pt" ], function( i, unit ) {
+			if ( style.indexOf( unit ) > 0 ) {
+				val = [ parseFloat( style ), unit ];
+			}
+		} );
+		return val;
+	},
+
+	cssClip: function( clipObj ) {
+		if ( clipObj ) {
+			return this.css( "clip", "rect(" + clipObj.top + "px " + clipObj.right + "px " +
+				clipObj.bottom + "px " + clipObj.left + "px)" );
+		}
+		return parseClip( this.css( "clip" ), this );
+	},
+
+	transfer: function( options, done ) {
+		var element = $( this ),
+			target = $( options.to ),
+			targetFixed = target.css( "position" ) === "fixed",
+			body = $( "body" ),
+			fixTop = targetFixed ? body.scrollTop() : 0,
+			fixLeft = targetFixed ? body.scrollLeft() : 0,
+			endPosition = target.offset(),
+			animation = {
+				top: endPosition.top - fixTop,
+				left: endPosition.left - fixLeft,
+				height: target.innerHeight(),
+				width: target.innerWidth()
+			},
+			startPosition = element.offset(),
+			transfer = $( "<div class='ui-effects-transfer'></div>" )
+				.appendTo( "body" )
+				.addClass( options.className )
+				.css( {
+					top: startPosition.top - fixTop,
+					left: startPosition.left - fixLeft,
+					height: element.innerHeight(),
+					width: element.innerWidth(),
+					position: targetFixed ? "fixed" : "absolute"
+				} )
+				.animate( animation, options.duration, options.easing, function() {
+					transfer.remove();
+					if ( $.isFunction( done ) ) {
+						done();
+					}
+				} );
+	}
+} );
+
+function parseClip( str, element ) {
+		var outerWidth = element.outerWidth(),
+			outerHeight = element.outerHeight(),
+			clipRegex = /^rect\((-?\d*\.?\d*px|-?\d+%|auto),?\s*(-?\d*\.?\d*px|-?\d+%|auto),?\s*(-?\d*\.?\d*px|-?\d+%|auto),?\s*(-?\d*\.?\d*px|-?\d+%|auto)\)$/,
+			values = clipRegex.exec( str ) || [ "", 0, outerWidth, outerHeight, 0 ];
+
+		return {
+			top: parseFloat( values[ 1 ] ) || 0,
+			right: values[ 2 ] === "auto" ? outerWidth : parseFloat( values[ 2 ] ),
+			bottom: values[ 3 ] === "auto" ? outerHeight : parseFloat( values[ 3 ] ),
+			left: parseFloat( values[ 4 ] ) || 0
+		};
+}
+
+$.fx.step.clip = function( fx ) {
+	if ( !fx.clipInit ) {
+		fx.start = $( fx.elem ).cssClip();
+		if ( typeof fx.end === "string" ) {
+			fx.end = parseClip( fx.end, fx.elem );
+		}
+		fx.clipInit = true;
+	}
+
+	$( fx.elem ).cssClip( {
+		top: fx.pos * ( fx.end.top - fx.start.top ) + fx.start.top,
+		right: fx.pos * ( fx.end.right - fx.start.right ) + fx.start.right,
+		bottom: fx.pos * ( fx.end.bottom - fx.start.bottom ) + fx.start.bottom,
+		left: fx.pos * ( fx.end.left - fx.start.left ) + fx.start.left
+	} );
+};
+
+} )();
+
+/******************************************************************************/
+/*********************************** EASING ***********************************/
+/******************************************************************************/
+
+( function() {
+
+// Based on easing equations from Robert Penner (http://www.robertpenner.com/easing)
+
+var baseEasings = {};
+
+$.each( [ "Quad", "Cubic", "Quart", "Quint", "Expo" ], function( i, name ) {
+	baseEasings[ name ] = function( p ) {
+		return Math.pow( p, i + 2 );
+	};
+} );
+
+$.extend( baseEasings, {
+	Sine: function( p ) {
+		return 1 - Math.cos( p * Math.PI / 2 );
+	},
+	Circ: function( p ) {
+		return 1 - Math.sqrt( 1 - p * p );
+	},
+	Elastic: function( p ) {
+		return p === 0 || p === 1 ? p :
+			-Math.pow( 2, 8 * ( p - 1 ) ) * Math.sin( ( ( p - 1 ) * 80 - 7.5 ) * Math.PI / 15 );
+	},
+	Back: function( p ) {
+		return p * p * ( 3 * p - 2 );
+	},
+	Bounce: function( p ) {
+		var pow2,
+			bounce = 4;
+
+		while ( p < ( ( pow2 = Math.pow( 2, --bounce ) ) - 1 ) / 11 ) {}
+		return 1 / Math.pow( 4, 3 - bounce ) - 7.5625 * Math.pow( ( pow2 * 3 - 2 ) / 22 - p, 2 );
+	}
+} );
+
+$.each( baseEasings, function( name, easeIn ) {
+	$.easing[ "easeIn" + name ] = easeIn;
+	$.easing[ "easeOut" + name ] = function( p ) {
+		return 1 - easeIn( 1 - p );
+	};
+	$.easing[ "easeInOut" + name ] = function( p ) {
+		return p < 0.5 ?
+			easeIn( p * 2 ) / 2 :
+			1 - easeIn( p * -2 + 2 ) / 2;
+	};
+} );
+
+} )();
+
+var effect = $.effects;
+
+
 /*!
  * jQuery UI Effects Blind 1.12.1
  * http://jqueryui.com
@@ -31,7 +1653,54 @@ var k="ui-effects-",e="ui-effects-style",p="ui-effects-animated",i=d;d.effects={
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var h=d.effects.define("blind","hide",function(y,w){var B={up:["bottom","top"],vertical:["bottom","top"],down:["top","bottom"],left:["right","left"],horizontal:["right","left"],right:["left","right"]},z=d(this),A=y.direction||"up",D=z.cssClip(),x={clip:d.extend({},D)},C=d.effects.createPlaceholder(z);x.clip[B[A][0]]=x.clip[B[A][1]];if(y.mode==="show"){z.cssClip(x.clip);if(C){C.css(d.effects.clipToBox(x))}x.clip=D}if(C){C.animate(d.effects.clipToBox(x),y.duration,y.easing)}z.animate(x,{queue:false,duration:y.duration,easing:y.easing,complete:w})});
+
+//>>label: Blind Effect
+//>>group: Effects
+//>>description: Blinds the element.
+//>>docs: http://api.jqueryui.com/blind-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectBlind = $.effects.define( "blind", "hide", function( options, done ) {
+	var map = {
+			up: [ "bottom", "top" ],
+			vertical: [ "bottom", "top" ],
+			down: [ "top", "bottom" ],
+			left: [ "right", "left" ],
+			horizontal: [ "right", "left" ],
+			right: [ "left", "right" ]
+		},
+		element = $( this ),
+		direction = options.direction || "up",
+		start = element.cssClip(),
+		animate = { clip: $.extend( {}, start ) },
+		placeholder = $.effects.createPlaceholder( element );
+
+	animate.clip[ map[ direction ][ 0 ] ] = animate.clip[ map[ direction ][ 1 ] ];
+
+	if ( options.mode === "show" ) {
+		element.cssClip( animate.clip );
+		if ( placeholder ) {
+			placeholder.css( $.effects.clipToBox( animate ) );
+		}
+
+		animate.clip = start;
+	}
+
+	if ( placeholder ) {
+		placeholder.animate( $.effects.clipToBox( animate ), options.duration, options.easing );
+	}
+
+	element.animate( animate, {
+		queue: false,
+		duration: options.duration,
+		easing: options.easing,
+		complete: done
+	} );
+} );
+
+
 /*!
  * jQuery UI Effects Bounce 1.12.1
  * http://jqueryui.com
@@ -40,7 +1709,94 @@ var h=d.effects.define("blind","hide",function(y,w){var B={up:["bottom","top"],v
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var q=d.effects.define("bounce",function(x,E){var A,I,L,w=d(this),D=x.mode,C=D==="hide",M=D==="show",N=x.direction||"up",y=x.distance,B=x.times||5,O=B*2+(M||C?1:0),K=x.duration/O,G=x.easing,z=(N==="up"||N==="down")?"top":"left",F=(N==="up"||N==="left"),J=0,H=w.queue().length;d.effects.createPlaceholder(w);L=w.css(z);if(!y){y=w[z==="top"?"outerHeight":"outerWidth"]()/3}if(M){I={opacity:1};I[z]=L;w.css("opacity",0).css(z,F?-y*2:y*2).animate(I,K,G)}if(C){y=y/Math.pow(2,B-1)}I={};I[z]=L;for(;J<B;J++){A={};A[z]=(F?"-=":"+=")+y;w.animate(A,K,G).animate(I,K,G);y=C?y*2:y/2}if(C){A={opacity:0};A[z]=(F?"-=":"+=")+y;w.animate(A,K,G)}w.queue(E);d.effects.unshift(w,H,O+1)});
+
+//>>label: Bounce Effect
+//>>group: Effects
+//>>description: Bounces an element horizontally or vertically n times.
+//>>docs: http://api.jqueryui.com/bounce-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectBounce = $.effects.define( "bounce", function( options, done ) {
+	var upAnim, downAnim, refValue,
+		element = $( this ),
+
+		// Defaults:
+		mode = options.mode,
+		hide = mode === "hide",
+		show = mode === "show",
+		direction = options.direction || "up",
+		distance = options.distance,
+		times = options.times || 5,
+
+		// Number of internal animations
+		anims = times * 2 + ( show || hide ? 1 : 0 ),
+		speed = options.duration / anims,
+		easing = options.easing,
+
+		// Utility:
+		ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
+		motion = ( direction === "up" || direction === "left" ),
+		i = 0,
+
+		queuelen = element.queue().length;
+
+	$.effects.createPlaceholder( element );
+
+	refValue = element.css( ref );
+
+	// Default distance for the BIGGEST bounce is the outer Distance / 3
+	if ( !distance ) {
+		distance = element[ ref === "top" ? "outerHeight" : "outerWidth" ]() / 3;
+	}
+
+	if ( show ) {
+		downAnim = { opacity: 1 };
+		downAnim[ ref ] = refValue;
+
+		// If we are showing, force opacity 0 and set the initial position
+		// then do the "first" animation
+		element
+			.css( "opacity", 0 )
+			.css( ref, motion ? -distance * 2 : distance * 2 )
+			.animate( downAnim, speed, easing );
+	}
+
+	// Start at the smallest distance if we are hiding
+	if ( hide ) {
+		distance = distance / Math.pow( 2, times - 1 );
+	}
+
+	downAnim = {};
+	downAnim[ ref ] = refValue;
+
+	// Bounces up/down/left/right then back to 0 -- times * 2 animations happen here
+	for ( ; i < times; i++ ) {
+		upAnim = {};
+		upAnim[ ref ] = ( motion ? "-=" : "+=" ) + distance;
+
+		element
+			.animate( upAnim, speed, easing )
+			.animate( downAnim, speed, easing );
+
+		distance = hide ? distance * 2 : distance / 2;
+	}
+
+	// Last Bounce when Hiding
+	if ( hide ) {
+		upAnim = { opacity: 0 };
+		upAnim[ ref ] = ( motion ? "-=" : "+=" ) + distance;
+
+		element.animate( upAnim, speed, easing );
+	}
+
+	element.queue( done );
+
+	$.effects.unshift( element, queuelen, anims + 1 );
+} );
+
+
 /*!
  * jQuery UI Effects Clip 1.12.1
  * http://jqueryui.com
@@ -49,7 +1805,49 @@ var q=d.effects.define("bounce",function(x,E){var A,I,L,w=d(this),D=x.mode,C=D==
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var v=d.effects.define("clip","hide",function(E,A){var x,y={},B=d(this),D=E.direction||"vertical",C=D==="both",w=C||D==="horizontal",z=C||D==="vertical";x=B.cssClip();y.clip={top:z?(x.bottom-x.top)/2:x.top,right:w?(x.right-x.left)/2:x.right,bottom:z?(x.bottom-x.top)/2:x.bottom,left:w?(x.right-x.left)/2:x.left};d.effects.createPlaceholder(B);if(E.mode==="show"){B.cssClip(y.clip);y.clip=x}B.animate(y,{queue:false,duration:E.duration,easing:E.easing,complete:A})});
+
+//>>label: Clip Effect
+//>>group: Effects
+//>>description: Clips the element on and off like an old TV.
+//>>docs: http://api.jqueryui.com/clip-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectClip = $.effects.define( "clip", "hide", function( options, done ) {
+	var start,
+		animate = {},
+		element = $( this ),
+		direction = options.direction || "vertical",
+		both = direction === "both",
+		horizontal = both || direction === "horizontal",
+		vertical = both || direction === "vertical";
+
+	start = element.cssClip();
+	animate.clip = {
+		top: vertical ? ( start.bottom - start.top ) / 2 : start.top,
+		right: horizontal ? ( start.right - start.left ) / 2 : start.right,
+		bottom: vertical ? ( start.bottom - start.top ) / 2 : start.bottom,
+		left: horizontal ? ( start.right - start.left ) / 2 : start.left
+	};
+
+	$.effects.createPlaceholder( element );
+
+	if ( options.mode === "show" ) {
+		element.cssClip( animate.clip );
+		animate.clip = start;
+	}
+
+	element.animate( animate, {
+		queue: false,
+		duration: options.duration,
+		easing: options.easing,
+		complete: done
+	} );
+
+} );
+
+
 /*!
  * jQuery UI Effects Drop 1.12.1
  * http://jqueryui.com
@@ -58,7 +1856,53 @@ var v=d.effects.define("clip","hide",function(E,A){var x,y={},B=d(this),D=E.dire
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var g=d.effects.define("drop","hide",function(G,z){var w,A=d(this),C=G.mode,E=C==="show",D=G.direction||"left",x=(D==="up"||D==="down")?"top":"left",F=(D==="up"||D==="left")?"-=":"+=",B=(F==="+=")?"-=":"+=",y={opacity:0};d.effects.createPlaceholder(A);w=G.distance||A[x==="top"?"outerHeight":"outerWidth"](true)/2;y[x]=F+w;if(E){A.css(y);y[x]=B+w;y.opacity=1}A.animate(y,{queue:false,duration:G.duration,easing:G.easing,complete:z})});
+
+//>>label: Drop Effect
+//>>group: Effects
+//>>description: Moves an element in one direction and hides it at the same time.
+//>>docs: http://api.jqueryui.com/drop-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectDrop = $.effects.define( "drop", "hide", function( options, done ) {
+
+	var distance,
+		element = $( this ),
+		mode = options.mode,
+		show = mode === "show",
+		direction = options.direction || "left",
+		ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
+		motion = ( direction === "up" || direction === "left" ) ? "-=" : "+=",
+		oppositeMotion = ( motion === "+=" ) ? "-=" : "+=",
+		animation = {
+			opacity: 0
+		};
+
+	$.effects.createPlaceholder( element );
+
+	distance = options.distance ||
+		element[ ref === "top" ? "outerHeight" : "outerWidth" ]( true ) / 2;
+
+	animation[ ref ] = motion + distance;
+
+	if ( show ) {
+		element.css( animation );
+
+		animation[ ref ] = oppositeMotion + distance;
+		animation.opacity = 1;
+	}
+
+	// Animate
+	element.animate( animation, {
+		queue: false,
+		duration: options.duration,
+		easing: options.easing,
+		complete: done
+	} );
+} );
+
+
 /*!
  * jQuery UI Effects Explode 1.12.1
  * http://jqueryui.com
@@ -67,7 +1911,95 @@ var g=d.effects.define("drop","hide",function(G,z){var w,A=d(this),C=G.mode,E=C=
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var b=d.effects.define("explode","hide",function(x,J){var M,L,z,H,G,E,D=x.pieces?Math.round(Math.sqrt(x.pieces)):3,y=D,w=d(this),F=x.mode,N=F==="show",B=w.show().css("visibility","hidden").offset(),K=Math.ceil(w.outerWidth()/y),I=Math.ceil(w.outerHeight()/D),C=[];function O(){C.push(this);if(C.length===D*y){A()}}for(M=0;M<D;M++){H=B.top+M*I;E=M-(D-1)/2;for(L=0;L<y;L++){z=B.left+L*K;G=L-(y-1)/2;w.clone().appendTo("body").wrap("<div></div>").css({position:"absolute",visibility:"visible",left:-L*K,top:-M*I}).parent().addClass("ui-effects-explode").css({position:"absolute",overflow:"hidden",width:K,height:I,left:z+(N?G*K:0),top:H+(N?E*I:0),opacity:N?0:1}).animate({left:z+(N?0:G*K),top:H+(N?0:E*I),opacity:N?1:0},x.duration||500,x.easing,O)}}function A(){w.css({visibility:"visible"});d(C).remove();J()}});
+
+//>>label: Explode Effect
+//>>group: Effects
+// jscs:disable maximumLineLength
+//>>description: Explodes an element in all directions into n pieces. Implodes an element to its original wholeness.
+// jscs:enable maximumLineLength
+//>>docs: http://api.jqueryui.com/explode-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectExplode = $.effects.define( "explode", "hide", function( options, done ) {
+
+	var i, j, left, top, mx, my,
+		rows = options.pieces ? Math.round( Math.sqrt( options.pieces ) ) : 3,
+		cells = rows,
+		element = $( this ),
+		mode = options.mode,
+		show = mode === "show",
+
+		// Show and then visibility:hidden the element before calculating offset
+		offset = element.show().css( "visibility", "hidden" ).offset(),
+
+		// Width and height of a piece
+		width = Math.ceil( element.outerWidth() / cells ),
+		height = Math.ceil( element.outerHeight() / rows ),
+		pieces = [];
+
+	// Children animate complete:
+	function childComplete() {
+		pieces.push( this );
+		if ( pieces.length === rows * cells ) {
+			animComplete();
+		}
+	}
+
+	// Clone the element for each row and cell.
+	for ( i = 0; i < rows; i++ ) { // ===>
+		top = offset.top + i * height;
+		my = i - ( rows - 1 ) / 2;
+
+		for ( j = 0; j < cells; j++ ) { // |||
+			left = offset.left + j * width;
+			mx = j - ( cells - 1 ) / 2;
+
+			// Create a clone of the now hidden main element that will be absolute positioned
+			// within a wrapper div off the -left and -top equal to size of our pieces
+			element
+				.clone()
+				.appendTo( "body" )
+				.wrap( "<div></div>" )
+				.css( {
+					position: "absolute",
+					visibility: "visible",
+					left: -j * width,
+					top: -i * height
+				} )
+
+				// Select the wrapper - make it overflow: hidden and absolute positioned based on
+				// where the original was located +left and +top equal to the size of pieces
+				.parent()
+					.addClass( "ui-effects-explode" )
+					.css( {
+						position: "absolute",
+						overflow: "hidden",
+						width: width,
+						height: height,
+						left: left + ( show ? mx * width : 0 ),
+						top: top + ( show ? my * height : 0 ),
+						opacity: show ? 0 : 1
+					} )
+					.animate( {
+						left: left + ( show ? 0 : mx * width ),
+						top: top + ( show ? 0 : my * height ),
+						opacity: show ? 1 : 0
+					}, options.duration || 500, options.easing, childComplete );
+		}
+	}
+
+	function animComplete() {
+		element.css( {
+			visibility: "visible"
+		} );
+		$( pieces ).remove();
+		done();
+	}
+} );
+
+
 /*!
  * jQuery UI Effects Fade 1.12.1
  * http://jqueryui.com
@@ -76,7 +2008,31 @@ var b=d.effects.define("explode","hide",function(x,J){var M,L,z,H,G,E,D=x.pieces
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var s=d.effects.define("fade","toggle",function(y,x){var w=y.mode==="show";d(this).css("opacity",w?0:1).animate({opacity:w?1:0},{queue:false,duration:y.duration,easing:y.easing,complete:x})});
+
+//>>label: Fade Effect
+//>>group: Effects
+//>>description: Fades the element.
+//>>docs: http://api.jqueryui.com/fade-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectFade = $.effects.define( "fade", "toggle", function( options, done ) {
+	var show = options.mode === "show";
+
+	$( this )
+		.css( "opacity", show ? 0 : 1 )
+		.animate( {
+			opacity: show ? 1 : 0
+		}, {
+			queue: false,
+			duration: options.duration,
+			easing: options.easing,
+			complete: done
+		} );
+} );
+
+
 /*!
  * jQuery UI Effects Fold 1.12.1
  * http://jqueryui.com
@@ -85,7 +2041,73 @@ var s=d.effects.define("fade","toggle",function(y,x){var w=y.mode==="show";d(thi
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var f=d.effects.define("fold","hide",function(M,B){var C=d(this),D=M.mode,J=D==="show",E=D==="hide",L=M.size||15,F=/([0-9]+)%/.exec(L),K=!!M.horizFirst,z=K?["right","bottom"]:["bottom","right"],A=M.duration/2,I=d.effects.createPlaceholder(C),x=C.cssClip(),H={clip:d.extend({},x)},G={clip:d.extend({},x)},w=[x[z[0]],x[z[1]]],y=C.queue().length;if(F){L=parseInt(F[1],10)/100*w[E?0:1]}H.clip[z[0]]=L;G.clip[z[0]]=L;G.clip[z[1]]=0;if(J){C.cssClip(G.clip);if(I){I.css(d.effects.clipToBox(G))}G.clip=x}C.queue(function(N){if(I){I.animate(d.effects.clipToBox(H),A,M.easing).animate(d.effects.clipToBox(G),A,M.easing)}N()}).animate(H,A,M.easing).animate(G,A,M.easing).queue(B);d.effects.unshift(C,y,4)});
+
+//>>label: Fold Effect
+//>>group: Effects
+//>>description: Folds an element first horizontally and then vertically.
+//>>docs: http://api.jqueryui.com/fold-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectFold = $.effects.define( "fold", "hide", function( options, done ) {
+
+	// Create element
+	var element = $( this ),
+		mode = options.mode,
+		show = mode === "show",
+		hide = mode === "hide",
+		size = options.size || 15,
+		percent = /([0-9]+)%/.exec( size ),
+		horizFirst = !!options.horizFirst,
+		ref = horizFirst ? [ "right", "bottom" ] : [ "bottom", "right" ],
+		duration = options.duration / 2,
+
+		placeholder = $.effects.createPlaceholder( element ),
+
+		start = element.cssClip(),
+		animation1 = { clip: $.extend( {}, start ) },
+		animation2 = { clip: $.extend( {}, start ) },
+
+		distance = [ start[ ref[ 0 ] ], start[ ref[ 1 ] ] ],
+
+		queuelen = element.queue().length;
+
+	if ( percent ) {
+		size = parseInt( percent[ 1 ], 10 ) / 100 * distance[ hide ? 0 : 1 ];
+	}
+	animation1.clip[ ref[ 0 ] ] = size;
+	animation2.clip[ ref[ 0 ] ] = size;
+	animation2.clip[ ref[ 1 ] ] = 0;
+
+	if ( show ) {
+		element.cssClip( animation2.clip );
+		if ( placeholder ) {
+			placeholder.css( $.effects.clipToBox( animation2 ) );
+		}
+
+		animation2.clip = start;
+	}
+
+	// Animate
+	element
+		.queue( function( next ) {
+			if ( placeholder ) {
+				placeholder
+					.animate( $.effects.clipToBox( animation1 ), duration, options.easing )
+					.animate( $.effects.clipToBox( animation2 ), duration, options.easing );
+			}
+
+			next();
+		} )
+		.animate( animation1, duration, options.easing )
+		.animate( animation2, duration, options.easing )
+		.queue( done );
+
+	$.effects.unshift( element, queuelen, 4 );
+} );
+
+
 /*!
  * jQuery UI Effects Highlight 1.12.1
  * http://jqueryui.com
@@ -94,7 +2116,41 @@ var f=d.effects.define("fold","hide",function(M,B){var C=d(this),D=M.mode,J=D===
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var r=d.effects.define("highlight","show",function(x,w){var y=d(this),z={backgroundColor:y.css("backgroundColor")};if(x.mode==="hide"){z.opacity=0}d.effects.saveStyle(y);y.css({backgroundImage:"none",backgroundColor:x.color||"#ffff99"}).animate(z,{queue:false,duration:x.duration,easing:x.easing,complete:w})});
+
+//>>label: Highlight Effect
+//>>group: Effects
+//>>description: Highlights the background of an element in a defined color for a custom duration.
+//>>docs: http://api.jqueryui.com/highlight-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectHighlight = $.effects.define( "highlight", "show", function( options, done ) {
+	var element = $( this ),
+		animation = {
+			backgroundColor: element.css( "backgroundColor" )
+		};
+
+	if ( options.mode === "hide" ) {
+		animation.opacity = 0;
+	}
+
+	$.effects.saveStyle( element );
+
+	element
+		.css( {
+			backgroundImage: "none",
+			backgroundColor: options.color || "#ffff99"
+		} )
+		.animate( animation, {
+			queue: false,
+			duration: options.duration,
+			easing: options.easing,
+			complete: done
+		} );
+} );
+
+
 /*!
  * jQuery UI Effects Size 1.12.1
  * http://jqueryui.com
@@ -103,7 +2159,175 @@ var r=d.effects.define("highlight","show",function(x,w){var y=d(this),z={backgro
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var n=d.effects.define("size",function(z,F){var D,E,J,w=d(this),B=["fontSize"],K=["borderTopWidth","borderBottomWidth","paddingTop","paddingBottom"],y=["borderLeftWidth","borderRightWidth","paddingLeft","paddingRight"],C=z.mode,I=C!=="effect",N=z.scale||"both",L=z.origin||["middle","center"],M=w.css("position"),A=w.position(),G=d.effects.scaledDimensions(w),H=z.from||G,x=z.to||d.effects.scaledDimensions(w,0);d.effects.createPlaceholder(w);if(C==="show"){J=H;H=x;x=J}E={from:{y:H.height/G.height,x:H.width/G.width},to:{y:x.height/G.height,x:x.width/G.width}};if(N==="box"||N==="both"){if(E.from.y!==E.to.y){H=d.effects.setTransition(w,K,E.from.y,H);x=d.effects.setTransition(w,K,E.to.y,x)}if(E.from.x!==E.to.x){H=d.effects.setTransition(w,y,E.from.x,H);x=d.effects.setTransition(w,y,E.to.x,x)}}if(N==="content"||N==="both"){if(E.from.y!==E.to.y){H=d.effects.setTransition(w,B,E.from.y,H);x=d.effects.setTransition(w,B,E.to.y,x)}}if(L){D=d.effects.getBaseline(L,G);H.top=(G.outerHeight-H.outerHeight)*D.y+A.top;H.left=(G.outerWidth-H.outerWidth)*D.x+A.left;x.top=(G.outerHeight-x.outerHeight)*D.y+A.top;x.left=(G.outerWidth-x.outerWidth)*D.x+A.left}w.css(H);if(N==="content"||N==="both"){K=K.concat(["marginTop","marginBottom"]).concat(B);y=y.concat(["marginLeft","marginRight"]);w.find("*[width]").each(function(){var R=d(this),O=d.effects.scaledDimensions(R),Q={height:O.height*E.from.y,width:O.width*E.from.x,outerHeight:O.outerHeight*E.from.y,outerWidth:O.outerWidth*E.from.x},P={height:O.height*E.to.y,width:O.width*E.to.x,outerHeight:O.height*E.to.y,outerWidth:O.width*E.to.x};if(E.from.y!==E.to.y){Q=d.effects.setTransition(R,K,E.from.y,Q);P=d.effects.setTransition(R,K,E.to.y,P)}if(E.from.x!==E.to.x){Q=d.effects.setTransition(R,y,E.from.x,Q);P=d.effects.setTransition(R,y,E.to.x,P)}if(I){d.effects.saveStyle(R)}R.css(Q);R.animate(P,z.duration,z.easing,function(){if(I){d.effects.restoreStyle(R)}})})}w.animate(x,{queue:false,duration:z.duration,easing:z.easing,complete:function(){var O=w.offset();if(x.opacity===0){w.css("opacity",H.opacity)}if(!I){w.css("position",M==="static"?"relative":M).offset(O);d.effects.saveStyle(w)}F()}})});
+
+//>>label: Size Effect
+//>>group: Effects
+//>>description: Resize an element to a specified width and height.
+//>>docs: http://api.jqueryui.com/size-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectSize = $.effects.define( "size", function( options, done ) {
+
+	// Create element
+	var baseline, factor, temp,
+		element = $( this ),
+
+		// Copy for children
+		cProps = [ "fontSize" ],
+		vProps = [ "borderTopWidth", "borderBottomWidth", "paddingTop", "paddingBottom" ],
+		hProps = [ "borderLeftWidth", "borderRightWidth", "paddingLeft", "paddingRight" ],
+
+		// Set options
+		mode = options.mode,
+		restore = mode !== "effect",
+		scale = options.scale || "both",
+		origin = options.origin || [ "middle", "center" ],
+		position = element.css( "position" ),
+		pos = element.position(),
+		original = $.effects.scaledDimensions( element ),
+		from = options.from || original,
+		to = options.to || $.effects.scaledDimensions( element, 0 );
+
+	$.effects.createPlaceholder( element );
+
+	if ( mode === "show" ) {
+		temp = from;
+		from = to;
+		to = temp;
+	}
+
+	// Set scaling factor
+	factor = {
+		from: {
+			y: from.height / original.height,
+			x: from.width / original.width
+		},
+		to: {
+			y: to.height / original.height,
+			x: to.width / original.width
+		}
+	};
+
+	// Scale the css box
+	if ( scale === "box" || scale === "both" ) {
+
+		// Vertical props scaling
+		if ( factor.from.y !== factor.to.y ) {
+			from = $.effects.setTransition( element, vProps, factor.from.y, from );
+			to = $.effects.setTransition( element, vProps, factor.to.y, to );
+		}
+
+		// Horizontal props scaling
+		if ( factor.from.x !== factor.to.x ) {
+			from = $.effects.setTransition( element, hProps, factor.from.x, from );
+			to = $.effects.setTransition( element, hProps, factor.to.x, to );
+		}
+	}
+
+	// Scale the content
+	if ( scale === "content" || scale === "both" ) {
+
+		// Vertical props scaling
+		if ( factor.from.y !== factor.to.y ) {
+			from = $.effects.setTransition( element, cProps, factor.from.y, from );
+			to = $.effects.setTransition( element, cProps, factor.to.y, to );
+		}
+	}
+
+	// Adjust the position properties based on the provided origin points
+	if ( origin ) {
+		baseline = $.effects.getBaseline( origin, original );
+		from.top = ( original.outerHeight - from.outerHeight ) * baseline.y + pos.top;
+		from.left = ( original.outerWidth - from.outerWidth ) * baseline.x + pos.left;
+		to.top = ( original.outerHeight - to.outerHeight ) * baseline.y + pos.top;
+		to.left = ( original.outerWidth - to.outerWidth ) * baseline.x + pos.left;
+	}
+	element.css( from );
+
+	// Animate the children if desired
+	if ( scale === "content" || scale === "both" ) {
+
+		vProps = vProps.concat( [ "marginTop", "marginBottom" ] ).concat( cProps );
+		hProps = hProps.concat( [ "marginLeft", "marginRight" ] );
+
+		// Only animate children with width attributes specified
+		// TODO: is this right? should we include anything with css width specified as well
+		element.find( "*[width]" ).each( function() {
+			var child = $( this ),
+				childOriginal = $.effects.scaledDimensions( child ),
+				childFrom = {
+					height: childOriginal.height * factor.from.y,
+					width: childOriginal.width * factor.from.x,
+					outerHeight: childOriginal.outerHeight * factor.from.y,
+					outerWidth: childOriginal.outerWidth * factor.from.x
+				},
+				childTo = {
+					height: childOriginal.height * factor.to.y,
+					width: childOriginal.width * factor.to.x,
+					outerHeight: childOriginal.height * factor.to.y,
+					outerWidth: childOriginal.width * factor.to.x
+				};
+
+			// Vertical props scaling
+			if ( factor.from.y !== factor.to.y ) {
+				childFrom = $.effects.setTransition( child, vProps, factor.from.y, childFrom );
+				childTo = $.effects.setTransition( child, vProps, factor.to.y, childTo );
+			}
+
+			// Horizontal props scaling
+			if ( factor.from.x !== factor.to.x ) {
+				childFrom = $.effects.setTransition( child, hProps, factor.from.x, childFrom );
+				childTo = $.effects.setTransition( child, hProps, factor.to.x, childTo );
+			}
+
+			if ( restore ) {
+				$.effects.saveStyle( child );
+			}
+
+			// Animate children
+			child.css( childFrom );
+			child.animate( childTo, options.duration, options.easing, function() {
+
+				// Restore children
+				if ( restore ) {
+					$.effects.restoreStyle( child );
+				}
+			} );
+		} );
+	}
+
+	// Animate
+	element.animate( to, {
+		queue: false,
+		duration: options.duration,
+		easing: options.easing,
+		complete: function() {
+
+			var offset = element.offset();
+
+			if ( to.opacity === 0 ) {
+				element.css( "opacity", from.opacity );
+			}
+
+			if ( !restore ) {
+				element
+					.css( "position", position === "static" ? "relative" : position )
+					.offset( offset );
+
+				// Need to save style here so that automatic style restoration
+				// doesn't restore to the original styles from before the animation.
+				$.effects.saveStyle( element );
+			}
+
+			done();
+		}
+	} );
+
+} );
+
+
 /*!
  * jQuery UI Effects Scale 1.12.1
  * http://jqueryui.com
@@ -112,7 +2336,39 @@ var n=d.effects.define("size",function(z,F){var D,E,J,w=d(this),B=["fontSize"],K
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var j=d.effects.define("scale",function(x,w){var y=d(this),B=x.mode,z=parseInt(x.percent,10)||(parseInt(x.percent,10)===0?0:(B!=="effect"?0:100)),A=d.extend(true,{from:d.effects.scaledDimensions(y),to:d.effects.scaledDimensions(y,z,x.direction||"both"),origin:x.origin||["middle","center"]},x);if(x.fade){A.from.opacity=1;A.to.opacity=0}d.effects.effect.size.call(this,A,w)});
+
+//>>label: Scale Effect
+//>>group: Effects
+//>>description: Grows or shrinks an element and its content.
+//>>docs: http://api.jqueryui.com/scale-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectScale = $.effects.define( "scale", function( options, done ) {
+
+	// Create element
+	var el = $( this ),
+		mode = options.mode,
+		percent = parseInt( options.percent, 10 ) ||
+			( parseInt( options.percent, 10 ) === 0 ? 0 : ( mode !== "effect" ? 0 : 100 ) ),
+
+		newOptions = $.extend( true, {
+			from: $.effects.scaledDimensions( el ),
+			to: $.effects.scaledDimensions( el, percent, options.direction || "both" ),
+			origin: options.origin || [ "middle", "center" ]
+		}, options );
+
+	// Fade option to support puff
+	if ( options.fade ) {
+		newOptions.from.opacity = 1;
+		newOptions.to.opacity = 0;
+	}
+
+	$.effects.effect.size.call( this, newOptions, done );
+} );
+
+
 /*!
  * jQuery UI Effects Puff 1.12.1
  * http://jqueryui.com
@@ -121,7 +2377,25 @@ var j=d.effects.define("scale",function(x,w){var y=d(this),B=x.mode,z=parseInt(x
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var a=d.effects.define("puff","hide",function(x,w){var y=d.extend(true,{},x,{fade:true,percent:parseInt(x.percent,10)||150});d.effects.effect.scale.call(this,y,w)});
+
+//>>label: Puff Effect
+//>>group: Effects
+//>>description: Creates a puff effect by scaling the element up and hiding it at the same time.
+//>>docs: http://api.jqueryui.com/puff-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectPuff = $.effects.define( "puff", "hide", function( options, done ) {
+	var newOptions = $.extend( true, {}, options, {
+		fade: true,
+		percent: parseInt( options.percent, 10 ) || 150
+	} );
+
+	$.effects.effect.scale.call( this, newOptions, done );
+} );
+
+
 /*!
  * jQuery UI Effects Pulsate 1.12.1
  * http://jqueryui.com
@@ -130,7 +2404,48 @@ var a=d.effects.define("puff","hide",function(x,w){var y=d.extend(true,{},x,{fad
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var o=d.effects.define("pulsate","show",function(H,y){var A=d(this),B=H.mode,F=B==="show",C=B==="hide",G=F||C,D=((H.times||5)*2)+(G?1:0),x=H.duration/D,E=0,z=1,w=A.queue().length;if(F||!A.is(":visible")){A.css("opacity",0).show();E=1}for(;z<D;z++){A.animate({opacity:E},x,H.easing);E=1-E}A.animate({opacity:E},x,H.easing);A.queue(y);d.effects.unshift(A,w,D+1)});
+
+//>>label: Pulsate Effect
+//>>group: Effects
+//>>description: Pulsates an element n times by changing the opacity to zero and back.
+//>>docs: http://api.jqueryui.com/pulsate-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectPulsate = $.effects.define( "pulsate", "show", function( options, done ) {
+	var element = $( this ),
+		mode = options.mode,
+		show = mode === "show",
+		hide = mode === "hide",
+		showhide = show || hide,
+
+		// Showing or hiding leaves off the "last" animation
+		anims = ( ( options.times || 5 ) * 2 ) + ( showhide ? 1 : 0 ),
+		duration = options.duration / anims,
+		animateTo = 0,
+		i = 1,
+		queuelen = element.queue().length;
+
+	if ( show || !element.is( ":visible" ) ) {
+		element.css( "opacity", 0 ).show();
+		animateTo = 1;
+	}
+
+	// Anims - 1 opacity "toggles"
+	for ( ; i < anims; i++ ) {
+		element.animate( { opacity: animateTo }, duration, options.easing );
+		animateTo = 1 - animateTo;
+	}
+
+	element.animate( { opacity: animateTo }, duration, options.easing );
+
+	element.queue( done );
+
+	$.effects.unshift( element, queuelen, anims + 1 );
+} );
+
+
 /*!
  * jQuery UI Effects Shake 1.12.1
  * http://jqueryui.com
@@ -139,7 +2454,58 @@ var o=d.effects.define("pulsate","show",function(H,y){var A=d(this),B=H.mode,F=B
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var u=d.effects.define("shake",function(K,D){var E=1,F=d(this),H=K.direction||"left",w=K.distance||20,x=K.times||3,I=x*2+1,B=Math.round(K.duration/I),A=(H==="up"||H==="down")?"top":"left",y=(H==="up"||H==="left"),C={},J={},G={},z=F.queue().length;d.effects.createPlaceholder(F);C[A]=(y?"-=":"+=")+w;J[A]=(y?"+=":"-=")+w*2;G[A]=(y?"-=":"+=")+w*2;F.animate(C,B,K.easing);for(;E<x;E++){F.animate(J,B,K.easing).animate(G,B,K.easing)}F.animate(J,B,K.easing).animate(C,B/2,K.easing).queue(D);d.effects.unshift(F,z,I+1)});
+
+//>>label: Shake Effect
+//>>group: Effects
+//>>description: Shakes an element horizontally or vertically n times.
+//>>docs: http://api.jqueryui.com/shake-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectShake = $.effects.define( "shake", function( options, done ) {
+
+	var i = 1,
+		element = $( this ),
+		direction = options.direction || "left",
+		distance = options.distance || 20,
+		times = options.times || 3,
+		anims = times * 2 + 1,
+		speed = Math.round( options.duration / anims ),
+		ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
+		positiveMotion = ( direction === "up" || direction === "left" ),
+		animation = {},
+		animation1 = {},
+		animation2 = {},
+
+		queuelen = element.queue().length;
+
+	$.effects.createPlaceholder( element );
+
+	// Animation
+	animation[ ref ] = ( positiveMotion ? "-=" : "+=" ) + distance;
+	animation1[ ref ] = ( positiveMotion ? "+=" : "-=" ) + distance * 2;
+	animation2[ ref ] = ( positiveMotion ? "-=" : "+=" ) + distance * 2;
+
+	// Animate
+	element.animate( animation, speed, options.easing );
+
+	// Shakes
+	for ( ; i < times; i++ ) {
+		element
+			.animate( animation1, speed, options.easing )
+			.animate( animation2, speed, options.easing );
+	}
+
+	element
+		.animate( animation1, speed, options.easing )
+		.animate( animation, speed / 2, options.easing )
+		.queue( done );
+
+	$.effects.unshift( element, queuelen, anims + 1 );
+} );
+
+
 /*!
  * jQuery UI Effects Slide 1.12.1
  * http://jqueryui.com
@@ -148,7 +2514,60 @@ var u=d.effects.define("shake",function(K,D){var E=1,F=d(this),H=K.direction||"l
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var l=d.effects.define("slide","show",function(H,D){var A,x,E=d(this),y={up:["bottom","top"],down:["top","bottom"],left:["right","left"],right:["left","right"]},F=H.mode,G=H.direction||"left",B=(G==="up"||G==="down")?"top":"left",z=(G==="up"||G==="left"),w=H.distance||E[B==="top"?"outerHeight":"outerWidth"](true),C={};d.effects.createPlaceholder(E);A=E.cssClip();x=E.position()[B];C[B]=(z?-1:1)*w+x;C.clip=E.cssClip();C.clip[y[G][1]]=C.clip[y[G][0]];if(F==="show"){E.cssClip(C.clip);E.css(B,C[B]);C.clip=A;C[B]=x}E.animate(C,{queue:false,duration:H.duration,easing:H.easing,complete:D})});
+
+//>>label: Slide Effect
+//>>group: Effects
+//>>description: Slides an element in and out of the viewport.
+//>>docs: http://api.jqueryui.com/slide-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effectsEffectSlide = $.effects.define( "slide", "show", function( options, done ) {
+	var startClip, startRef,
+		element = $( this ),
+		map = {
+			up: [ "bottom", "top" ],
+			down: [ "top", "bottom" ],
+			left: [ "right", "left" ],
+			right: [ "left", "right" ]
+		},
+		mode = options.mode,
+		direction = options.direction || "left",
+		ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
+		positiveMotion = ( direction === "up" || direction === "left" ),
+		distance = options.distance ||
+			element[ ref === "top" ? "outerHeight" : "outerWidth" ]( true ),
+		animation = {};
+
+	$.effects.createPlaceholder( element );
+
+	startClip = element.cssClip();
+	startRef = element.position()[ ref ];
+
+	// Define hide animation
+	animation[ ref ] = ( positiveMotion ? -1 : 1 ) * distance + startRef;
+	animation.clip = element.cssClip();
+	animation.clip[ map[ direction ][ 1 ] ] = animation.clip[ map[ direction ][ 0 ] ];
+
+	// Reverse the animation if we're showing
+	if ( mode === "show" ) {
+		element.cssClip( animation.clip );
+		element.css( ref, animation[ ref ] );
+		animation.clip = startClip;
+		animation[ ref ] = startRef;
+	}
+
+	// Actually animate
+	element.animate( animation, {
+		queue: false,
+		duration: options.duration,
+		easing: options.easing,
+		complete: done
+	} );
+} );
+
+
 /*!
  * jQuery UI Effects Transfer 1.12.1
  * http://jqueryui.com
@@ -157,4 +2576,24 @@ var l=d.effects.define("slide","show",function(H,D){var A,x,E=d(this),y={up:["bo
  * Released under the MIT license.
  * http://jquery.org/license
  */
-var m;if(d.uiBackCompat!==false){m=d.effects.define("transfer",function(x,w){d(this).transfer(x,w)})}var t=m}));
+
+//>>label: Transfer Effect
+//>>group: Effects
+//>>description: Displays a transfer effect from one element to another.
+//>>docs: http://api.jqueryui.com/transfer-effect/
+//>>demos: http://jqueryui.com/effect/
+
+
+
+var effect;
+if ( $.uiBackCompat !== false ) {
+	effect = $.effects.define( "transfer", function( options, done ) {
+		$( this ).transfer( options, done );
+	} );
+}
+var effectsEffectTransfer = effect;
+
+
+
+
+}));

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="jeesite-common/src/main/java"/>
+	<classpathentry kind="src" path="jeesite-common/src/test/java"/>
+	<classpathentry kind="src" path="jeesite-web/src/main/java"/>
+	<classpathentry kind="src" path="jeesite-web/src/test/java"/>
+	<classpathentry kind="src" path="modules/jeesite-module-core/src/main/java"/>
+	<classpathentry kind="src" path="modules/jeesite-module-core/src/test/java"/>
+	<classpathentry kind="lib" path="jeesite-common/target/jeesite-common-4.0-SNAPSHOT.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="output" path="jeesite-common/target/classes"/>
+</classpath>
