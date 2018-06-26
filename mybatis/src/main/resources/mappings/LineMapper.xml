@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yui.mybatis.modules.test.mapper.LineMapper">
+
+	<!-- 主键查询 -->
+	<select id="get" resultType="Line">
+		SELECT
+			*
+		FROM
+			line u
+		<where>
+			<if test="id != null and id != '' ">
+				u.id = #{id}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="Line">
+		INSERT line(
+			id,
+			NAME,
+			from,
+			to,
+			time
+		)VALUES(
+			#{id},
+			#{name},
+			#{from},
+			#{to},
+			#{time}
+		)
+	</insert>
+	
+	<select id="findList" resultType="Line">
+		SELECT
+			*
+		FROM	
+			line u
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				and u.id = #{id}
+			</if>
+			<if test="name != null and name != '' ">
+				and u.name like '%' #{name} '%'
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 更新 -->
+	<update id="update">
+		UPDATE line 
+		<set>
+			<if test="name != null and name != '' ">name=#{name},</if>
+			<if test="from != null and from != '' ">from=#{from},</if>
+			<if test="to != null and to != '' ">to=#{to}</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

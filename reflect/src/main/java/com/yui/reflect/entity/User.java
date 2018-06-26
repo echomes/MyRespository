@@ -9,6 +9,7 @@ import java.util.Date;
  * @author Echo
  *
  */
+@SuppressWarnings("all")
 public class User implements Serializable {
 
 	/**
@@ -26,6 +27,7 @@ public class User implements Serializable {
 
 	public User() {
 		super();
+		System.out.println("无参数的构造函数。。");
 	}
 
 	public User(String name, Integer age, Date birth) {
@@ -33,6 +35,19 @@ public class User implements Serializable {
 		this.name = name;
 		this.age = age;
 		this.birth = birth;
+		System.out.println("有参数的构造函数。。");
+	}
+
+	protected User(Integer id) {
+		super();
+		this.id = id;
+		System.out.println("受保护的构造函数。。");
+	}
+
+	private User(String name) {
+		super();
+		this.name = name;
+		System.out.println("私有的构造函数。。");
 	}
 
 	public String getName() {
@@ -65,6 +80,10 @@ public class User implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String show() {
+		return "用户信息：" + this.name;
 	}
 
 	@Override

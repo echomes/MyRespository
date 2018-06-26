@@ -2,6 +2,7 @@ package com.yui.mybatis.modules.test.web;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,6 +61,13 @@ public class TestController extends BaseController {
 		}
 		userService.insertList(userList);
 		return userService.findList(user);
+	}
+	
+	@RequestMapping("getQuneeData")
+	@ResponseBody
+	public Map getQuneeData(HttpServletRequest request,HttpServletResponse response,User user) {
+		
+		return this.userService.getQuneeData();
 	}
 
 }
