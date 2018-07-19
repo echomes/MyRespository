@@ -1,29 +1,31 @@
 package com.yui.boot.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yui.boot.common.persistence.entity.DataEntity;
 
 /**
  * 用户
+ * 
  * @author Echo
  *
  */
-public class User implements Serializable {
+public class User extends DataEntity<User> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
+	private String id;
 	private String name;
 	private String sex;
 	private Integer age;
-	
-	@JSONField(format="yyyy-MM-dd HH:mm:ss")
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date birth;
-	
+
 	public User() {
 		super();
 	}
@@ -60,10 +62,23 @@ public class User implements Serializable {
 		this.birth = birth;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", sex=" + sex + ", age=" + age + ", birth=" + birth + "]";
+		return "User [id=" + id + ", name=" + name + ", sex=" + sex + ", age=" + age + ", birth=" + birth + "]";
 	}
-	
+
+	@Override
+	public void preInsert() {
+		
+		
+	}
 
 }

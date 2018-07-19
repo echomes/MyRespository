@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yui.boot.mapper.UserMapper">
+
+	<!-- 主键查询 -->
+	<select id="get" resultType="User">
+		SELECT
+			*
+		FROM
+			USER u
+		<where>
+			<if test="id != null and id != '' ">
+				u.id = #{id}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="User">
+		INSERT USER(
+			NAME,
+			age,
+			birth
+		)VALUES(
+			#{name},
+			#{age},
+			#{birth}
+		)
+	</insert>
+	
+	<insert id="insertList">
+		INSERT USER(
+			NAME,age,birth)
+		VALUES
+			<foreach collection="list" item="item" separator=",">
+				(#{item.name}, #{item.age}, #{item.birth})
+			</foreach>
+	</insert>
+	
+	<select id="findList" resultType="User">
+		SELECT
+			*
+		FROM	
+			USER u
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				and u.id = #{id}
+			</if>
+			<if test="name != null and name != '' ">
+				and u.name like '%' #{name} '%'
+			</if>
+		</trim>
+	</select>
+	
+	<select id="queryIn" resultType="User">
+		SELECT
+			*
+		FROM
+			USER u
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="list != null and list.size() >0 ">
+				id IN
+				<foreach collection="list" item="id" open="(" close=")" separator="," index="index">
+					#{id}
+				</foreach>
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 更新 -->
+	<update id="update">
+		UPDATE user 
+		<set>
+			<if test="name != null and name != '' ">name=#{name},</if>
+			<if test="age != null and age != '' ">age=#{age},</if>
+			<if test="birth != null and birth != '' ">birth=#{birth}</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

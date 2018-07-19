@@ -1,0 +1,39 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /boot
+    
+#添加那个目录的文件需要restart
+spring:
+  devtools:
+    restart:
+      additional-paths:
+      - src/main/java
+      exclude: static/**,public/**
+  thymeleaf:
+    cache: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    
+    
+#mybatis 配置文件
+mybatis:
+  config-location: classpath:/mybatis/mybatis-config.xml
+  mapper-locations: classpath*:/mybatis/mapper/*.xml
+  type-aliases-package: com.yui.boot
+
+#pagehelper分页插件
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
