@@ -82,6 +82,12 @@
 			<artifactId>pagehelper</artifactId>
 			<version>${pagehelper-version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.sitemesh</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -43,11 +43,14 @@
 		FROM	
 			USER u
 		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="id != null">
+			<if test="id != null and id !='' ">
 				and u.id = #{id}
 			</if>
 			<if test="name != null and name != '' ">
 				and u.name like '%' #{name} '%'
+			</if>
+			<if test="sex != null and sex != '' ">
+				and u.sex like '%' #{sex} '%'
 			</if>
 		</trim>
 	</select>

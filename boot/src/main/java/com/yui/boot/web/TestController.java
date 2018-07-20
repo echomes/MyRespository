@@ -94,4 +94,21 @@ public class TestController extends BaseController {
 		}
 		return dg;
 	}
+	
+	@RequestMapping("list")
+	public ModelAndView list(ModelAndView mv) {
+		mv.setViewName("boot/test/hello");
+		mv.addObject("msg", "测试");
+		mv.addObject("a", "ddd");
+
+		User user = new User();
+		user.setName("哈哈哈");
+		user.setBirth(new Date());
+		user.setAge(144);
+		mv.addObject("user", user);
+		
+		PageInfo<User> list = this.userService.findList(null);
+		mv.addObject("list", list.getList().get(0));
+		return mv;
+	}
 }

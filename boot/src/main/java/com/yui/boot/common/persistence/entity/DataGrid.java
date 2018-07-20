@@ -1,5 +1,6 @@
 package com.yui.boot.common.persistence.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * 
  */
 @SuppressWarnings("all")
-public class DataGrid implements java.io.Serializable {
+public class DataGrid implements Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private Long count = 0L;

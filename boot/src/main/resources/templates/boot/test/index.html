@@ -1,21 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <title>layuiAdmin std - 通用后台管理模板系统（iframe标准版）</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" href="../layui/css/layui.css?" media="all">
-  <link rel="stylesheet" href="../layui/style/admin.css?" media="all">
-  
-  <script>
-  /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
-  </script>
+  <title>管理系统</title>
 </head>
-<body class="layui-layout-body">
-  
-  <div id="LAY_app">
+<body>
+  <div id="LAY_app" class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
       <div class="layui-header">
         <!-- 头部区域 -->
@@ -367,7 +356,7 @@
               </a>
               <dl class="layui-nav-child">
                 <dd>
-                  <a lay-href="user/user/list.html">网站用户</a>
+                  <a lay-href="list">网站用户</a>
                 </dd>
                 <dd>
                   <a lay-href="user/administrators/list.html">后台管理员</a>
@@ -446,13 +435,12 @@
     </div>
   </div>
 
-  <script src="../layui/layui.js"></script>
   <script>
-  layui.config({
-    base: '../layui/' //静态资源所在路径
-  }).extend({
-    index: 'lib/index' //主入口模块
-  }).use('index');
+	  layui.config({
+	    base: '../layui/' //静态资源所在路径
+	  }).extend({
+	    index: 'lib/index' //主入口模块
+	  }).use('index');
   </script>
 </body>
 </html>
